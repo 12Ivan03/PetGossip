@@ -1,0 +1,22 @@
+<h1>User profile</h1>
+
+{{#if user}}
+    <p>Hello, {{user.name}} {{user.lastName}}</p>
+    <p>Welcome to our PetGossip comunity!</p>
+{{/if}}
+
+<br>
+
+<p>img</p>
+<img src="{{user.img}}" alt="image of the user" style="height: 200px">
+
+<p>Name: {{user.name}} {{user.lastName}}</p>
+<p>Username: {{user.username}}</p>
+<p>City: {{user.city}}</p>
+<p>Short Bio: {{user.bio}}</p>
+
+<button><a href="/create-pet/{{user._id}}">Create Pet</a></button>
+<br>
+<br>
+<button><a href="/logout">logout</a></button>
+<button><a href="/edit-profile/{{user._id}}">Edit Profile</a></button>

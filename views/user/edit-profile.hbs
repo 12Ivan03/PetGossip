@@ -1,0 +1,39 @@
+<h1>edit user prof {{foundUser.username}}</h1>
+
+<form action="/edit-profile/{{foundUser._id}}{{userId}}" method="POST">
+    <label for="img">Upload your image:
+        <input type="url" name="img" id="img" value="{{foundUser.img}}">
+    </label>
+    <br>
+    <label for="name"> Name:
+        <input type="text" id="name" name="name" value="{{foundUser.name}}">
+        {{#if errMsg}}
+            <p>{{errMsg}}</p>
+        {{/if}}
+    </label>
+    <br>
+    <label for="lastName">Last name:
+        <input type="text" name="lastName" id="lastName" value="{{foundUser.lastName}}">
+    </label>
+    <br>
+    <label for="city">City:
+        <input type="text" name="city" id="city" value="{{foundUser.city}}">
+        {{#if errMsg}}
+            <p>{{errMsg}}</p>
+        {{/if}}
+    </label>
+    <br>
+    <label for="bio">Short Bio:
+        <input type="text" name="bio" id="bio" value="{{foundUser.bio}}">
+    </label>
+    <br>
+    <label for="email">Email:
+        <input type="text" name="email" id="email" value="{{foundUser.email}}">
+    </label>
+    <br>
+    <label for="username">Username:
+        <input type="text" name="username" id="username" value="{{foundUser.username}}">
+    </label>
+    <br>
+    <button type="submit">Submit</button>
+</form>
