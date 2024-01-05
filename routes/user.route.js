@@ -13,6 +13,7 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
     console.log('session userId =====>', userId._id);
 
     User.findById(userId)
+        .populate("pets")
         .then((user) => {
             console.log('Found user name, profile:', user)
             res.render('user/profile', {user})

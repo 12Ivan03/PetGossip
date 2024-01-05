@@ -15,6 +15,16 @@
 <p>City: {{user.city}}</p>
 <p>Short Bio: {{user.bio}}</p>
 
+<p>User's pets:</p>
+{{#each user.pets}}
+<p>Pet's name: {{name}}</p>
+<p><a href="/pet-profile/{{_id}}"><img src="{{img}}" alt="image of the user" style="height: 100px"></a></p>
+{{/each}}
+
+
+<br>
+<br>
+<button><a href="/view-all-pets">View All Pets</a></button>
 <button><a href="/create-pet/{{user._id}}">Create Pet</a></button>
 <br>
 <br>
