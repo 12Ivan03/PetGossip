@@ -10,7 +10,7 @@ const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.
 
 router.get('/profile', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser
-    console.log('session userId =====>', userId._id);
+    //console.log('session userId =====>', userId._id);
 
     User.findById(userId)
         .populate("pets")

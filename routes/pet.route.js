@@ -62,16 +62,20 @@ router.post('/create-pet/:userId', (req, res, next) => {
 
 router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
     const { petId } = req.params
+    let user = req.session.currentUser._id
 
     Pet.findById(petId)
     .populate("description")
+    .populate("user")
     .then((petInfo) => {
-        res.render('pet/profile',{ petInfo })
+        //console.log("This is the pet profile populated with des and user", petInfo.user._id)
+        //console.log("current User session", user)
+        res.render('pet/profile',{ petInfo, user })
     })
-    
+    .catch((err) => console.log(err))
 })
 
-router.get("/view-all-pets", isLoggedIn, (req, res, next) => {
+router.get("/view-all-pets", (req, res, next) => {
     Pet.find()
     .populate('description')
     .populate('user')
@@ -79,6 +83,38 @@ router.get("/view-all-pets", isLoggedIn, (req, res, next) => {
         console.log(allPets)
         res.render("pet/view-all-pets", { allPets })
     })
+    .catch((err) => console.log(err))
+})
+
+router.post("/pet/:petId/delete", (req, res, next) => {
+    const { petId } = req.params
+    let userId = req.session.currentUser._id
+
+    Pet.findById(petId)
+        .populate('user')
+        .then((foudnPet) => {
+            const petOwnerId = foudnPet.user._id.toString();
+            const currentUserId = userId.toString();
+
+            console.log('The found pet - user - the user/s _id => ', petOwnerId)
+            console.log('This is the session of the current user the id => ', currentUserId )
+            if(petOwnerId === currentUserId) {
+                Pet.findByIdAndDelete(petId)
+                .then(() => {
+                    res.redirect('/profile')
+                })
+            } else {
+                User.findById(userId) 
+                    .populate('pets')
+                    .then((user) => {
+                        // res.redirect('/profile')
+                        console.log('This is the falty user => ', user)
+                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foudnPet.name}. You cannot delete his profile!`})
+                    })
+            }
+            
+        })
+        .catch((err) => console.log(err))
 })
 
 module.exports = router;

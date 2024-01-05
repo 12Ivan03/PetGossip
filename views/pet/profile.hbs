@@ -8,3 +8,7 @@
 <p>Description: {{petInfo.description.text}}</p>
 
 <p>votes: {{petInfo.votes}}</p>
+
+<form action="/pet/{{petInfo._id}}/delete" method="post">
+    <button>Delete Pet</button>
+</form>

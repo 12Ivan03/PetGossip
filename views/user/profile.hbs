@@ -1,5 +1,9 @@
 <h1>User profile</h1>
 
+{{#if errMegDelete}}
+    <p style="color: red">{{errMegDelete}}</p>
+{{/if}}
+
 {{#if user}}
     <p>Hello, {{user.name}} {{user.lastName}}</p>
     <p>Welcome to our PetGossip comunity!</p>

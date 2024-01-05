@@ -8,7 +8,8 @@ const Description = require("./Description.model");
 const userSchema = new Schema(
   {
     img: {
-      type: String
+      type: String,
+      default: '/images/pngwing.com.png',
     },
     username: {
       type: String,
