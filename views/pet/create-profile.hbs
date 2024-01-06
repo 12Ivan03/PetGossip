@@ -1,0 +1,31 @@
+<h1>create pet profile</h1>
+
+<form action="/create-pet/{{userId}}" method="POST">
+
+    <label for="img">Img:
+        <input type="text" name="img" id="img" placeholder="URL">
+    </label>
+    <br>
+    <br>
+    <label for="name">Name:
+        <input type="text" name="name" id="name">
+    </label>
+    <br>
+    <br>
+    <label for="description"> Description:
+        <br>
+        <textarea name="description" id="description" cols="50" rows="5" placeholder="description..."></textarea>
+    </label>
+    <br>
+    <br>
+    <label for="votes">
+        <input type="radio" name="votes" id="votes" value="1">1
+        <input type="radio" name="votes" id="votes" value="2">2
+        <input type="radio" name="votes" id="votes" value="3">3
+        <input type="radio" name="votes" id="votes" value="4">4
+        <input type="radio" name="votes" id="votes" value="5">5
+    </label>
+    <br>
+    <br>
+    <button type="submit">Create</button>
+</form>

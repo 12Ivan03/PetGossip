@@ -11,7 +11,7 @@ const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.
 router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
-    res.render('pet/edit-profile', {userId} )
+    res.render('pet/create-profile', {userId} )
 })
 
 router.post('/create-pet/:userId', (req, res, next) => {
@@ -70,6 +70,7 @@ router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
     .then((petInfo) => {
         //console.log("This is the pet profile populated with des and user", petInfo.user._id)
         //console.log("current User session", user)
+        console.log(' This is the found pet => ', petInfo._id)
         res.render('pet/profile',{ petInfo, user })
     })
     .catch((err) => console.log(err))
@@ -113,6 +114,54 @@ router.post("/pet/:petId/delete", (req, res, next) => {
                     })
             }
             
+        })
+        .catch((err) => console.log(err))
+})
+
+router.get("/edit-pet/:petId", (req, res, next) => {
+    const { petId } = req.params
+    let userId = req.session.currentUser._id
+
+    Pet.findById(petId)
+        .populate('user')
+        .populate('description')
+        .then((foundPet) => {
+            console.log('this is the Id of the user /owner',foundPet.user._id.toString())
+            console.log('this is the current id of the session', userId.toString() )
+
+            const petOwnerId = foundPet.user._id.toString();
+            const currentUserId = userId.toString();
+
+            if(petOwnerId === currentUserId) {
+                res.render('pet/edit-profile', { foundPet })
+            } else {
+                User.findById(userId) 
+                    .populate('pets')
+                    .then((user) => {
+                        console.log('This is the falty user => ', user)
+                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot edit his/her profile!`})
+                    })
+            }
+            
+        })
+        .catch((err) => console.log(err))
+})
+
+router.post("/edit-pet-profile/:petId", (req, res, next) => {
+    const { petId } = req.params
+    const { name, img, votes, description } = req.body
+    
+
+    Pet.findByIdAndUpdate(petId, {name, img, votes})
+        .populate('description')
+        .then((foundPet) => {
+            console.log('this is the found pet and the description Id', foundPet.description._id)
+            Description.findByIdAndUpdate(foundPet.description._id, { text: description }, {new: true})
+                .then((updatedDes) => {
+                    console.log('the updated description', updatedDes)
+                    res.redirect(`/pet-profile/${petId}`)
+                })
+                .catch((err) => console.log(err))
         })
         .catch((err) => console.log(err))
 })
