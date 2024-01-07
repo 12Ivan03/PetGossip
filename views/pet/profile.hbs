@@ -16,9 +16,15 @@
 </form>
 
 <p>Comments:</p>
+{{#if errMsgCommentDel}}
+    <p style="color: red">{{errMsgCommentDel}}</p>
+{{/if}}
 {{#each petInfo.comment}}
     <p>{{text}}</p>
     <p>commented by {{user.name}}</p>
+    <form action="/comment/delete/{{_id}}" method="post">
+        <button type="submit">Delete Comment</button>
+    </form>
     <br>
 {{/each}}
 

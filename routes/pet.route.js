@@ -173,33 +173,4 @@ router.post("/edit-pet-profile/:petId", (req, res, next) => {
         .catch((err) => console.log(err))
 })
 
-router.post('/comment/:petId/user/:userId/description/:descriptionId', isLoggedIn, (req, res, next) => {
-    const { petId, userId, descriptionId } = req.params 
-    const { text } = req.body
-    let createdComment
-
-    Comment.create({ text, user: userId, pet: petId, description: descriptionId })
-        .then((comment) => {
-            console.log("this is the created comment", comment)
-            return createdComment = comment
-        })
-        .then(() => {
-            return Pet.findByIdAndUpdate(petId, { $push: { comment: createdComment._id } })
-        })
-        .then((petUpdate) => {
-            console.log('this sould be the updated Pet ===>', petUpdate )
-            return Description.findByIdAndUpdate(descriptionId, { $push: {comments: createdComment._id}})
-        })
-        .then((descriptionUpdate) => {
-            console.log('This is hte description UPDATE =>', descriptionUpdate )
-            return User.findByIdAndUpdate(userId, {$push: { comments: createdComment._id } })
-        })
-        .then(() => {
-            res.redirect(`/pet-profile/${petId}`)
-        })
-        .catch((err) => console.log(err))
-        
-    
-})
-
 module.exports = router;
