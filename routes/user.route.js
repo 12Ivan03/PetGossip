@@ -14,6 +14,7 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
 
     User.findById(userId)
         .populate("pets")
+        .populate("comments")
         .then((user) => {
             console.log('Found user name, profile:', user)
             res.render('user/profile', {user})

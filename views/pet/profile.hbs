@@ -7,6 +7,21 @@
 
 <p>Description: {{petInfo.description.text}}</p>
 
+<form action="/comment/{{petInfo._id}}/user/{{user}}/description/{{petInfo.description._id}}" method="POST">
+    <label for="text">
+        <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
+    </label>
+    <br>
+    <button type="submit">Comment</button>
+</form>
+
+<p>Comments:</p>
+{{#each petInfo.comment}}
+    <p>{{text}}</p>
+    <p>commented by {{user.name}}</p>
+    <br>
+{{/each}}
+
 <p>votes: {{petInfo.votes}}</p>
 <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
 <br>

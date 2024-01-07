@@ -22,10 +22,10 @@ const petSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Description"
     },
-    // comment: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Comment"
-    // },
+    comment: [{
+        type: Schema.Types.ObjectId,
+        ref: "Comment"
+    }],
     votes: {
         type: Number
     },
