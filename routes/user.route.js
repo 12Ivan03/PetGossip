@@ -15,7 +15,7 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
         .populate("pets")
         .populate("comments")
         .then((user) => {
-            res.render('user/profile', {user})
+            res.render('user/profile', {user, inSession: true})
         })
         .catch((err) => console.log(err))
 })
@@ -25,7 +25,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
 
     User.findById(userId)
         .then((foundUser) => {
-            res.render('user/edit-profile', { foundUser })
+            res.render('user/edit-profile', { foundUser, inSession: true })
         })
         .catch((err) => console.log(err))
     
@@ -93,7 +93,7 @@ router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
             .populate("pets")
             .populate("comments")
             .then((user) => {
-                res.render('user/profile', {user, errMsgDeleteProf:  `You cannot delete the profile of ${user.name} `})
+                res.render('user/profile', {user, errMsgDeleteProf:  `You cannot delete the profile of ${user.name} `, inSession: true})
             })
             .catch((err) => console.log(err));
     }

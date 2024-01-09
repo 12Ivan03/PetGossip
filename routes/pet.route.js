@@ -11,7 +11,7 @@ const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.
 router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
-    res.render('pet/create-profile', {userId} )
+    res.render('pet/create-profile', {userId, inSession: true} )
 })
 
 router.post('/create-pet/:userId', (req, res, next) => {
@@ -73,7 +73,7 @@ router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
             // console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
             // console.log("current User session", user)
             // console.log(' This is the found pet description => ', petInfo.description._id)
-            res.render('pet/profile',{ petInfo, user })
+            res.render('pet/profile',{ petInfo, user , inSession: true})
         })
         .catch((err) => console.log(err))
 })
@@ -84,7 +84,14 @@ router.get("/view-all-pets", (req, res, next) => {
     .populate('user')
     .then((allPets) => {
         // console.log(allPets)
-        res.render("pet/view-all-pets", { allPets })
+        const inSession = req.session.currentUser
+
+        if(inSession){
+            res.render("pet/view-all-pets", { allPets, inSession: true} );
+        } else {
+            res.render("pet/view-all-pets", { allPets, inSession: false} );
+        };
+        // res.render("pet/view-all-pets", { allPets, inSession: true })
     })
     .catch((err) => console.log(err))
 })
@@ -128,7 +135,7 @@ router.post("/pet/:petId/delete", (req, res, next) => {
                     .populate('pets')
                     .then((user) => {
                         // console.log('This is the falty user => ', user)
-                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foudnPet.name}. You cannot delete his profile!`})
+                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foudnPet.name}. You cannot delete his profile!`, inSession: true})
                     })
             }
             
@@ -151,13 +158,13 @@ router.get("/edit-pet/:petId", (req, res, next) => {
             const currentUserId = userId.toString();
 
             if(petOwnerId === currentUserId) {
-                res.render('pet/edit-profile', { foundPet })
+                res.render('pet/edit-profile', { foundPet, inSession: true })
             } else {
                 User.findById(userId) 
                     .populate('pets')
                     .then((user) => {
                         //console.log('This is the falty user => ', user)
-                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot edit his/her profile!`})
+                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot edit his/her profile!`, inSession: true})
                     })
             }
             

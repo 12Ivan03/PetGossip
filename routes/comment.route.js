@@ -78,7 +78,7 @@ router.post('/comment/delete/:commentId', (req, res, next) => {
                         },
                     })
                     .then((petInfo) => {
-                        res.render('pet/profile',{ petInfo, userId, errMsgCommentDel: "You cannot delete a comment you have not created!" })
+                        res.render('pet/profile',{ petInfo, userId, errMsgCommentDel: "You cannot delete a comment you have not created!", inSession: true })
                     })
                     .catch((err) => console.log(err))
             }
@@ -98,7 +98,7 @@ router.get('/edit-comment/:commentId', (req, res, next) => {
             .then((foundComment) => {
 
                 if(foundComment.user._id.toString() === user.toString()){
-                    res.render('comment/edit-comment', { foundComment })
+                    res.render('comment/edit-comment', { foundComment, inSession: true })
 
                 } else {
                     const petId = foundComment.pet._id
@@ -112,7 +112,7 @@ router.get('/edit-comment/:commentId', (req, res, next) => {
                             }
                         })
                         .then((petInfo) => {
-                            res.render('pet/profile',{ errMsgCommentDel: "You cannot edit comment you have not created", petInfo, user })
+                            res.render('pet/profile',{ errMsgCommentDel: "You cannot edit comment you have not created", petInfo, user, inSession: true })
                         })
                         .catch((err) => console.log(err));
                 }

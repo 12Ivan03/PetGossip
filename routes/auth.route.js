@@ -18,7 +18,7 @@ router.post("/signup", (req, res, next) => {
     // console.log("this is the body", req.body);
 
     if(username === '' || password === '' || email === ''){
-        res.render('auth/signup', {errMsg: "Please fill in all the required spaces"})
+        res.render('auth/signup', {errMsg: "Please fill in all the required spaces", inSession: false})
         return;
     }
 
