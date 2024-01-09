@@ -14,10 +14,10 @@ const commentSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Description"
     },
-    // pet: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Pet"
-    // },
+    pet: {
+        type: Schema.Types.ObjectId,
+        ref: "Pet"
+    },
     user: { 
         type: Schema.Types.ObjectId,
         ref: "User"

@@ -32,5 +32,7 @@
 <button><a href="/create-pet/{{user._id}}">Create Pet</a></button>
 <br>
 <br>
-<button><a href="/logout">logout</a></button>
-<button><a href="/edit-profile/{{user._id}}">Edit Profile</a></button>
+<button><a href="/edit-profile/{{user._id}}">Edit {{user.name}}'s Profile</a></button>
+<form action="/profile/delete/{{user._id}}" method="POST">
+    <button type="submit">Delete {{user.name}}'s Profile</button>
+</form>

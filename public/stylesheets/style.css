@@ -1,12 +1,24 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.nav-bar {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: tan;
 }
 
-a {
-  color: #00b7ff;
+.nav-bar-list {
+  display: flex;
 }
 
-h1 {
-  color: 15px;
+.nav-bar-list-items {
+  margin: 0.5rem 0.5rem;
+  list-style: none;
+}
+
+.nav-bar-list-items a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-bar-list-items a:hover {
+  color: rgba(0, 0, 0, 0.638);
+  cursor: pointer;
 }

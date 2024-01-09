@@ -7,18 +7,24 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>{{appTitle}}</title>
       <link rel="stylesheet" href="/stylesheets/style.css" />
+      <link rel="stylesheet" href="/stylesheets/reset.style.css">
    </head>
 
-   <nav>
-      <ul>
-         <li><a href="/signup">Sing Up</a></li>
-         <li><a href="/login">Login</a></li>
-         <li><a href="/profile">prof</a></li>
-         <li><a href="/view-all-pets">View All Pets</a></li>
-      </ul>
-   </nav>
+   <body class="{{bgPage}}">
 
-   <body>
+      <nav class="nav-bar">
+         <ul class="nav-bar-list">
+            <li class="nav-bar-list-items"><a href="/">Home</a></li>
+            <li class="nav-bar-list-items"><a href="/view-all-pets">View All Pets</a></li>
+            {{#if inSession}}
+            <li class="nav-bar-list-items"><a href="/profile">Profile</a></li>
+            <li class="nav-bar-list-items"><a href="/logout">logout</a></li>
+            {{else}}
+            <li class="nav-bar-list-items"><a href="/signup">Sing Up</a></li>
+            <li class="nav-bar-list-items"><a href="/login">Login</a></li>
+            {{/if}}
+         </ul>
+      </nav>
 
       {{{body}}}
 

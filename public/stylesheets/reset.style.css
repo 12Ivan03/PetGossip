@@ -1,0 +1,15 @@
+body,
+div,
+p,
+h1,
+h2,
+h3,
+ul,
+ol,
+li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 16px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}

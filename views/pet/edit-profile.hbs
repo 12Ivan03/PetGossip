@@ -1,23 +1,27 @@
-<h1>create pet profile</h1>
+<h1>Edit the profile of {{foundPet.name}}</h1>
 
-<form action="/create-pet/{{userId}}" method="POST">
-
-    <label for="img">Img:
-        <input type="text" name="img" id="img" placeholder="URL">
+<form action="/edit-pet-profile/{{foundPet._id}}" method="post">
+    <label for="name"> Pet's name:
+        <input type="text" id="name" name="name" value="{{foundPet.name}}">
     </label>
     <br>
     <br>
-    <label for="name">Name:
-        <input type="text" name="name" id="name">
+    <label for="img">new Img:
+        <input type="text" name="img" id="img" value="{{foundPet.img}}">
     </label>
     <br>
     <br>
+    <img src="{{foundPet.img}}" alt="image of the pet" style="height: 200px">
+
+    <p>I call my owner: bark-bark, but his human name is {{foundPet.user.name}} {{foundPet.user.lastName}}</p>
+
     <label for="description"> Description:
         <br>
-        <textarea name="description" id="description" cols="50" rows="5" placeholder="description..."></textarea>
+        <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description.text}}</textarea>
     </label>
     <br>
     <br>
+    <p>votes: {{foundPet.votes}}</p>
     <label for="votes">
         <input type="radio" name="votes" id="votes" value="1">1
         <input type="radio" name="votes" id="votes" value="2">2
@@ -27,5 +31,9 @@
     </label>
     <br>
     <br>
-    <button type="submit">Create</button>
-</form>
+    <button type="submit">Edit Pet</button>
+    </form>
+    <br>
+    <form action="/pet/{{foundPet._id}}/delete" method="post">
+        <button>Delete Pet</button>
+    </form>
