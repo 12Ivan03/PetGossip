@@ -16,18 +16,18 @@ router.post('/comment/:petId/user/:userId/description/:descriptionId', isLoggedI
     
         Comment.create({ text, user: userId, pet: petId, description: descriptionId })
             .then((comment) => {
-                console.log("this is the created comment", comment)
+                // console.log("this is the created comment", comment)
                 return createdComment = comment
             })
             .then(() => {
                 return Pet.findByIdAndUpdate(petId, { $push: { comment: createdComment._id } })
             })
             .then((petUpdate) => {
-                console.log('this sould be the updated Pet ===>', petUpdate )
+                // console.log('this sould be the updated Pet ===>', petUpdate )
                 return Description.findByIdAndUpdate(descriptionId, { $push: {comments: createdComment._id}})
             })
             .then((descriptionUpdate) => {
-                console.log('This is hte description UPDATE =>', descriptionUpdate )
+                // console.log('This is hte description UPDATE =>', descriptionUpdate )
                 return User.findByIdAndUpdate(userId, {$push: { comments: createdComment._id } })
             })
             .then(() => {
@@ -41,16 +41,17 @@ router.post('/comment/:petId/user/:userId/description/:descriptionId', isLoggedI
 router.post('/comment/delete/:commentId', (req, res, next) => {
     const { commentId } = req.params
     let userId = req.session.currentUser._id
-    console.log('thii is the current user in session',userId)
+    // console.log('thii is the current user in session',userId)
 
     Comment.findById(commentId)
         .populate('user')
         .populate('pet')
         .then((foundComment) => {
-            console.log("this is the found comment-user-id ===> ", foundComment.user._id.toString() )
-            console.log("this is the found comment-pet-id that i need to extract ;P ===> ", foundComment.pet._id.toString() )
+            // console.log("this is the found comment-user-id ===> ", foundComment.user._id.toString() )
+            // console.log("this is the found comment-pet-id that i need to extract ;P ===> ", foundComment.pet._id.toString() )
 
-            let { user, description, pet} = foundComment
+            let { user , description, pet } = foundComment
+            // console.log("this is the let of the USER ===> ", user )
 
             if(foundComment.user._id.toString() === userId.toString()) {
                 Comment.findByIdAndDelete(commentId)
@@ -68,8 +69,8 @@ router.post('/comment/delete/:commentId', (req, res, next) => {
                     .catch((err) => console.log(err))
             } else {
                 Pet.findById(pet) 
-                    .populate('user')
-                    .populate('description')
+                    .populate("description")
+                    .populate("user")
                     .populate({
                         path: "comment",
                         populate: {
@@ -77,32 +78,58 @@ router.post('/comment/delete/:commentId', (req, res, next) => {
                         },
                     })
                     .then((petInfo) => {
-                        //console.log('This is the falty user => ', user)
-                        //res.render('user/profile', {user, errMegDelete: `You're not allowed to delete this comment`})
-                        res.render('pet/profile',{ petInfo, user, errMsgCommentDel: "You cannot delete a comment you have not created!" })
+                        res.render('pet/profile',{ petInfo, userId, errMsgCommentDel: "You cannot delete a comment you have not created!" })
                     })
                     .catch((err) => console.log(err))
             }
         })
+        .catch((err) => console.log(err));
 
 })
 
-module.exports = router;
+router.get('/edit-comment/:commentId', (req, res, next) => {
+    
+    const { commentId } = req.params;
+    let user = req.session.currentUser._id;
 
-// Pet.findById(petId)
-// .populate("description")
-// .populate("user")
-// .populate({
-//     path: "comment",
-//     populate: {
-//         path: "user",
-//     },
-// })
-// .then((petInfo) => {
-//     console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
-//     // console.log("current User session", user)
-//     // console.log(' This is the found pet => ', petInfo)
-//     // console.log(' This is the found pet description => ', petInfo.description._id)
-//     res.render('pet/profile',{ petInfo, user })
-// })
-// .catch((err) => console.log(err))
+    Comment.findById(commentId)
+            .populate('user')
+            .populate('pet')
+            .then((foundComment) => {
+
+                if(foundComment.user._id.toString() === user.toString()){
+                    res.render('comment/edit-comment', { foundComment })
+
+                } else {
+                    const petId = foundComment.pet._id
+                    Pet.findById(petId)
+                        .populate('description')
+                        .populate('user')
+                        .populate({
+                            path: "comment",
+                            populate: {
+                                path: "user",
+                            }
+                        })
+                        .then((petInfo) => {
+                            res.render('pet/profile',{ errMsgCommentDel: "You cannot edit comment you have not created", petInfo, user })
+                        })
+                        .catch((err) => console.log(err));
+                }
+
+            })
+            .catch((err) => console.log(err));
+       
+})
+
+router.post('/comment-save/:commentId/pet/:petId', (req, res, next) => {
+    const {commentId, petId } = req.params
+    
+    Comment.findByIdAndUpdate(commentId, req.body, {new: true})
+        .then(() => {
+            res.redirect(`/pet-profile/${petId}`)
+        })
+        .catch((err) => console.log(err));
+})
+
+module.exports = router;

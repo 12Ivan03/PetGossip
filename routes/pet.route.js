@@ -16,18 +16,17 @@ router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
 
 router.post('/create-pet/:userId', (req, res, next) => {
     const { userId } = req.params
-    //const user = userId
-    console.log('post-pet the USER ID',userId)
+    // console.log('post-pet the USER ID',userId)
   
     const { img, name, description, votes } = req.body;
-    console.log('req.body',req.body)
+    // console.log('req.body',req.body)
 
     let createdPet; // store info from the created pet
 
     Pet.create({img, name, user: userId, votes})
         // create pet
         .then((createdLocalPet) => { 
-            console.log("created new Pet line 30 => ", createdLocalPet)
+            // console.log("created new Pet line 30 => ", createdLocalPet)
 
             // pass the created pet to the hier scope to be asscessed later. 
             createdPet = createdLocalPet;
@@ -40,20 +39,17 @@ router.post('/create-pet/:userId', (req, res, next) => {
             return newDescription.save();
         })
         .then((passDescription) => {
-            console.log('===> This is the NEW Description created after the pet ===>', passDescription)
-            console.log('This is the createdPet git scope variable --------->', createdPet)
+            // console.log('===> This is the NEW Description created after the pet ===>', passDescription)
+            // console.log('This is the createdPet git scope variable --------->', createdPet)
             return Pet.findByIdAndUpdate(createdPet._id, { description: passDescription._id }, { new: true })
         })
         .then((passPet) => {
-            console.log("this is pet updated info description to update the user  =====>", passPet)
+            // console.log("this is pet updated info description to update the user  =====>", passPet)
             return User.findByIdAndUpdate(userId, { $push: { pets: passPet._id }}, {new: true} )
         })
-        .then(() => { 
-            return Pet.findById(createdPet._id).populate('description')
-        })
-        .then((petInfo) => {
-            console.log('this should contian the Pet info', petInfo)
-            res.render('pet/profile', { petInfo })
+       
+        .then(() => {
+            res.redirect(`/pet-profile/${createdPet._id}`)
         })
         .catch((err) => {
             console.log(err)
@@ -74,9 +70,8 @@ router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
             },
         })
         .then((petInfo) => {
-            console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
+            // console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
             // console.log("current User session", user)
-            // console.log(' This is the found pet => ', petInfo)
             // console.log(' This is the found pet description => ', petInfo.description._id)
             res.render('pet/profile',{ petInfo, user })
         })
@@ -88,7 +83,7 @@ router.get("/view-all-pets", (req, res, next) => {
     .populate('description')
     .populate('user')
     .then((allPets) => {
-        console.log(allPets)
+        // console.log(allPets)
         res.render("pet/view-all-pets", { allPets })
     })
     .catch((err) => console.log(err))
@@ -100,14 +95,31 @@ router.post("/pet/:petId/delete", (req, res, next) => {
 
     Pet.findById(petId)
         .populate('user')
-        .then((foudnPet) => {
-            const petOwnerId = foudnPet.user._id.toString();
-            const currentUserId = userId.toString();
+        .populate('description')
+        .populate('comment')
+        .then((foundPet) => {
 
-            console.log('The found pet - user - the user/s _id => ', petOwnerId)
-            console.log('This is the session of the current user the id => ', currentUserId )
-            if(petOwnerId === currentUserId) {
+            let { user, description, comment } = foundPet
+
+            const petOwnerId = foundPet.user._id.toString();
+            const currentUserId = userId.toString();
+            //const petDescriptionId = foundPet.description._id.toString()
+            //const petComments = foundPet.comment._id.toString()
+
+            //console.log('The found pet - description STRINGED => ', description._id.toString())
+            //console.log('The found pet - user - the user/s _id => ', petOwnerId)
+            //console.log('This is the session of the current user the id => ', currentUserId )
+
+            if (petOwnerId === currentUserId) {
                 Pet.findByIdAndDelete(petId)
+                    .then(() => { 
+                        return Promise.all([
+                            Comment.deleteMany({ _id: { $in: foundPet.comment } }),
+                            User.findByIdAndUpdate(user._id, { $pull: { pets: petId } }),
+                            Description.findByIdAndDelete(description._id.toString()),
+                            // Comment.findByIdAndDelete(comment._id.toString() , { $pull: { pet: petId } }),
+                        ])
+                    })
                 .then(() => {
                     res.redirect('/profile')
                 })
@@ -115,8 +127,7 @@ router.post("/pet/:petId/delete", (req, res, next) => {
                 User.findById(userId) 
                     .populate('pets')
                     .then((user) => {
-                        // res.redirect('/profile')
-                        console.log('This is the falty user => ', user)
+                        // console.log('This is the falty user => ', user)
                         res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foudnPet.name}. You cannot delete his profile!`})
                     })
             }
