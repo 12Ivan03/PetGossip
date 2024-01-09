@@ -18,7 +18,7 @@ router.post("/signup", (req, res, next) => {
     // console.log("this is the body", req.body);
 
     if(username === '' || password === '' || email === ''){
-        res.render('auth/signup', {errMsg: "Please fill in all the required spaces", inSession: false})
+        res.render('auth/signup', {errMsg: "Please fill in all the required spaces"})
         return;
     }
 
@@ -34,7 +34,7 @@ router.post("/signup", (req, res, next) => {
                 .then(foundUser => {
                     req.session.currentUser = foundUser;
                     // console.log("this is the user's-session", foundUser)
-                    res.render('user/edit-profile', { foundUser })
+                    res.render('user/edit-profile', { foundUser, inSession: true })
                 })
             }
         })
