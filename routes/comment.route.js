@@ -22,11 +22,11 @@ router.post('/comment/:petId/user/:userId/description/:descriptionId', isLoggedI
             .then(() => {
                 return Pet.findByIdAndUpdate(petId, { $push: { comment: createdComment._id } })
             })
-            .then((petUpdate) => {
+            .then(() => {
                 // console.log('this sould be the updated Pet ===>', petUpdate )
                 return Description.findByIdAndUpdate(descriptionId, { $push: {comments: createdComment._id}})
             })
-            .then((descriptionUpdate) => {
+            .then(() => {
                 // console.log('This is hte description UPDATE =>', descriptionUpdate )
                 return User.findByIdAndUpdate(userId, {$push: { comments: createdComment._id } })
             })

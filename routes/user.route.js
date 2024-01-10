@@ -3,6 +3,10 @@ const User = require('../models/User.model.js');
 const Pet = require('../models/Pet.model.js');
 const Description = require('../models/Description.model');
 const Comment = require('../models/Comment.model.js');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const fileUploader = require('../config/cloudinary.config.js')
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
@@ -31,22 +35,46 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
     
 })
 
-router.post('/edit-profile/:userId', isLoggedIn, (req, res, next) => {
+router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (req, res, next) => {
     const { userId } = req.params;
-
-    const { name, lastName, city, bio, img, _id } = req.body;
+    const { name, lastName, city, bio, _id, img } = req.body;
+    // console.log('This is the req.file ===> ', req.file);
 
     if(name === ''|| city === ''){
         const { userId } = req.params;
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
     } 
-    
-    User.findByIdAndUpdate(userId, req.body)
+
+    User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true })
         .then(() => {
             res.redirect("/profile")
         })
-        .catch((err) => console.log(err))
+            .catch((err) => console.log(err))
+
+    // let publicIdOfCloudinary
+
+    // User.findById(userId)
+    //     .then((foundUser) => {
+    //         if (foundUser.img){
+    //             // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
+    //             // OR
+    //             publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
         
+    //         }
+    //         return cloudinary.v2.uploader.destroy(publicIdOfCloudinary, { invalidate: true });     
+    //     })
+    //     .then((whatIsHere) => {
+    //         console.log('whatIsHere ===>', whatIsHere);
+
+    //         return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true });
+    //     })
+    //     .then((updatedUser) => {
+    //         console.log('The updated user =>', updatedUser);
+
+    //         res.redirect("/profile");
+    //     })
+    //     .catch((err) => console.log(err))
+
 })
 
 router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
