@@ -57,7 +57,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
     //     .then((foundUser) => {
     //         if (foundUser.img){
     //             // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
-    //             // OR
+    //
     //             publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
         
     //         }
