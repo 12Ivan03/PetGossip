@@ -135,7 +135,7 @@ router.post("/pet/:petId/delete", (req, res, next) => {
                     .populate('pets')
                     .then((user) => {
                         // console.log('This is the falty user => ', user)
-                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foudnPet.name}. You cannot delete his profile!`, inSession: true})
+                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot delete his profile!`, inSession: true})
                     })
             }
             
