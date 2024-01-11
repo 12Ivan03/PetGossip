@@ -37,7 +37,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
 
 router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (req, res, next) => {
     const { userId } = req.params;
-    const { name, lastName, city, bio, _id, img } = req.body;
+    const { name, lastName, city, bio, _id, existingImage } = req.body;
     // console.log('This is the req.file ===> ', req.file);
 
     if(name === ''|| city === ''){
@@ -45,35 +45,43 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
     } 
 
-    User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true })
-        .then(() => {
-            res.redirect("/profile")
-        })
-            .catch((err) => console.log(err))
+    // let img;
+    //     if (req.file) {
+    //         img = req.file.path;
+    //     } else {
+    //         img = existingImage;
+    //     }
 
-    // let publicIdOfCloudinary
+    // User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true })
+    //     .then(() => {
+    //         res.redirect("/profile")
+    //     })
+    //         .catch((err) => console.log(err))
 
-    // User.findById(userId)
-    //     .then((foundUser) => {
-    //         if (foundUser.img){
-    //             // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
-    //
-    //             publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
+    let publicIdOfCloudinary
+
+    User.findById(userId)
+        .then((foundUser) => {
+            if (foundUser.img){
+                // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
+                publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
+                // console.log('This is the Public_id', publicIdOfCloudinary)
         
-    //         }
-    //         return cloudinary.v2.uploader.destroy(publicIdOfCloudinary, { invalidate: true });     
-    //     })
-    //     .then((whatIsHere) => {
-    //         console.log('whatIsHere ===>', whatIsHere);
+            }
+            return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true })
+               
+        })
+        .then((whatIsHere) => {
+            console.log('whatIsHere ===>', whatIsHere);
 
-    //         return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true });
-    //     })
-    //     .then((updatedUser) => {
-    //         console.log('The updated user =>', updatedUser);
+            return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true });
+        })
+        .then((updatedUser) => {
+            console.log('The updated user =>', updatedUser);
 
-    //         res.redirect("/profile");
-    //     })
-    //     .catch((err) => console.log(err))
+            res.redirect("/profile");
+        })
+        .catch((err) => console.log(err))
 
 })
 

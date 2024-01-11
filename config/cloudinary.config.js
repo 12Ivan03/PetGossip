@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    allowed_formats: ['jpg', 'png', 'GIF', 'TIFF', 'PSD', 'PDF', 'EPS', 'AI'],
+    allowed_formats: ['jpg', 'png', 'gif', 'tiff', 'psd', 'pdf', 'eps'],
     folder: 'Pet-Gossip-User-Img'
     // resource_type: 'raw' => this is in case you want to upload other type of files, not just images
   }
