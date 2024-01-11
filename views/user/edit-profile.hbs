@@ -2,7 +2,8 @@
 
 <form action="/edit-profile/{{foundUser._id}}{{userId}}" method="POST" enctype="multipart/form-data">
     <label for="img">Image:
-        <input type="file" name="img" id="img" value="{{foundUser.img}}" />
+        <input type="file" name="img" id="img">
+        <input type="text" name="existingImage" id="img" hidden value="{{foundUser.img}}">
     </label>
     {{!-- <label for="img">Upload your image:
         <input type="text" name="img" id="img" value="{{foundUser.img}}">

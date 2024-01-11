@@ -1,7 +1,9 @@
 .nav-bar {
   display: flex;
-  flex-direction: row-reverse;
-  background-color: tan;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d2b48c;
+  height: 5rem;
 }
 
 .nav-bar-list {
@@ -22,4 +24,132 @@
 .nav-bar-list-items a:hover {
   color: rgba(0, 0, 0, 0.638);
   cursor: pointer;
+}
+
+.parallelogram {
+  position: absolute;
+  background-color: rgb(237, 253, 240);
+  height: 5rem;
+  width: 11.3rem;
+  transform: skew(-25deg);
+}
+
+.logo {
+  background-color: rgb(237, 253, 240);
+  height: 5rem;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.logo-img {
+  height: 4.5rem;
+  margin-left: 3rem;
+}
+
+/* web-title-phrase */
+
+.web-title-phrase {
+  background-image: url(../images/isolated-on-blue-background.jpeg);
+  background-position: top;
+  background-position-x: center;
+  background-repeat: none;
+  height: 24rem;
+}
+
+.text-web-title-phrase {
+  height: 24rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 8rem;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.phrase {
+  text-align: center;
+}
+
+/* web-description */
+
+.web-description {
+  display: flex;
+  flex-direction: row;
+  background-image: linear-gradient(#d2b48c, #ffffff);
+  height: 35rem;
+}
+
+.img-web-description {
+  background-image: url(../images/petgossip-end-logo-transparent.png);
+  background-repeat: no-repeat;
+  background-size: 20rem 20rem;
+  background-position: center center;
+  height: 30rem;
+  width: 50vw;
+}
+
+.description-info {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-right: 6rem;
+  text-align: center;
+}
+
+/* .description-info-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .description-info-text p {
+  text-align: center;
+} */
+
+.description-info-text h2 {
+  margin-bottom: 4rem ;
+  font-size: xx-large;
+}
+
+.web-description-extra-info {
+  margin-top: 5rem;
+}
+
+.btn-web-description-extra-info {
+  height: 3rem;
+  width: 20rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: rgb(56, 100, 100);
+  color: white;
+}
+
+/* profilesPet */
+
+.profilesPet {
+  overflow-y: scroll;
+  display: flex;
+}
+
+.profilesPet-container {
+  margin-right: 2rem;
+}
+
+.profilesPet-img  {
+  height: 8rem;
+  width: 8rem;
+  margin-left: 3rem;
+  border-radius: 4rem;
+}
+
+.profilesPet-name {
+  margin-left: 3rem;
 }

@@ -1,5 +1,42 @@
-<h1>PegGossip</h1>
+
+<div class="web-title-phrase">
+    <div class="text-web-title-phrase">
+        <h1 class="title">PetGossip</h1>
+        <p class="phrase">Whether it's a question about their health, behavior, or simply showcasing their cuteness, Gossip Pets is the go-to platform.</p>
+    </div>
+</div>
+
+<div class="web-description">
+    <div class="img-web-description">
+        
+    </div>
+    <div class="description-info">
+        <div class="description-info-text">
+            <h2>WHAT IS PET GOSSIP?</h2>
+            <p>Welcome to Gossip Pets, the online hub where your furry, feathery, or scaly friends take the spotlight! 
+                Here, it's all about your pet - their quirks, health concerns, and the adorable chaos they bring into your life. 
+                <br>
+                <br>
+                Create personalized profiles for your beloved companions and connect with a passionate pet community. Share your experiences, seek advice, and celebrate the uniqueness of your pet pals. 
+                <br>
+                <br>
+                Whether it's a question about their health, behavior, or simply showcasing their cuteness, Gossip Pets is the go-to platform.
+            </p>
+        </div>
+        <div class="web-description-extra-info">
+            <a href="/info"><button class="btn-web-description-extra-info">Learn more about our community</button></a>
+        </div>
+    </div>
+</div>
 <br><br>
+<div class="profilesPet">
+    {{#each foundPets}}
+        <div class="profilesPet-container">
+            <img class="profilesPet-img" src="{{img}}" alt="Pet's img">
+            <p class="profilesPet-name">{{name}}</p>
+        </div>
+    {{/each}}
+</div>
 <p>working profiles</p>
 <p>username: qwqw or zxzx</p>
 <p>password: qwqw or zxzx</p>

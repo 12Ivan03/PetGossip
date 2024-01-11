@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Pet = require('../models/Pet.model.js');
 
 const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
 
@@ -8,11 +9,28 @@ router.get("/", (req, res, next) => {
   const inSession = req.session.currentUser
 
   if(inSession){
-    res.render("index", { bgPage: "bg-page", inSession: true} );
+    Pet.find()
+      .then((foundPets) => {
+        res.render("index", { bgPage: "bg-page", inSession: true, foundPets} );
+      })
   } else {
-    res.render("index", { bgPage: "bg-page", inSession: false} );
+    Pet.find()
+      .then((foundPets) => {
+        res.render("index", { bgPage: "bg-page", inSession: false, foundPets} );
+      })
   };
 
 });
+
+router.get("/info", (req, res, next) => {
+  const inSession = req.session.currentUser
+
+  if(inSession){
+    res.render("info", { inSession: true });
+  } else {
+    res.render("info", { inSession: false });
+  };
+
+})
 
 module.exports = router;
