@@ -51,7 +51,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
     //     } else {
     //         img = existingImage;
     //     }
-
+    
     // User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true })
     //     .then(() => {
     //         res.redirect("/profile")
@@ -69,7 +69,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
         
             }
             return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true })
-               
+
         })
         .then((whatIsHere) => {
             console.log('whatIsHere ===>', whatIsHere);
