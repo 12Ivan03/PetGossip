@@ -1,13 +1,14 @@
 <h1>Edit the profile of {{foundPet.name}}</h1>
 
-<form action="/edit-pet-profile/{{foundPet._id}}" method="post">
+<form action="/edit-pet-profile/{{foundPet._id}}" method="post" enctype="multipart/form-data">
     <label for="name"> Pet's name:
         <input type="text" id="name" name="name" value="{{foundPet.name}}">
     </label>
     <br>
     <br>
     <label for="img">new Img:
-        <input type="text" name="img" id="img" value="{{foundPet.img}}">
+        <input type="file" name="img" id="img"/>
+        <input type="text" name="img" id="img" hidden value="{{foundPet.img}}">
     </label>
     <br>
     <br>

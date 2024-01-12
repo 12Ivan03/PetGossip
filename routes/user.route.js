@@ -45,40 +45,29 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
     } 
 
-    // let img;
-    //     if (req.file) {
-    //         img = req.file.path;
-    //     } else {
-    //         img = existingImage;
-    //     }
+    let img;
     
-    // User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true })
-    //     .then(() => {
-    //         res.redirect("/profile")
-    //     })
-    //         .catch((err) => console.log(err))
+    if (req.file) {
+        img = req.file.path;
+    } else {
+        img = existingImage;
+    }
 
     let publicIdOfCloudinary
 
     User.findById(userId)
         .then((foundUser) => {
-            if (foundUser.img){
-                // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
-                publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
-                // console.log('This is the Public_id', publicIdOfCloudinary)
-        
-            }
-            return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true })
-
+                if (foundUser.img){
+                    publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
+                    return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+                } else {
+                    next()
+                }       
         })
-        .then((whatIsHere) => {
-            console.log('whatIsHere ===>', whatIsHere);
-
-            return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true });
+        .then(() => {
+            return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true });
         })
-        .then((updatedUser) => {
-            console.log('The updated user =>', updatedUser);
-
+        .then(() => {
             res.redirect("/profile");
         })
         .catch((err) => console.log(err))

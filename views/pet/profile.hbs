@@ -3,6 +3,8 @@
 <p>Pet's name: {{petInfo.name}}</p>
 <img src="{{petInfo.img}}" alt="image of the pet" style="height: 200px">
 
+<p>Votes: {{petInfo.votes}}</p>
+
 <p>I call my owner: bark-bark, but his human name is {{petInfo.user.name}} {{petInfo.user.lastName}}</p>
 
 <p>Description: {{petInfo.description.text}}</p>
@@ -33,7 +35,6 @@
     <br>
 {{/each}}
 
-<p>votes: {{petInfo.votes}}</p>
 <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
 <br>
 <br>

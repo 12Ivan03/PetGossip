@@ -30,6 +30,13 @@
 </div>
 <br><br>
 <div class="profilesPet">
+    <div class="profilesPet-container profilesPet-view-all">
+        <a href="/view-all-pets">
+            <div class="profilesPet-img view-all-shape">
+                <p class="view-all-shape-text">View All Pets</p>
+            </div>
+        </a>
+    </div>
     {{#each foundPets}}
         <div class="profilesPet-container">
             <img class="profilesPet-img" src="{{img}}" alt="Pet's img">
@@ -37,6 +44,82 @@
         </div>
     {{/each}}
 </div>
-<p>working profiles</p>
+<br><br>
+
+<div class="white-horizontal-img">
+
+</div>
+
+<div class="singup-login-profile-logout-btn-container">
+    {{#if inSession}}
+        <a href="/profile"><div class="btn-container btn-web-description-extra-info">
+            <p>Profile</p>
+        </div></a>
+
+        <a href="/logout"><div class="btn-container btn-web-description-extra-info">
+            <p>Logout</p>
+        </div></a>
+    {{else}}
+        <a href="/login"><div class="btn-container btn-web-description-extra-info">
+            <p>Login</p>
+        </div></a>
+
+        <a href="/signup"><div class="btn-container btn-web-description-extra-info">
+            <p>Sing Up</p>
+        </div></a>   
+    {{/if}}
+</div>
+
+<footer class="footer">
+
+    <div class="footer-background-color-logo">
+        <img class="footer-logo-image" src="/images/petgossip-logo-black-transparent.png" alt="">
+        <div class="footer-parallelogram">
+        </div>
+        <div class="footer-square">
+        </div>
+    </div>
+
+    <div class="footer-text">
+         <ul class="Websites-list footer-text-ul">
+            <li class="first-li-child-footer-text">Resorces made this project possible</li>
+            <li><a href="https://www.google.com/">Google</a></li>
+            <li><a href="https://cloudinary.com/documentation" target="_blank">Cloudinary.com</a></li>
+            <li><a href="https://stock.adobe.com/" target="_blank">Stock Adobe</a></li>
+            <li><a href="https://www.freepik.com/" target="_blank">Freepik.com</a></li>
+            <li><a href="https://www.shutterstock.com/" target="_blank">Shutterstock.com</a></li>
+            <li><a href="www.colormatters.com" target="_blank">Colormatters.com</a></li>
+            <li><a href="https://github.com/" target="_blank">Git Hub</a></li>
+            <li><a href="https://www.pngwing.com/" target="_blank">Pngwing.com</a></li>
+        </ul>
+        
+        <ul class="social-media footer-text-ul">
+            <li class="first-li-child-footer-text">Follow Us:</li>
+            <li><img src="/images/facebook.png" alt="">Facebook</li>
+            <li><img src="/images/instagram.png" alt="">Instagram</li>
+            <li><img src="/images/Twitter.png" alt="">Twiter</li>
+            <li><img src="/images/linkedIn.png" alt="">Linkedin</li> 
+        </ul>
+
+        <ul class="about-us footer-text-ul">
+            <li class="first-li-child-footer-text">About Us:</li>
+            <li>link to the description text </li>
+            <li>View All Pets</li>
+        </ul>
+
+        <ul class="contacts footer-text-ul">
+            <li class="first-li-child-footer-text">Contact Us:</li>
+            <li>Phone:</li>
+            <li>Email:</li>
+            <li>Write us dirrectly:</li>
+        </ul>
+    </div>
+
+</footer>
+
+<div class="black-footer">
+    <p>Created by: Vijay &amp; Ivan</p>
+</div>
+{{!-- <p>working profiles</p>
 <p>username: qwqw or zxzx</p>
-<p>password: qwqw or zxzx</p>
+<p>password: qwqw or zxzx</p> --}}
