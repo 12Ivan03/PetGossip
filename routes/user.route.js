@@ -41,7 +41,6 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
     // console.log('This is the req.file ===> ', req.file);
 
     if(name === ''|| city === ''){
-        const { userId } = req.params;
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
     } 
 
@@ -61,7 +60,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
                     publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
                     return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
                 } else {
-                    next()
+                    return Promise.resolve();
                 }       
         })
         .then(() => {
@@ -75,10 +74,9 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
 })
 
 router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
-    const { userId } = req.params
-    const currentUserInSession = req.session.currentUser._id
-    //console.log('This is the current user insession => ', req.session.currentUser)
-
+    const { userId } = req.params;
+    const currentUserInSession = req.session.currentUser._id;
+    
     if(currentUserInSession === userId) {
         User.findById(userId)
             .populate({
