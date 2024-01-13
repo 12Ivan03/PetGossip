@@ -49,18 +49,25 @@ router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
 
     Pet.findById(petId)
         .populate('user')
-        .then(petInfo => {
+        .then(foundPet => {
             Comment.find({ pet: petId })
                 .populate('user')
+                .populate('pet')
                 .then((foundComments)=>{
 
-                    const newFoundComments = foundComments.map((obj)=> {
-                       return {...obj, isOwner: userId.toString() === obj.user._id.toString()}
+                    let newFoundComments = foundComments.map((obj) => {
+                       return {...obj.toObject(), isOwner: userId.toString() === obj.user._id.toString()};
 
                     });
+
+                    const isUser = userId.toString() === foundPet.user._id.toString();
+
                     console.log('foundComments 3 =====> ', newFoundComments)
-                    
-                    res.render('pet/profile',{ petInfo, userId, comments: newFoundComments, inSession: true})
+                    console.log('current user in session ===========>' , isUser)
+                    console.log('the found pet ===> ', foundPet._id)
+
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true})
+                
                 });
         })
         .catch((err) => console.log(err))
@@ -84,11 +91,11 @@ router.get("/view-all-pets", (req, res, next) => {
 
 router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
     const { petId } = req.params
-    let userId = req.session.currentUser._id
+    //let userId = req.session.currentUser._id
     
-    Comment.deleteMany({pet: petId})
+    Pet.findByIdAndDelete(petId)
         .then(() => {
-            Pet.findByIdAndDelete(petId)
+            Comment.deleteMany({pet: petId})
         })
         .then(() => {
             res.redirect('/profile')
