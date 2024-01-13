@@ -10,22 +10,18 @@ const commentSchema = new Schema(
     text: {
         type: String,
     },
-    description: {
-        type: Schema.Types.ObjectId,
-        ref: "Description"
-    },
+    // description: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Description"
+    // },
     pet: {
         type: Schema.Types.ObjectId,
         ref: "Pet"
     },
     user: { 
         type: Schema.Types.ObjectId,
-        ref: "User"
-    },
-    reply: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }]
+        ref: "User" 
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

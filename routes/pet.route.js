@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const User = require('../models/User.model.js');
 const Pet = require('../models/Pet.model.js');
-const Description = require('../models/Description.model');
 const Comment = require('../models/Comment.model.js');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -12,7 +11,7 @@ const saltRounds = 11;
 
 const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
 
-router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
+router.get('/create-pet/:userId', (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
     res.render('pet/create-profile', {userId, inSession: true} )
@@ -20,38 +19,14 @@ router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
 
 router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params
-    // console.log('post-pet the USER ID',userId)
-  
+    console.log('post-pet the USER ID',userId)
+
     const { name, description, votes } = req.body;
-    // console.log('req.body',req.body)
+    console.log('req.body',req.body)
 
-    let createdPet; // store info from the created pet
-
-    Pet.create({img: req.file.path, name, user: userId, votes})
-        // create pet
-        .then((createdLocalPet) => { 
-            // console.log("created new Pet line 30 => ", createdLocalPet)
-
-            // pass the created pet to the hier scope to be asscessed later. 
-            createdPet = createdLocalPet;
-
-            const newDescription = new Description({
-                pet: createdLocalPet._id,
-                user: userId,
-                text: description,
-            })
-            return newDescription.save();
-        })
-        .then((passDescription) => {
-            // console.log('===> This is the NEW Description created after the pet ===>', passDescription)
-            // console.log('This is the createdPet git scope variable --------->', createdPet)
-            return Pet.findByIdAndUpdate(createdPet._id, { description: passDescription._id }, { new: true })
-        })
-        .then((passPet) => {
-            // console.log("this is pet updated info description to update the user  =====>", passPet)
-            return User.findByIdAndUpdate(userId, { $push: { pets: passPet._id }}, {new: true} )
-        })     
-        .then(() => {
+    Pet.create({img: req.file.path, name, description, user: userId, votes})   
+        .then((createdPet) => {
+            console.log('created pet', createdPet)
             res.redirect(`/pet-profile/${createdPet._id}`)
         })
         .catch((err) => {
@@ -59,23 +34,22 @@ router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) 
         })
 })
 
-router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
+router.get("/pet-profile/:petId",(req, res, next) => {
     const { petId } = req.params
     let user = req.session.currentUser._id
+    console.log("current User session", user)
 
     Pet.findById(petId)
-        .populate("description")
-        .populate("user")
         .populate({
-            path: "comment",
+            path: "user",
             populate: {
-                path: "user",
+                path: "comment",
             },
         })
         .then((petInfo) => {
             // console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
-            // console.log("current User session", user)
-            // console.log(' This is the found pet description => ', petInfo.description._id)
+            console.log("current User session", user)
+            console.log(' This is the found pet description => ', petInfo.user.comment)
             res.render('pet/profile',{ petInfo, user , inSession: true})
         })
         .catch((err) => console.log(err))

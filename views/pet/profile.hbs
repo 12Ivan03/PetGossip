@@ -3,13 +3,14 @@
 <p>Pet's name: {{petInfo.name}}</p>
 <img src="{{petInfo.img}}" alt="image of the pet" style="height: 200px">
 
-<p>Votes: {{petInfo.votes}}</p>
-
 <p>I call my owner: bark-bark, but his human name is {{petInfo.user.name}} {{petInfo.user.lastName}}</p>
 
-<p>Description: {{petInfo.description.text}}</p>
+<br>
+<p>Votes: {{petInfo.votes}}</p>
+<p>Description: {{petInfo.description}}</p>
 
-<form action="/comment/{{petInfo._id}}/user/{{user}}{{userId}}/description/{{petInfo.description._id}}" method="POST">
+<hr>
+<form action="/comment/{{petInfo._id}}/user/{{user}}{{userId}}" method="POST">
     <label for="text">
         <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
     </label>
@@ -22,16 +23,18 @@
 {{#if errMsgCommentDel}}
     <p style="color: red">{{errMsgCommentDel}}</p>
 {{/if}}
-{{#each petInfo.comment}}
+{{#each petInfo.user}}
         <hr>
-        <p>{{text}}</p>
-        <p>commented by {{user.name}}</p>
+        <p>{{comment.text}}</p>
+        <p>commented by {{name}}</p>
 
+        {{!-- {{if}} --}}
         <button><a href="/edit-comment/{{_id}}">Edit</a></button>
 
         <form action="/comment/delete/{{_id}}" method="post">
             <button type="submit">Delete Comment</button>
         </form>
+        {{!-- {{/if}} --}}
     <br>
 {{/each}}
 

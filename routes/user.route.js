@@ -12,12 +12,11 @@ const saltRounds = 11;
 
 const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
 
-router.get('/profile', isLoggedIn, (req, res, next) => {
+router.get('/profile', (req, res, next) => {
     const userId = req.session.currentUser._id
 
     User.findById(userId)
-        .populate("pets")
-        .populate("comments")
+        .populate("comment")
         .then((user) => {
             res.render('user/profile', {user, inSession: true})
         })
@@ -35,7 +34,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
     
 })
 
-router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (req, res, next) => {
+router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params;
     const { name, lastName, city, bio, _id, existingImage } = req.body;
     // console.log('This is the req.file ===> ', req.file);
@@ -73,7 +72,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
 
 })
 
-router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
+router.post('/profile/delete/:userId', (req, res, next) => {
     const { userId } = req.params;
     const currentUserInSession = req.session.currentUser._id;
     
@@ -103,7 +102,10 @@ router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
                 }))
             })
             .then(() => {
-                return User.findByIdAndDelete(userId)
+                return Promise.all([
+                    Comment.deleteMany({ _id: { $in: foundUser.comments } }),
+                    User.findByIdAndDelete(userId)
+                ])
             })
             .then(() => {
                 req.session.destroy((err) => {
