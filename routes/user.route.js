@@ -12,13 +12,15 @@ const saltRounds = 11;
 
 const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
 
-router.get('/profile', (req, res, next) => {
+router.get('/profile', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser._id
 
     User.findById(userId)
-        .populate("comment")
-        .then((user) => {
-            res.render('user/profile', {user, inSession: true})
+        .then((userFound) => {
+            Pet.find({user: userId})
+            .then((foundPet) => {
+                res.render('user/profile', {user: userFound, foundPet, inSession: true})
+            })
         })
         .catch((err) => console.log(err))
 })
@@ -37,7 +39,6 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
 router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params;
     const { name, lastName, city, bio, _id, existingImage } = req.body;
-    // console.log('This is the req.file ===> ', req.file);
 
     if(name === ''|| city === ''){
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
@@ -74,54 +75,21 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next
 
 router.post('/profile/delete/:userId', (req, res, next) => {
     const { userId } = req.params;
-    const currentUserInSession = req.session.currentUser._id;
+    //const currentUserInSession = req.session.currentUser._id;
     
-    if(currentUserInSession === userId) {
-        User.findById(userId)
-            .populate({
-                path:'pets',
-                populate: { 
-                    path: "description"
-                },
-                populate: {
-                    path: "comment"
-                }
+    Pet.deleteMany({ user: userId})
+        .then(() => {
+            return Promise.all([
+                Comment.deleteMany({ user: userId}),
+                User.findByIdAndDelete(userId)
+            ])   
+        })
+        .then(() => {
+            req.session.destroy((err) => {
+                res.redirect("/")
             })
-            .then((foundUser) => {
-                console.log("This is the found user and populated with the pets and comments =>  ", foundUser)
-                
-                return Promise.all(foundUser.pets.map((pets) => {
-                    // console.log("THOSE ARE THE PETS FOR EACH LOOP ", pets._id)
-                    // console.log("Extraction of the description id = populated pet des", pets.description._id)
-                    // console.log("this is the foundUser-Pet-populated with comment = reach for the comments", pets.comment)
-                    return Promise.all ([
-                        Description.findByIdAndDelete(pets.description._id),
-                        Comment.deleteMany({ _id: { $in: pets.comment } }),
-                        Pet.findByIdAndDelete(pets._id)
-                    ])
-                }))
-            })
-            .then(() => {
-                return Promise.all([
-                    Comment.deleteMany({ _id: { $in: foundUser.comments } }),
-                    User.findByIdAndDelete(userId)
-                ])
-            })
-            .then(() => {
-                req.session.destroy((err) => {
-                    res.redirect("/")
-                })
-            })
-            .catch((err) => console.log(err));
-    } else {
-        User.findById(userId)
-            .populate("pets")
-            .populate("comments")
-            .then((user) => {
-                res.render('user/profile', {user, errMsgDeleteProf:  `You cannot delete the profile of ${user.name} `, inSession: true})
-            })
-            .catch((err) => console.log(err));
-    }
+        })
+        .catch((err) => console.log(err));
     
 })
 

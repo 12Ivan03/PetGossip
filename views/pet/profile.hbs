@@ -10,7 +10,8 @@
 <p>Description: {{petInfo.description}}</p>
 
 <hr>
-<form action="/comment/{{petInfo._id}}/user/{{user}}{{userId}}" method="POST">
+
+<form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
     <label for="text">
         <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
     </label>
@@ -23,19 +24,19 @@
 {{#if errMsgCommentDel}}
     <p style="color: red">{{errMsgCommentDel}}</p>
 {{/if}}
-{{#each petInfo.user}}
+
+{{#each comments}}
         <hr>
-        <p>{{comment.text}}</p>
-        <p>commented by {{name}}</p>
+        <p>{{_doc.text}}</p>
+        <p>commented by {{_doc.user.name}}</p>
 
-        {{!-- {{if}} --}}
-        <button><a href="/edit-comment/{{_id}}">Edit</a></button>
+        {{#if isOwner}}
+        <button><a href="/edit-comment/{{_doc._id}}">Edit</a></button>
 
-        <form action="/comment/delete/{{_id}}" method="post">
+        <form action="/comment/delete/{{_doc._id}}" method="post">
             <button type="submit">Delete Comment</button>
         </form>
-        {{!-- {{/if}} --}}
-    <br>
+        {{/if}}
 {{/each}}
 
 <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
