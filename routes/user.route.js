@@ -41,44 +41,32 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
     // console.log('This is the req.file ===> ', req.file);
 
     if(name === ''|| city === ''){
-        const { userId } = req.params;
         return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
     } 
 
-    // let img;
-    //     if (req.file) {
-    //         img = req.file.path;
-    //     } else {
-    //         img = existingImage;
-    //     }
-
-    // User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true })
-    //     .then(() => {
-    //         res.redirect("/profile")
-    //     })
-    //         .catch((err) => console.log(err))
+    let img;
+    
+    if (req.file) {
+        img = req.file.path;
+    } else {
+        img = existingImage;
+    }
 
     let publicIdOfCloudinary
 
     User.findById(userId)
         .then((foundUser) => {
-            if (foundUser.img){
-                // publicIdOfCloudinary = foundUser.img.split('/').pop().split('.')[0] // ==> the last part 
-                publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0] // last part with the pet-gosip...thing
-                // console.log('This is the Public_id', publicIdOfCloudinary)
-        
-            }
-            return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true })
-               
+                if (foundUser.img){
+                    publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
+                    return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+                } else {
+                    return Promise.resolve();
+                }       
         })
-        .then((whatIsHere) => {
-            console.log('whatIsHere ===>', whatIsHere);
-
-            return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img: req.file.path }, { new: true });
+        .then(() => {
+            return User.findByIdAndUpdate(userId, { name, lastName, city, bio, _id, img }, { new: true });
         })
-        .then((updatedUser) => {
-            console.log('The updated user =>', updatedUser);
-
+        .then(() => {
             res.redirect("/profile");
         })
         .catch((err) => console.log(err))
@@ -86,10 +74,9 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), isLoggedIn, (re
 })
 
 router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
-    const { userId } = req.params
-    const currentUserInSession = req.session.currentUser._id
-    //console.log('This is the current user insession => ', req.session.currentUser)
-
+    const { userId } = req.params;
+    const currentUserInSession = req.session.currentUser._id;
+    
     if(currentUserInSession === userId) {
         User.findById(userId)
             .populate({

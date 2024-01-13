@@ -3,6 +3,10 @@ const User = require('../models/User.model.js');
 const Pet = require('../models/Pet.model.js');
 const Description = require('../models/Description.model');
 const Comment = require('../models/Comment.model.js');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const fileUploader = require('../config/cloudinary.config.js')
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
@@ -14,16 +18,16 @@ router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
     res.render('pet/create-profile', {userId, inSession: true} )
 })
 
-router.post('/create-pet/:userId', (req, res, next) => {
+router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params
     // console.log('post-pet the USER ID',userId)
   
-    const { img, name, description, votes } = req.body;
+    const { name, description, votes } = req.body;
     // console.log('req.body',req.body)
 
     let createdPet; // store info from the created pet
 
-    Pet.create({img, name, user: userId, votes})
+    Pet.create({img: req.file.path, name, user: userId, votes})
         // create pet
         .then((createdLocalPet) => { 
             // console.log("created new Pet line 30 => ", createdLocalPet)
@@ -46,8 +50,7 @@ router.post('/create-pet/:userId', (req, res, next) => {
         .then((passPet) => {
             // console.log("this is pet updated info description to update the user  =====>", passPet)
             return User.findByIdAndUpdate(userId, { $push: { pets: passPet._id }}, {new: true} )
-        })
-       
+        })     
         .then(() => {
             res.redirect(`/pet-profile/${createdPet._id}`)
         })
@@ -172,12 +175,28 @@ router.get("/edit-pet/:petId", (req, res, next) => {
         .catch((err) => console.log(err))
 })
 
-router.post("/edit-pet-profile/:petId", (req, res, next) => {
+router.post("/edit-pet-profile/:petId", fileUploader.single('img'), (req, res, next) => {
     const { petId } = req.params
-    const { name, img, votes, description } = req.body
+    const { name, incommingImg, votes, description } = req.body
     
+    let img;
 
-    Pet.findByIdAndUpdate(petId, {name, img, votes})
+    if(req.file) {
+        img = req.file.path;
+    } else {
+        img = incommingImg;
+    }
+
+    let publicIdOfCloudinary
+
+    Pet.findById(petId)
+        .then((foundPet) => { 
+            if(foundPet.img) {
+                publicIdOfCloudinary = foundPet.img.split('/').splice(-2).join('/').split('.')[0];
+            }
+            return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true})
+        })
+    Pet.findByIdAndUpdate(petId, {name, img, votes}, {new: true})
         .populate('description')
         .then((foundPet) => {
             //console.log('this is the found pet and the description Id', foundPet.description._id)

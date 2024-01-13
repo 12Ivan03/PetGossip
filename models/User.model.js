@@ -9,7 +9,7 @@ const userSchema = new Schema(
   {
     img: {
       type: String,
-      default: '/images/pngwing.com.png',
+      // default: '/images/pngwing.com.png',
     },
     username: {
       type: String,

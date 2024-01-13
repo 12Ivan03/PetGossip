@@ -11,12 +11,13 @@ router.get("/", (req, res, next) => {
   if(inSession){
     Pet.find()
       .then((foundPets) => {
-        res.render("index", { bgPage: "bg-page", inSession: true, foundPets} );
+        res.render("index", { inSession: true, foundPets} );
+        // bgPage: "bg-page", 
       })
   } else {
     Pet.find()
       .then((foundPets) => {
-        res.render("index", { bgPage: "bg-page", inSession: false, foundPets} );
+        res.render("index", { inSession: false, foundPets} );
       })
   };
 
