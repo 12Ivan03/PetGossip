@@ -107,11 +107,17 @@ router.get('/confirm/:confirmCode', (req, res)=> {
     // console.log('confirmCode', req.params.confirmCode);
     User.find({confirmationCode: req.params.confirmCode})
         .then(foundUser => {
-            console.log('User is found, making it active');
-            User
-            .findByIdAndUpdate(foundUser.username, {status:'Active'})
-            .then(()=> res.render('account-verified', {success:true}));
-        }).catch(err => res.render('account-verified'));
+            if(foundUser.length !== 0){
+                console.log('foundUser', foundUser);
+                console.log('User is found, making it active');
+                User
+                .findByIdAndUpdate(foundUser.username, {status:'Active'})
+                .then(()=> res.render('auth/account-verified', {success:true}));
+            } else {
+                console.log('no user is found registered for this user');
+                res.render('auth/account-verified');
+            }
+        }).catch(err => console.log(err));
 })
 
 function getRandomToken() {
