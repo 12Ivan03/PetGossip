@@ -1,6 +1,25 @@
-<h2> Account Verification</h2>
 {{#if success}}
 <p><strong>Congratulation!! You have successfully verified your account.</strong></p>
 {{else}}
-<p style="color:red;">Sorry, no account is found for the given user. <br>Please signup again or contact support at:  </p><em>petgossips@hotmail.com</em>
+<p style="color:red;">Sorry, no account is found for the given user. </p>
+<p style="color:green;">Please signup again or contact us below, and we will get back to you soon.</p>
+
+<hr>
+
+<form>
+    <label for="userName">Name:</label>
+    <input type="text" required="true"/>
+    <br>
+    <br>
+    <label for="userEmail">Email*:</label>
+    <input type="email" name="userEmail"/>
+    <br>
+    <br>
+    <label>Your Message*</label>
+    <br>
+    <br>
+    <textarea name="customerNote" rows="6" cols="100" placeholder="Please provide all the information about your issue you can."></textarea>
+    <br>
+    <button id="customerIssueBtn">Submit</button>
+</form>
 {{/if}}

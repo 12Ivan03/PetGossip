@@ -120,6 +120,11 @@ router.get('/confirm/:confirmCode', (req, res)=> {
         }).catch(err => console.log(err));
 })
 
+// router.post('/contact', (req, res)=>{
+//     console.log('req.body', req.body);
+
+// });
+
 function getRandomToken() {
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let token = '';
