@@ -12,20 +12,21 @@ const petSchema = new Schema(
       required: true
     },
     img: {
-        type: String
+        type: String,
+        default: '/images/pet-default-pic.png',
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
     description: {
-        type: Schema.Types.ObjectId,
-        ref: "Description"
+        type: String,
+        required: true
     },
-    comment: [{
-        type: Schema.Types.ObjectId,
-        ref: "Comment"
-    }],
+    // comment: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Comment"
+    // }],
     votes: {
         type: Number
     },

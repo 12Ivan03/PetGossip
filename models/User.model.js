@@ -47,11 +47,11 @@ const userSchema = new Schema(
       type: String,
       unique: true
     },
-    pets: [{
-      type: Schema.Types.ObjectId,
-      ref: "Pet"
-    }],
-    comments: [{
+    // pets: [{
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Pet"
+    // }],
+    comment: [{
       type: Schema.Types.ObjectId,
       ref: "Comment"
     }],

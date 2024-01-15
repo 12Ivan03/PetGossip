@@ -1,9 +1,10 @@
 <h1>create pet profile</h1>
 
-<form action="/create-pet/{{userId}}" method="POST">
+<form action="/create-pet/{{userId}}" method="POST" enctype="multipart/form-data">
 
     <label for="img">Img:
-        <input type="text" name="img" id="img" placeholder="URL">
+        <input type="file" name="img" id="img">
+        {{!-- <input type="text" name="img" id="img" placeholder="URL"> --}}
     </label>
     <br>
     <br>

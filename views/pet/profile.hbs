@@ -5,9 +5,13 @@
 
 <p>I call my owner: bark-bark, but his human name is {{petInfo.user.name}} {{petInfo.user.lastName}}</p>
 
-<p>Description: {{petInfo.description.text}}</p>
+<br>
+<p>Votes: {{petInfo.votes}}</p>
+<p>Description: {{petInfo.description}}</p>
 
-<form action="/comment/{{petInfo._id}}/user/{{user}}{{userId}}/description/{{petInfo.description._id}}" method="POST">
+<hr>
+
+<form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
     <label for="text">
         <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
     </label>
@@ -17,26 +21,28 @@
 
 <hr>
 <p>Comments:</p>
-{{#if errMsgCommentDel}}
-    <p style="color: red">{{errMsgCommentDel}}</p>
-{{/if}}
-{{#each petInfo.comment}}
+
+{{#each comment}}
         <hr>
         <p>{{text}}</p>
         <p>commented by {{user.name}}</p>
 
+        {{#if isOwner}}
         <button><a href="/edit-comment/{{_id}}">Edit</a></button>
 
         <form action="/comment/delete/{{_id}}" method="post">
             <button type="submit">Delete Comment</button>
         </form>
-    <br>
+        {{/if}}
 {{/each}}
+<p>Here under should be delete and edit pet</p>
+<p>if not your pet you dont see!!!</p>
 
-<p>votes: {{petInfo.votes}}</p>
-<button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
-<br>
-<br>
-<form action="/pet/{{petInfo._id}}/delete" method="post">
-    <button>Delete Pet</button>
-</form>
+{{#if isUser}}
+    <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
+    <br>
+    <br>
+    <form action="/pet/{{petInfo._id}}/delete" method="post">
+        <button type="submit">Delete Pet</button>
+    </form>
+{{/if}}
