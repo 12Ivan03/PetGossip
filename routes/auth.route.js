@@ -45,7 +45,7 @@ router.post("/signup", (req, res, next) => {
                         subject: "Account Verification",
                         text: message,
                         // html: `<a href="http://localhost:'+ ${process.env.PORT}+'/auth/confirm/'+${foundUser.confirmationCode}">${message}</a>`,
-                        html:templates.templateExample(foundUser.username, foundUser.confirmationCode)
+                        html:templates.templateAccountVerification(foundUser.username, foundUser.confirmationCode)
                         })
                         .then((info) => {
                             //Need to show some intimation to the user for email received and verification.
@@ -120,10 +120,23 @@ router.get('/confirm/:confirmCode', (req, res)=> {
         }).catch(err => console.log(err));
 })
 
-// router.post('/contact', (req, res)=>{
-//     console.log('req.body', req.body);
+router.post('/contact', (req, res)=>{
+    console.log('req.body', req.body);
+    const {userName, userEmail, customerNote} = req.body;
+    transporter.sendMail({
+        from: `"Pet Gossips - Support " <${process.env.EMAIL_ADDRESS}>`,
+        to: process.env.EMAIL_ADDRESS,
+        subject: "Pet Gossips - User Issues",
+        text: `Name:${userName} Email: ${userEmail} Message: ${customerNote}`,
+        html:templates.templateCustomerIssues(req.body)
+        })
+        .then((info) => {
+            console.log('email sent by the user to pet gossips.') 
+            res.render('auth/account-verified',{isMsgSent:true})
+        })
+        .catch(err=>console.log(err));
 
-// });
+});
 
 function getRandomToken() {
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

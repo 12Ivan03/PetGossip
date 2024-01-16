@@ -6,13 +6,13 @@
 
 <hr>
 
-<form>
+<form method="post" action="/contact">
     <label for="userName">Name:</label>
-    <input type="text" required="true"/>
+    <input type="text" name="userName"/>
     <br>
     <br>
     <label for="userEmail">Email*:</label>
-    <input type="email" name="userEmail"/>
+    <input type="email" name="userEmail" required="true"/>
     <br>
     <br>
     <label>Your Message*</label>
@@ -21,5 +21,8 @@
     <textarea name="customerNote" rows="6" cols="100" placeholder="Please provide all the information about your issue you can."></textarea>
     <br>
     <button id="customerIssueBtn">Submit</button>
+    {{#if isMsgSent}}
+    <h3 style="color:green;">Message Sent</h3>
+    {{/if}}
 </form>
 {{/if}}
