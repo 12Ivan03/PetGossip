@@ -81,14 +81,10 @@
     height: 17rem;
     object-fit: cover;
     overflow: hidden;
-    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
-
 }
 
-.all-profile-each-box-pic-of-pet:hover {
-    position: center!important;
-    width: 25rem!important;
-    height: 23rem!important;
+.hover-image {
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 
 .hover-name {
