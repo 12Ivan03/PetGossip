@@ -11,6 +11,7 @@ const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.
 const { transporter} = require("../config/transporter.config");
 const fs = require('fs');
 const templates = require("../templates/template");
+const utils = require("../utils/utils");
 
 router.get("/signup", isLoggedOut, (req, res, next) => {
     res.render("auth/signup");
@@ -33,7 +34,7 @@ router.post("/signup", (req, res, next) => {
             } else {
                 bcrypt.hash(password, saltRounds)
                 .then((hash) => {
-                    return User.create({username, password: hash, email, confirmationCode:getRandomToken()})
+                    return User.create({username, password: hash, email, confirmationCode:utils.getRandomToken()})
                 })
                 .then(foundUser => {
                     const message = "Click here to verify account.";
@@ -104,15 +105,21 @@ router.get("/logout", isLoggedIn, (req, res, next) => {
 })
 
 router.get('/confirm/:confirmCode', (req, res)=> {
-    // console.log('confirmCode', req.params.confirmCode);
-    User.find({confirmationCode: req.params.confirmCode})
+    User.findOne({confirmationCode: req.params.confirmCode})
         .then(foundUser => {
-            if(foundUser.length !== 0){
+            if(foundUser){
                 console.log('foundUser', foundUser);
                 console.log('User is found, making it active');
+                if(foundUser.status === 'Active'){
+                    res.render('auth/account-verified', {isActive:true});
+                    return;
+                }
                 User
-                .findByIdAndUpdate(foundUser.username, {status:'Active'})
-                .then(()=> res.render('auth/account-verified', {success:true}));
+                .findByIdAndUpdate(foundUser._id, { $set: { status: 'Active' } }, { new: true })
+                .then(updated=>{ 
+                    console.log('updated status is', updated);
+                    res.render('auth/account-verified', {success:true})})
+                .catch(err=>console.log('error in updating status', err));
             } else {
                 console.log('no user is found registered for this user');
                 res.render('auth/account-verified');
@@ -137,14 +144,5 @@ router.post('/contact', (req, res)=>{
         .catch(err=>console.log(err));
 
 });
-
-function getRandomToken() {
-    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let token = '';
-    for (let i = 0; i < 25; i++) {
-        token += characters[Math.floor(Math.random() * characters.length)];
-    }
-    return token;
-}
 
 module.exports = router;
