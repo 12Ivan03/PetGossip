@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded",() => {
       
 //// Pet profile ////
-  const hoverContainers = document.querySelectorAll('.hover');
+  const hoverContainers = document.querySelectorAll('.hover-each-grid-box');
     
 
   hoverContainers.forEach((hoverContainer) => {
