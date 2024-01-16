@@ -332,27 +332,3 @@
   font-size: 0.6rem;
   margin-left: 1rem;
 }
-
-
-/* pet profile messge edit board*/
-
-#iframe-edit-message-popup-page {
-  display: none;
-
-  position: fixed;
-  top: 15vw;
-  left: 50vh;
-  
-}
-
-.blur-on {
-  filter: blur(10px);
-}
-
-.blur-off {
-  filter: none!important;
-} 
-
-.edit-message { 
-  border: 0.5rem rgb(0, 0, 0) solid;
-}

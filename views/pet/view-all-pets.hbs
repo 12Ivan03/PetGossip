@@ -1,26 +1,31 @@
-<div class="all-profile-top">
-    <div class="all-profile-top-bg-page-img">
-        <img src="" alt="">
-    </div>
-    <div class="all-profile-top-bg-page-text">
-        <h1>Find your friends</h1>
-        <p>Discover and connect with your pals effortlessly, staying in the loop not just with their furry companions but also with the fascinating folks who call them family. Your social circle just got a whole lot furrier and friendlier!</p>
+<div class="view-all-pet-profile-top">
+    <div class="all-profile-top">
+        <h6 class="view-all-pet-profile-logo-title">PetGossip</h6>
+        <h1 class="all-pet-profile-find">Find your friends</h1>
+        <p class="all-pet-profile-find-text">Discover and connect with your pals effortlessly, staying in the loop not just with their furry companions but also with the fascinating folks who call them family. Your social circle just got a whole lot furrier and friendlier!</p>
     </div>
 </div>
 
-
 <div class="all-profiles">
     {{#each allPets}}
+        <div class="all-prifles-each-box">
+            <a href="/pet-profile/{{_id}}" class="hover">
+                <div class="all-profile-each-box-pic-of-pet-div">
+                    <img  class="all-profile-each-box-pic-of-pet hover-image" src="{{img}}" alt="pet img">
+                </div>
 
-        <div>
-            <a href="/pet-profile/{{_id}}" class="all-profile-pic-of-pet"><img src="{{img}}" alt="pet's img" style="height: 150px"></a>
-
-            <div class="all-profile-info-of-pet">
-                <p>Name: {{name}}</p>
-                <p>Owner's name: {{user.name}}</p>
-                <p>Description: {{description}}</p>
-            </div>
+                <div class="all-profile-each-box-info-of-pet">
+                    <div class="all-profile-each-box-info-of-pet-name into-pet-p">
+                        <p>Name: <p class="hover-name">{{name}}</p></p>
+                    </div>
+                    <div class="all-profile-each-box-info-of-pet-owner into-pet-p">
+                        <p>Owner: <p>{{user.name}}</p></p>
+                    </div>
+                    <div class="all-profile-each-box-info-of-pet-description into-pet-p">
+                        <p>Description: <p>{{description}}</p></p>
+                    </div>
+                </div>
+            </a>
         </div>
-
     {{/each}}
 </div>

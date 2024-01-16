@@ -1,10 +1,28 @@
+// Code to run when the window has fully loaded
+document.addEventListener("DOMContentLoaded",() => {
+      
+//// Pet profile ////
+  const hoverContainers = document.querySelectorAll('.hover');
+    
 
-  // // Code to run when the window has fully loaded
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   console.log("PetGossipView JS imported successfully!");
-  // });
+  hoverContainers.forEach((hoverContainer) => {
+    const genreElement = hoverContainer.querySelector('.hover-name');
+    // const imgOfAnimal = document.querySelectorAll('.hover-image');
+        
+      
+    hoverContainer.addEventListener('mouseenter', () => {
+        genreElement.style.color = "gray";
+        genreElement.style.fontSize = "xx-large";
+    });
+      
+    hoverContainer.addEventListener('mouseleave', () => {
+        genreElement.style.color = 'black';
+        genreElement.style.fontSize = "medium";
+    });
+  });
 
-  // Layout
+  //// Layout ////
+
   const iframeMainPage = document.getElementById('pet-profile-page');
   //profilePet
   const iframeBtn = document.getElementById('iframe-edit-message-popup-btn');
@@ -31,3 +49,4 @@
   
   });
 
+});
