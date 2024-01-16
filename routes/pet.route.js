@@ -62,11 +62,11 @@ router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
 
                     const isUser = userId.toString() === foundPet.user._id.toString();
 
-                    console.log('foundComments 3 =====> ', newFoundComments)
-                    console.log('current user in session ===========>' , isUser)
-                    console.log('the found pet ===> ', foundPet._id)
+                    // console.log('foundComments 3 =====> ', newFoundComments)
+                    // console.log('current user in session ===========>' , isUser)
+                    // console.log('the found pet ===> ', foundPet._id)
 
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true})
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, idTitle:"pet-profile-page"})
                 
                 });
         })
