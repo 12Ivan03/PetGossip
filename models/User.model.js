@@ -38,6 +38,15 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    status: {
+      type: String,
+      enum: ['Pending Confirmation', 'Active'],
+      default: 'Pending Confirmation'
+    },
+    confirmationCode: {
+      type: String,
+      unique: true
+    },
     // pets: [{
     //   type: Schema.Types.ObjectId,
     //   ref: "Pet"
