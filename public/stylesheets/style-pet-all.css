@@ -1,0 +1,148 @@
+/* View pet profile */
+
+.view-all-pet-profile-top {
+    background-image: url(../images/running-in-grass-dog.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 30rem;
+}
+
+/* all-profile-top */
+
+.view-all-pet-profile-logo-title {
+    font-size: 1.6rem;
+    position: relative;
+    top: 3rem;
+    left: -16.7rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.all-profile-top {
+    padding-top: 8rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    /* flex-wrap: wrap; */
+}
+
+.all-pet-profile-find {
+    font-size: 5rem;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.all-pet-profile-find-text {
+    text-align: center;
+    width: 60vw;
+    text-shadow: #ffffff 0.05rem 0.05rem 0.2rem;
+}
+
+/* all-profiles grid*/
+
+.all-profiles {
+    margin: 8rem 0;
+    display: grid;
+    grid-template-columns: repeat(3,20rem);
+    grid-template-rows: 25rem;
+    grid-gap: 2rem;
+    justify-content: center;
+    grid-auto-flow: row;
+}
+
+.all-prifles-each-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    background-image: linear-gradient(#d2b48c, #ffffff);
+}
+
+.all-prifles-each-box a {
+    text-decoration: none;
+    color: black;
+}
+
+.all-profile-each-box-pic-of-pet-div {
+    width: 20rem;
+    height: 17rem;
+    object-fit: cover;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.all-profile-each-box-pic-of-pet {
+
+    position: center;
+    width: 20rem;
+    height: 17rem;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+/* hover JS  */
+
+.hover-image {
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.hover-name {
+    transition: color 0.3s ease-in-out, font-size 0.3s ease-in-out;
+}
+
+.all-profile-each-box-info-of-pet {
+    height: 7.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+   
+}
+
+.all-profile-each-box-info-of-pet p {
+    display: inline;
+}
+
+.all-profile-each-box-info-of-pet-name {
+    margin-top: 1rem;
+}
+
+.into-pet-p p:first-child {
+    font-size: small;
+    font-style: italic;
+    color: rgb(78, 77, 77);
+}
+
+.all-profile-each-box-info-of-pet-description {
+    padding-top: 0.2rem;
+    overflow: hidden;
+}
+
+
+
+
+/* pet profile message edit blur*/
+
+#iframe-edit-message-popup-page {
+    display: none;
+  
+    position: fixed;
+    top: 15vw;
+    left: 50vh;
+    
+  }
+  
+  .blur-on {
+    filter: blur(10px);
+  }
+  
+  .blur-off {
+    filter: none!important;
+  } 
+  
+  .edit-message { 
+    border: 0.5rem rgb(0, 0, 0) solid;
+  }

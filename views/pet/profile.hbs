@@ -1,15 +1,27 @@
+{{!-- <div id="pet-profile-page" class="blur-off"> --}}
+
 <h1>My profile</h1>
 
 <p>Pet's name: {{petInfo.name}}</p>
 <img src="{{petInfo.img}}" alt="image of the pet" style="height: 200px">
 
-<p>Votes: {{petInfo.votes}}</p>
-
 <p>I call my owner: bark-bark, but his human name is {{petInfo.user.name}} {{petInfo.user.lastName}}</p>
 
-<p>Description: {{petInfo.description.text}}</p>
+<br>
+<p>Votes: {{petInfo.votes}}</p>
+<p>Description: {{petInfo.description}}</p>
 
-<form action="/comment/{{petInfo._id}}/user/{{user}}{{userId}}/description/{{petInfo.description._id}}" method="POST">
+{{#if isUser}}
+    <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
+
+    <form action="/pet/{{petInfo._id}}/delete" method="post">
+        <button type="submit">Delete Pet</button>
+    </form>
+{{/if}}
+
+<hr>
+
+<form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
     <label for="text">
         <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
     </label>
@@ -18,26 +30,53 @@
 </form>
 
 <hr>
+
 <p>Comments:</p>
-{{#if errMsgCommentDel}}
-    <p style="color: red">{{errMsgCommentDel}}</p>
-{{/if}}
-{{#each petInfo.comment}}
-        <hr>
+
+{{#each comment}}
+
         <p>{{text}}</p>
         <p>commented by {{user.name}}</p>
 
-        <button><a href="/edit-comment/{{_id}}">Edit</a></button>
+        {{#if isOwner}}
 
-        <form action="/comment/delete/{{_id}}" method="post">
-            <button type="submit">Delete Comment</button>
-        </form>
-    <br>
+            <button><a id="iframe-edit-message-popup-btn">Edit</a></button>
+            {{!-- href="/edit-comment/{{_id}}" --}}
+
+            {{!-- <iframe id="iframe-edit-message-popup-page" src="/edit-comment/{{_id}}" frameborder="0" style="display: none;"></iframe> --}}
+
+            {{!-- <form action="/comment/delete/{{_id}}" method="post">
+                <button type="submit">Delete Comment</button>
+            </form> --}}
+        {{/if}}
+
+            <div id="iframe-edit-message-popup-page" class="blur-on">
+
+                <h1>Edit comment:</h1>
+
+                <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
+                    <label for="text">
+                        <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
+                    </label>
+                    <p>commented by {{user.name}}</p>
+
+                    <button id="iframe-edit-message-save-btn" type="submit">Save</button>     
+                </form>
+
+                <form action="/comment/delete/{{_id}}" method="post">
+                    <button type="submit">Delete Comment</button>
+                </form>
+
+            </div>
+
 {{/each}}
 
-<button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
-<br>
-<br>
-<form action="/pet/{{petInfo._id}}/delete" method="post">
-    <button>Delete Pet</button>
-</form>
+</div>
+
+<div id="new-idea-test"></div>
+
+           
+
+
+
+

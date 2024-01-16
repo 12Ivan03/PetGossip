@@ -9,7 +9,7 @@ const userSchema = new Schema(
   {
     img: {
       type: String,
-      // default: '/images/pngwing.com.png',
+      default: '/images/pngwing.com.png',
     },
     username: {
       type: String,
@@ -38,11 +38,20 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    pets: [{
-      type: Schema.Types.ObjectId,
-      ref: "Pet"
-    }],
-    comments: [{
+    status: {
+      type: String,
+      enum: ['Pending Confirmation', 'Active'],
+      default: 'Pending Confirmation'
+    },
+    confirmationCode: {
+      type: String,
+      unique: true
+    },
+    // pets: [{
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Pet"
+    // }],
+    comment: [{
       type: Schema.Types.ObjectId,
       ref: "Comment"
     }],

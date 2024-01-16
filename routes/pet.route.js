@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const User = require('../models/User.model.js');
 const Pet = require('../models/Pet.model.js');
-const Description = require('../models/Description.model');
 const Comment = require('../models/Comment.model.js');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -12,7 +11,7 @@ const saltRounds = 11;
 
 const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
 
-router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
+router.get('/create-pet/:userId', (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
     res.render('pet/create-profile', {userId, inSession: true} )
@@ -20,38 +19,22 @@ router.get('/create-pet/:userId', isLoggedIn, (req, res, next) => {
 
 router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params
-    // console.log('post-pet the USER ID',userId)
-  
-    const { name, description, votes } = req.body;
-    // console.log('req.body',req.body)
+    console.log('post-pet the USER ID',userId)
 
-    let createdPet; // store info from the created pet
+    const { name, description, votes, incommingImg } = req.body;
+    console.log('req.body',req.body)
 
-    Pet.create({img: req.file.path, name, user: userId, votes})
-        // create pet
-        .then((createdLocalPet) => { 
-            // console.log("created new Pet line 30 => ", createdLocalPet)
+    let img;
 
-            // pass the created pet to the hier scope to be asscessed later. 
-            createdPet = createdLocalPet;
+    if(req.file) {
+        img = req.file.path;
+    } else {
+        img = incommingImg;
+    }
 
-            const newDescription = new Description({
-                pet: createdLocalPet._id,
-                user: userId,
-                text: description,
-            })
-            return newDescription.save();
-        })
-        .then((passDescription) => {
-            // console.log('===> This is the NEW Description created after the pet ===>', passDescription)
-            // console.log('This is the createdPet git scope variable --------->', createdPet)
-            return Pet.findByIdAndUpdate(createdPet._id, { description: passDescription._id }, { new: true })
-        })
-        .then((passPet) => {
-            // console.log("this is pet updated info description to update the user  =====>", passPet)
-            return User.findByIdAndUpdate(userId, { $push: { pets: passPet._id }}, {new: true} )
-        })     
-        .then(() => {
+    Pet.create({img, name, description, user: userId, votes})   
+        .then((createdPet) => {
+            console.log('created pet', createdPet)
             res.redirect(`/pet-profile/${createdPet._id}`)
         })
         .catch((err) => {
@@ -59,31 +42,39 @@ router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) 
         })
 })
 
-router.get("/pet-profile/:petId", isLoggedIn,(req, res, next) => {
+router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
     const { petId } = req.params
-    let user = req.session.currentUser._id
+    let userId = req.session.currentUser._id
+    console.log("current User session", userId)
 
     Pet.findById(petId)
-        .populate("description")
-        .populate("user")
-        .populate({
-            path: "comment",
-            populate: {
-                path: "user",
-            },
-        })
-        .then((petInfo) => {
-            // console.log("This is the pet profile populated with des and user and comments ===> ", petInfo)
-            // console.log("current User session", user)
-            // console.log(' This is the found pet description => ', petInfo.description._id)
-            res.render('pet/profile',{ petInfo, user , inSession: true})
+        .populate('user')
+        .then(foundPet => {
+            Comment.find({ pet: petId })
+                .populate('user')
+                .populate('pet')
+                .then((foundComments)=>{
+
+                    let newFoundComments = foundComments.map((obj) => {
+                       return {...obj.toObject(), isOwner: userId.toString() === obj.user._id.toString()};
+
+                    });
+
+                    const isUser = userId.toString() === foundPet.user._id.toString();
+
+                    // console.log('foundComments 3 =====> ', newFoundComments)
+                    // console.log('current user in session ===========>' , isUser)
+                    // console.log('the found pet ===> ', foundPet._id)
+
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, idTitle:"pet-profile-page"})
+                
+                });
         })
         .catch((err) => console.log(err))
 })
 
 router.get("/view-all-pets", (req, res, next) => {
     Pet.find()
-    .populate('description')
     .populate('user')
     .then((allPets) => {
         // console.log(allPets)
@@ -94,83 +85,32 @@ router.get("/view-all-pets", (req, res, next) => {
         } else {
             res.render("pet/view-all-pets", { allPets, inSession: false} );
         };
-        // res.render("pet/view-all-pets", { allPets, inSession: true })
     })
     .catch((err) => console.log(err))
 })
 
-router.post("/pet/:petId/delete", (req, res, next) => {
+router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
     const { petId } = req.params
-    let userId = req.session.currentUser._id
-
-    Pet.findById(petId)
-        .populate('user')
-        .populate('description')
-        .populate('comment')
-        .then((foundPet) => {
-
-            let { user, description, comment } = foundPet
-
-            const petOwnerId = foundPet.user._id.toString();
-            const currentUserId = userId.toString();
-            //const petDescriptionId = foundPet.description._id.toString()
-            //const petComments = foundPet.comment._id.toString()
-
-            //console.log('The found pet - description STRINGED => ', description._id.toString())
-            //console.log('The found pet - user - the user/s _id => ', petOwnerId)
-            //console.log('This is the session of the current user the id => ', currentUserId )
-
-            if (petOwnerId === currentUserId) {
-                Pet.findByIdAndDelete(petId)
-                    .then(() => { 
-                        return Promise.all([
-                            Comment.deleteMany({ _id: { $in: foundPet.comment } }),
-                            User.findByIdAndUpdate(user._id, { $pull: { pets: petId } }),
-                            Description.findByIdAndDelete(description._id.toString()),
-                            // Comment.findByIdAndDelete(comment._id.toString() , { $pull: { pet: petId } }),
-                        ])
-                    })
-                .then(() => {
-                    res.redirect('/profile')
-                })
-            } else {
-                User.findById(userId) 
-                    .populate('pets')
-                    .then((user) => {
-                        // console.log('This is the falty user => ', user)
-                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot delete his profile!`, inSession: true})
-                    })
-            }
-            
+    //let userId = req.session.currentUser._id
+    
+    Pet.findByIdAndDelete(petId)
+        .then(() => {
+            Comment.deleteMany({pet: petId})
+        })
+        .then(() => {
+            res.redirect('/profile')
         })
         .catch((err) => console.log(err))
+        
 })
 
 router.get("/edit-pet/:petId", (req, res, next) => {
     const { petId } = req.params
-    let userId = req.session.currentUser._id
 
     Pet.findById(petId)
         .populate('user')
-        .populate('description')
         .then((foundPet) => {
-            // console.log('this is the Id of the user /owner',foundPet.user._id.toString())
-            // console.log('this is the current id of the session', userId.toString() )
-
-            const petOwnerId = foundPet.user._id.toString();
-            const currentUserId = userId.toString();
-
-            if(petOwnerId === currentUserId) {
-                res.render('pet/edit-profile', { foundPet, inSession: true })
-            } else {
-                User.findById(userId) 
-                    .populate('pets')
-                    .then((user) => {
-                        //console.log('This is the falty user => ', user)
-                        res.render('user/profile', {user, errMegDelete: `You're not the owner of ${foundPet.name}. You cannot edit his/her profile!`, inSession: true})
-                    })
-            }
-            
+                res.render('pet/edit-profile', { foundPet, inSession: true })  
         })
         .catch((err) => console.log(err))
 })
@@ -193,19 +133,12 @@ router.post("/edit-pet-profile/:petId", fileUploader.single('img'), (req, res, n
         .then((foundPet) => { 
             if(foundPet.img) {
                 publicIdOfCloudinary = foundPet.img.split('/').splice(-2).join('/').split('.')[0];
+                return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true})
             }
-            return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true})
         })
-    Pet.findByIdAndUpdate(petId, {name, img, votes}, {new: true})
-        .populate('description')
-        .then((foundPet) => {
-            //console.log('this is the found pet and the description Id', foundPet.description._id)
-            Description.findByIdAndUpdate(foundPet.description._id, { text: description }, {new: true})
-                .then((updatedDes) => {
-                    //console.log('the updated description', updatedDes)
-                    res.redirect(`/pet-profile/${petId}`)
-                })
-                .catch((err) => console.log(err))
+    Pet.findByIdAndUpdate(petId, {name, img, votes, description}, {new: true})
+        .then(() => {
+            res.redirect(`/pet-profile/${petId}`)
         })
         .catch((err) => console.log(err))
 })
