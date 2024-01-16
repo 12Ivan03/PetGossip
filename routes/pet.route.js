@@ -92,16 +92,27 @@ router.get("/view-all-pets", (req, res, next) => {
 router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
     const { petId } = req.params
     //let userId = req.session.currentUser._id
-    
-    Pet.findByIdAndDelete(petId)
+    let publicIdOfCloudinary
+
+    Pet.findById(petId)
+        .then((foundPet) => {
+            if(foundPet.img) {
+                publicIdOfCloudinary = foundPet.img.split('/').splice(-2).join('/').split('.')[0];
+                return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+            } else {
+                return Promise.resolve();
+            }    
+        })
         .then(() => {
-            Comment.deleteMany({pet: petId})
+            return Promise.all ([
+                Comment.deleteMany({pet: petId}),
+                Pet.findByIdAndDelete(petId)
+            ])
         })
         .then(() => {
             res.redirect('/profile')
         })
         .catch((err) => console.log(err))
-        
 })
 
 router.get("/edit-pet/:petId", (req, res, next) => {

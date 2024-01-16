@@ -75,7 +75,6 @@
 }
 
 .all-profile-each-box-pic-of-pet {
-
     position: center;
     width: 20rem;
     height: 17rem;
@@ -99,7 +98,6 @@
     flex-direction: column;
     align-items: end;
     justify-content: center;
-   
 }
 
 .all-profile-each-box-info-of-pet p {
@@ -128,21 +126,19 @@
 
 #iframe-edit-message-popup-page {
     display: none;
-  
     position: fixed;
     top: 15vw;
-    left: 50vh;
-    
-  }
+    left: 50vh;  
+}
   
-  .blur-on {
+.blur-on {
     filter: blur(10px);
-  }
+}
   
-  .blur-off {
+.blur-off {
     filter: none!important;
-  } 
+} 
   
-  .edit-message { 
+.edit-message { 
     border: 0.5rem rgb(0, 0, 0) solid;
-  }
+}

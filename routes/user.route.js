@@ -76,13 +76,37 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next
 router.post('/profile/delete/:userId', (req, res, next) => {
     const { userId } = req.params;
     //const currentUserInSession = req.session.currentUser._id;
-    
-    Pet.deleteMany({ user: userId})
+    let publicIdOfCloudinary
+ 
+    User.findById(userId)  
+        .then((foundUser) => {
+            if (foundUser.img){        
+                publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
+                return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+            } else {
+                return Promise.resolve();
+            }       
+        })
+        .then(() => {
+            return Pet.find({user: userId})
+        })
+        .then((foundPets) => {
+            const deletePets = foundPets.map((pets) => {
+                if (pets.img){
+                    publicIdOfCloudinary = pets.img.split('/').splice(-2).join('/').split('.')[0];
+                    return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+                } else {
+                    return Promise.resolve();
+                }   
+            })
+            return Promise.all(deletePets)
+        })
         .then(() => {
             return Promise.all([
                 Comment.deleteMany({ user: userId}),
-                User.findByIdAndDelete(userId)
-            ])   
+                Pet.deleteMany({ user: userId}),
+                User.findByIdAndDelete(userId),
+            ]);
         })
         .then(() => {
             req.session.destroy((err) => {
