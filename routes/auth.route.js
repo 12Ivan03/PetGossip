@@ -19,9 +19,6 @@ router.get("/signup", isLoggedOut, (req, res, next) => {
 
 router.post("/signup", (req, res, next) => {
     const { username, password, email } = req.body;
-    
-    // console.log("this is the body", req.body);
-
     if(username === '' || password === '' || email === ''){
         res.render('auth/signup', {errMsg: "Please fill in all the required spaces"})
         return;
@@ -38,24 +35,17 @@ router.post("/signup", (req, res, next) => {
                 })
                 .then(foundUser => {
                     const message = "Click here to verify account.";
-                    // Send an email with the information we got from the form
-                      // Send an email with the information we got from the form
                     transporter.sendMail({
                         from: `"Pet Gossips " <${process.env.EMAIL_ADDRESS}>`,
                         to: email,
                         subject: "Account Verification",
                         text: message,
-                        // html: `<a href="http://localhost:'+ ${process.env.PORT}+'/auth/confirm/'+${foundUser.confirmationCode}">${message}</a>`,
                         html:templates.templateAccountVerification(foundUser.username, foundUser.confirmationCode)
                         })
                         .then((info) => {
-                            //Need to show some intimation to the user for email received and verification.
-                            // res.render("message", { email, subject, message, info })
                             console.log('info',info);
                             req.session.currentUser = foundUser;
-                            // console.log("this is the user's-session", foundUser)
                             res.render('user/edit-profile', { foundUser, inSession: true })
-
                         })
                         .catch((error) => console.log(error));
                 }).catch((error) => console.log(error));
@@ -128,7 +118,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
 })
 
 router.post('/contact', (req, res)=>{
-    console.log('req.body', req.body);
+    // console.log('req.body', req.body);
     const {userName, userEmail, customerNote} = req.body;
     transporter.sendMail({
         from: `"Pet Gossips - Support " <${process.env.EMAIL_ADDRESS}>`,

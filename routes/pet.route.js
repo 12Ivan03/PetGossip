@@ -9,7 +9,7 @@ const fileUploader = require('../config/cloudinary.config.js')
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
-const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
+const{ isLoggedIn, isLoggedOut, isAdmin, isVerifiedUser } = require('../middlewares/route-guard.js')
 
 router.get('/create-pet/:userId', (req, res, next) => {
     const { userId } = req.params
@@ -42,7 +42,7 @@ router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) 
         })
 })
 
-router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
+router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
     let userId = req.session.currentUser._id
     console.log("current User session", userId)
