@@ -1,5 +1,3 @@
-{{!-- <div id="pet-profile-page" class="blur-off"> --}}
-
 <h1>My profile</h1>
 
 <p>Pet's name: {{petInfo.name}}</p>
@@ -38,45 +36,33 @@
         <p>{{text}}</p>
         <p>commented by {{user.name}}</p>
 
-        {{#if isOwner}}
+        <div class="edit-plus-comment-div">
+            {{!-- <div class="edit-plus-comment-div-plus"> --}}
 
-            <button><a id="iframe-edit-message-popup-btn">Edit</a></button>
-            {{!-- href="/edit-comment/{{_id}}" --}}
+                <div class="edit-btn" style="display: block;">
+                {{#if isOwner}}
+                    <button><a class="edit-btn">Edit</a></button>
+                {{/if}}
+                </div>
 
-            {{!-- <iframe id="iframe-edit-message-popup-page" src="/edit-comment/{{_id}}" frameborder="0" style="display: none;"></iframe> --}}
+                <div class="comment-div" style="display: none">
+                    <h1>Edit comment:</h1>
 
-            {{!-- <form action="/comment/delete/{{_id}}" method="post">
-                <button type="submit">Delete Comment</button>
-            </form> --}}
-        {{/if}}
+                    <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
+                        <label for="text">
+                            <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
+                        </label>
+                        <p>commented by {{user.name}}</p>
+                        <button type="submit">Save</button>     
+                    </form>
 
-            <div id="iframe-edit-message-popup-page" class="blur-on">
+                    <button><a href="/pet-profile/{{pet._id}}">back</a></button>
 
-                <h1>Edit comment:</h1>
-
-                <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
-                    <label for="text">
-                        <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
-                    </label>
-                    <p>commented by {{user.name}}</p>
-
-                    <button id="iframe-edit-message-save-btn" type="submit">Save</button>     
-                </form>
-
-                <form action="/comment/delete/{{_id}}" method="post">
-                    <button type="submit">Delete Comment</button>
-                </form>
-
-            </div>
+                    <form action="/comment/delete/{{_id}}" method="post">
+                        <button type="submit">Delete Comment</button>
+                    </form>
+                </div>
+            {{!-- </div> --}}
+        </div>
 
 {{/each}}
-
-</div>
-
-<div id="new-idea-test"></div>
-
-           
-
-
-
-
