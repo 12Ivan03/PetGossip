@@ -77,7 +77,6 @@ router.get("/view-all-pets", (req, res, next) => {
     Pet.find()
     .populate('user')
     .then((allPets) => {
-        // console.log(allPets)
         const inSession = req.session.currentUser
 
         if(inSession){
@@ -91,7 +90,7 @@ router.get("/view-all-pets", (req, res, next) => {
 
 router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
     const { petId } = req.params
-    //let userId = req.session.currentUser._id
+    let userId = req.session.currentUser._id
     let publicIdOfCloudinary
 
     Pet.findById(petId)
@@ -103,6 +102,17 @@ router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
                 return Promise.resolve();
             }    
         })
+//
+        .then(() =>{
+            return Comment.find({ pet: petId})
+        })
+        .then((foundComments) => {
+            const userDeleteComments = foundComments.map((comment) => {
+                return User.findByIdAndUpdate(comment.user, { $pull: {comment: comment._id } } )     
+            })
+            return Promise.all(userDeleteComments)
+        })
+//
         .then(() => {
             return Promise.all ([
                 Comment.deleteMany({pet: petId}),

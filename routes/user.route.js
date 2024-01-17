@@ -70,7 +70,7 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next
             res.redirect("/profile");
         })
         .catch((err) => console.log(err))
-
+        
 })
 
 router.post('/profile/delete/:userId', (req, res, next) => {
