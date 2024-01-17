@@ -11,13 +11,13 @@ const saltRounds = 11;
 
 const{ isLoggedIn, isLoggedOut, isAdmin, isVerifiedUser } = require('../middlewares/route-guard.js')
 
-router.get('/create-pet/:userId', (req, res, next) => {
+router.get('/create-pet/:userId', isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
     res.render('pet/create-profile', {userId, inSession: true} )
 })
 
-router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) => {
+router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params
     console.log('post-pet the USER ID',userId)
 
@@ -89,7 +89,7 @@ router.get("/view-all-pets", (req, res, next) => {
     .catch((err) => console.log(err))
 })
 
-router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
+router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
     //let userId = req.session.currentUser._id
     
@@ -104,7 +104,7 @@ router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
         
 })
 
-router.get("/edit-pet/:petId", (req, res, next) => {
+router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
 
     Pet.findById(petId)
@@ -115,7 +115,7 @@ router.get("/edit-pet/:petId", (req, res, next) => {
         .catch((err) => console.log(err))
 })
 
-router.post("/edit-pet-profile/:petId", fileUploader.single('img'), (req, res, next) => {
+router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
     const { petId } = req.params
     const { name, incommingImg, votes, description } = req.body
     
