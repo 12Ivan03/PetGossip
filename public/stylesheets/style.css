@@ -230,7 +230,8 @@
 }
 
 .btn-container p {
-  font-weight: 100;
+  font-weight: 150;
+  font-size: large;
 }
 
 /* footer */
