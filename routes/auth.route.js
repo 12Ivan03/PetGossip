@@ -70,17 +70,18 @@ router.post("/login", (req, res, next) => {
     User.findOne({username})
         .then((logUser) => {
             if(!logUser){
-                res.render('auth/login', {errUsernameMsg: "Inccorect username"})
+                res.render('auth/login', {errUsernameMsg: "User not found or password incorrect"})
             }
 
             bcrypt.compare(password, logUser.password)
                 .then((approvedPwd) => {
                     if(approvedPwd) {
-                        req.session.currentUser = { username: logUser.username, _id: logUser._id }
+                        // req.session.currentUser = { username: logUser.username, _id: logUser._id }
+                        req.session.currentUser = logUser;
                         // console.log("session", req.session.currentUser)
                         res.redirect('/profile')
                     } else {
-                        res.render('auth/login', {errMsgPwd: "inccorect password"})
+                        res.render('auth/login', {errMsgPwd: "User not found or password incorrect"})
                     }
                 })
                 .catch((err) => console.log(err))
@@ -95,6 +96,7 @@ router.get("/logout", isLoggedIn, (req, res, next) => {
 })
 
 router.get('/confirm/:confirmCode', (req, res)=> {
+    console.log('currentUser', req.session.currentUser);
     User.findOne({confirmationCode: req.params.confirmCode})
         .then(foundUser => {
             if(foundUser){
@@ -106,8 +108,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 }
                 User
                 .findByIdAndUpdate(foundUser._id, { $set: { status: 'Active' } }, { new: true })
-                .then(updated=>{ 
-                    console.log('updated status is', updated);
+                .then(()=>{ 
                     res.render('auth/account-verified', {success:true})})
                 .catch(err=>console.log('error in updating status', err));
             } else {

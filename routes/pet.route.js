@@ -46,7 +46,6 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
     const { petId } = req.params
     let userId = req.session.currentUser._id
     console.log("current User session", userId)
-
     Pet.findById(petId)
         .populate('user')
         .then(foundPet => {
@@ -54,9 +53,9 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                 .populate('user')
                 .populate('pet')
                 .then((foundComments)=>{
-
+                    const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
                     let newFoundComments = foundComments.map((obj) => {
-                       return {...obj.toObject(), isOwner: userId.toString() === obj.user._id.toString()};
+                       return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
 
@@ -68,9 +67,10 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
 
                     res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, idTitle:"pet-profile-page"})
                 
-                });
+                })
+                .catch((err)=>console.log(err));
         })
-        .catch((err) => console.log(err))
+        .catch((err) => next(err))
 })
 
 router.get("/view-all-pets", (req, res, next) => {

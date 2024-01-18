@@ -36,7 +36,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
     
 })
 
-router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next) => {
+router.post('/edit-profile/:userId', isLoggedIn, fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params;
     const { name, lastName, city, bio, _id, existingImage } = req.body;
 

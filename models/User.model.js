@@ -47,6 +47,11 @@ const userSchema = new Schema(
       type: String,
       unique: true
     },
+    role: {
+      type: String,
+      enum: ['admin', 'moderator', 'normal'],
+      default: 'normal'
+    },
     // pets: [{
     //   type: Schema.Types.ObjectId,
     //   ref: "Pet"
