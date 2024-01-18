@@ -73,16 +73,18 @@ router.post('/edit-profile/:userId', isLoggedIn, fileUploader.single('img'), (re
 
 })
 
-router.post('/profile/delete/:userId', (req, res, next) => {
+router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
     const { userId } = req.params;
     //const currentUserInSession = req.session.currentUser._id;
-    
-    Pet.deleteMany({ user: userId})
-        .then(() => {
-            return Promise.all([
-                Comment.deleteMany({ user: userId}),
-                User.findByIdAndDelete(userId)
-            ])   
+    if(req.session.currentUser._id === userId || req.session.currentUser.role === 'Admin') {
+        console.log('userId', userId);
+        Pet.deleteMany({ user: userId})
+        .then((result) => {
+                console.log(result);
+                return Promise.all([
+                    Comment.deleteMany({ user: userId}),
+                    User.findByIdAndDelete(userId)
+                ]);  
         })
         .then(() => {
             req.session.destroy((err) => {
@@ -90,7 +92,10 @@ router.post('/profile/delete/:userId', (req, res, next) => {
             })
         })
         .catch((err) => console.log(err));
-    
+    } else {
+        res.redirect('/profile')
+    }
+   
 })
 
 module.exports = router;
