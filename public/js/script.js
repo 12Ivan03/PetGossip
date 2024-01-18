@@ -38,5 +38,23 @@ document.addEventListener("DOMContentLoaded",() => {
         editBtn.style.display = 'none';
       });   
     });
-  
+
+
+    ////scroll up ////
+
+    // const petOpening = document.querySelector('.pet-opening');
+
+    // const handleScroll = () => {
+    //   const scrollY = window.scrollY;
+
+    //   const threshold = 100;
+
+    //   if (scrollY > threshold) {
+    //     petOpening.classList.add('fade-away');
+    //   } else {
+    //     petOpening.classList.remove('fade-away');
+    //   }
+    // };
+
+    // window.addEventListener('scroll', handleScroll);
   });

@@ -1,3 +1,109 @@
+/* opening pet progile? */
+
+.pet-opening {
+    height: 50vw;
+    background-color: rgb(75, 57, 57);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.pet-opening-img img {
+    height: 20rem;
+}
+
+.pet-opening-img  {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20rem;
+    width: 20rem;
+    border-radius: 10rem;
+    margin-left: 5rem;
+}
+
+/* profile pet */
+
+.container {
+    height: 60vh;
+    background-image: url(/images/woman-walking-with-her-dog.jpeg);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: fixed;
+}
+
+.scroll-div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 60vh;
+}
+
+.pet-name-background {
+    font-size: 10rem;
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.pet-image img {
+    height: 20rem;
+    z-index: 10;
+}
+
+.pet-image {
+    overflow: hidden;
+    height: 20rem;
+    width: 20rem;
+    border-radius: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 0 0 13rem;
+    box-shadow: rgb(0, 0, 0) 0.5rem 0.5rem 1rem ;
+}
+
+.pet-info {
+    margin-left: 15rem;
+    width: 30vw;
+   
+}
+
+.static-name { 
+    font-size: small;
+    font-style: italic;
+    color: rgb(78, 77, 77);
+    margin-right: 0.5rem;
+}
+
+.pet-info-li {
+    display: flex;
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Pet comment  */
+
 .comment-div {
     position: fixed;
     top: 50%;
@@ -11,8 +117,4 @@
     justify-content: center;
     align-items: center;
     z-index: 50;
-}
-
-.form-comment-edit {
-
 }
