@@ -70,28 +70,50 @@ router.post('/edit-profile/:userId', isLoggedIn, fileUploader.single('img'), (re
             res.redirect("/profile");
         })
         .catch((err) => console.log(err))
-
+        
 })
 
 router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
     const { userId } = req.params;
     //const currentUserInSession = req.session.currentUser._id;
-    if(req.session.currentUser._id === userId || req.session.currentUser.role === 'Admin') {
-        console.log('userId', userId);
-        Pet.deleteMany({ user: userId})
-        .then((result) => {
-                console.log(result);
-                return Promise.all([
-                    Comment.deleteMany({ user: userId}),
-                    User.findByIdAndDelete(userId)
-                ]);  
-        })
-        .then(() => {
-            req.session.destroy((err) => {
-                res.redirect("/")
+    let publicIdOfCloudinary
+    if (req.session.currentUser._id === userId || req.session.currentUser.role === 'Admin') {
+        User.findById(userId)
+            .then((foundUser) => {
+                if (foundUser.img) {
+                    publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
+                    return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true });
+                } else {
+                    return Promise.resolve();
+                }
             })
-        })
-        .catch((err) => console.log(err));
+            .then(() => {
+                return Pet.find({ user: userId })
+            })
+            .then((foundPets) => {
+                const deletePets = foundPets.map((pets) => {
+                    if (pets.img) {
+                        publicIdOfCloudinary = pets.img.split('/').splice(-2).join('/').split('.')[0];
+                        return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true });
+                    } else {
+                        return Promise.resolve();
+                    }
+                })
+                return Promise.all(deletePets)
+            })
+            .then(() => {
+                return Promise.all([
+                    Comment.deleteMany({ user: userId }),
+                    Pet.deleteMany({ user: userId }),
+                    User.findByIdAndDelete(userId),
+                ]);
+            })
+            .then(() => {
+                req.session.destroy((err) => {
+                    res.redirect("/")
+                })
+            })
+            .catch((err) => console.log(err));
     } else {
         res.redirect('/profile')
     }

@@ -58,17 +58,11 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
-
                     const isUser = userId.toString() === foundPet.user._id.toString();
 
-                    // console.log('foundComments 3 =====> ', newFoundComments)
-                    // console.log('current user in session ===========>' , isUser)
-                    // console.log('the found pet ===> ', foundPet._id)
-
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, idTitle:"pet-profile-page"})
-                
-                })
-                .catch((err)=>console.log(err));
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true})
+                    //, idTitle:"pet-profile-page"})
+                });
         })
         .catch((err) => next(err))
 })
@@ -77,7 +71,6 @@ router.get("/view-all-pets", (req, res, next) => {
     Pet.find()
     .populate('user')
     .then((allPets) => {
-        // console.log(allPets)
         const inSession = req.session.currentUser
 
         if(inSession){
@@ -91,17 +84,39 @@ router.get("/view-all-pets", (req, res, next) => {
 
 router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
-    //let userId = req.session.currentUser._id
-    
-    Pet.findByIdAndDelete(petId)
+    let userId = req.session.currentUser._id
+    let publicIdOfCloudinary
+
+    Pet.findById(petId)
+        .then((foundPet) => {
+            if(foundPet.img) {
+                publicIdOfCloudinary = foundPet.img.split('/').splice(-2).join('/').split('.')[0];
+                return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+            } else {
+                return Promise.resolve();
+            }    
+        })
+//
+        .then(() =>{
+            return Comment.find({ pet: petId})
+        })
+        .then((foundComments) => {
+            const userDeleteComments = foundComments.map((comment) => {
+                return User.findByIdAndUpdate(comment.user, { $pull: {comment: comment._id } } )     
+            })
+            return Promise.all(userDeleteComments)
+        })
+//
         .then(() => {
-            Comment.deleteMany({pet: petId})
+            return Promise.all ([
+                Comment.deleteMany({pet: petId}),
+                Pet.findByIdAndDelete(petId)
+            ])
         })
         .then(() => {
             res.redirect('/profile')
         })
         .catch((err) => console.log(err))
-        
 })
 
 router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {

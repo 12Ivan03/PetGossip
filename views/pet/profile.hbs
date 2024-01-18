@@ -1,82 +1,99 @@
-{{!-- <div id="pet-profile-page" class="blur-off"> --}}
+    <div class="container">
+        {{!-- <div class="pet-opening" style="display: none">
 
-<h1>My profile</h1>
-
-<p>Pet's name: {{petInfo.name}}</p>
-<img src="{{petInfo.img}}" alt="image of the pet" style="height: 200px">
-
-<p>I call my owner: bark-bark, but his human name is {{petInfo.user.name}} {{petInfo.user.lastName}}</p>
-
-<br>
-<p>Votes: {{petInfo.votes}}</p>
-<p>Description: {{petInfo.description}}</p>
-
-{{#if isUser}}
-    <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
-
-    <form action="/pet/{{petInfo._id}}/delete" method="post">
-        <button type="submit">Delete Pet</button>
-    </form>
-{{/if}}
-
-<hr>
-
-<form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
-    <label for="text">
-        <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
-    </label>
-    <br>
-    <button type="submit">Comment</button>
-</form>
-
-<hr>
-
-<p>Comments:</p>
-
-{{#each comment}}
-
-        <p>{{text}}</p>
-        <p>commented by {{user.name}}</p>
-
-        {{#if isOwner}}
-
-            <button><a id="iframe-edit-message-popup-btn">Edit</a></button>
-            {{!-- href="/edit-comment/{{_id}}" --}}
-
-            {{!-- <iframe id="iframe-edit-message-popup-page" src="/edit-comment/{{_id}}" frameborder="0" style="display: none;"></iframe> --}}
-
-            {{!-- <form action="/comment/delete/{{_id}}" method="post">
-                <button type="submit">Delete Comment</button>
-            </form> --}}
-        {{/if}}
-
-            <div id="iframe-edit-message-popup-page" class="blur-on">
-
-                <h1>Edit comment:</h1>
-
-                <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
-                    <label for="text">
-                        <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
-                    </label>
-                    <p>commented by {{user.name}}</p>
-
-                    <button id="iframe-edit-message-save-btn" type="submit">Save</button>     
-                </form>
-
-                <form action="/comment/delete/{{_id}}" method="post">
-                    <button type="submit">Delete Comment</button>
-                </form>
-
+            <div class="pet-opening-img">
+                <img src="{{petInfo.img}}" alt="">
             </div>
 
-{{/each}}
+            <p>{{petInfo.name}}</p>
+        </div> --}}
 
+        <div class="scroll-div">
+            <div class="pet-name-background">{{petInfo.name}}</div>
+            <div class="pet-image">
+                <img src="{{petInfo.img}}" alt="image of the pet">
+            </div>
+
+            <div class="pet-info">
+                <ul>
+                    <li class="pet-info-li"><p class="static-name">Pet's name: <p>{{petInfo.name}}</p></p></li>
+                    <li class="pet-info-li"><p class="static-name">Pet nickname: <p></p></p></li>
+                    <li class="pet-info-li"><p class="static-name">Owner: <p>{{petInfo.user.name}} {{petInfo.user.lastName}}</p></p></li>
+                    <li class="pet-info-li"><p class="static-name">Votes: <p>{{petInfo.votes}}</p></p></li>
+                    <li class="pet-info-li"><p class="static-name">Age: <p></p></p></li>
+                    <li class="pet-info-li"><p class="static-name">Birthday: <p></p></p></li>
+                </ul>  
+            </div>   
+        </div>
+    </div>
+
+
+
+<div class="pet-edit-btns">
+    {{#if isUser}}
+        <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
+
+        <form action="/pet/{{petInfo._id}}/delete" method="post">
+            <button type="submit">Delete Pet</button>
+        </form>
+    {{/if}}
+</div>
+    
+<div class="pet-description">
+    <p>Description: {{petInfo.description}}</p>
 </div>
 
-<div id="new-idea-test"></div>
+<div class="pet-leave-a-comment">
+    <form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
+        <label for="text">
+            <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
+        </label>
 
-           
+        <button type="submit">Comment</button>
+    </form>
+</div>
 
+<div class="pet-comments-all">
 
+    <div class="pet-comments-title">
+        <p>Comments:</p>
+    </div>
 
+    <div class="pet-comments">
+        {{#each comment}}
 
+                <p>{{text}}</p>
+                <p>commented by {{user.name}}</p>
+
+                <div class="edit-plus-comment-div">
+                    {{!-- <div class="edit-plus-comment-div-plus"> --}}
+
+                        <div class="edit-btn" style="display: block;">
+                            {{#if isOwner}}
+                                <button><a class="edit-btn">Edit</a></button>
+                            {{/if}}
+                        </div>
+
+                        <div class="comment-div" style="display: none">
+
+                            <h1>Edit comment:</h1>
+
+                            <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
+                                <label for="text">
+                                    <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
+                                </label>
+                                <p>commented by {{user.name}}</p>
+                                <button type="submit">Save</button>     
+                            </form>
+                            <button><a href="/pet-profile/{{pet._id}}">back</a></button>
+                            <form action="/comment/delete/{{_id}}" method="post">
+                                <button type="submit">Delete Comment</button>
+                            </form>
+
+                        </div>
+                    {{!-- </div> --}}
+                </div>
+
+        {{/each}}
+    </div>
+</div>

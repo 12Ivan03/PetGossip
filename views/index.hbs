@@ -52,21 +52,21 @@
 
 <div class="singup-login-profile-logout-btn-container">
     {{#if inSession}}
-        <a href="/profile"><div class="btn-container btn-web-description-extra-info">
-            <p>Profile</p>
-        </div></a>
+        <a href="/profile">
+            <button class="btn-container btn-web-description-extra-info"><p>Profile</p></button>
+        </a>
 
-        <a href="/logout"><div class="btn-container btn-web-description-extra-info">
-            <p>Logout</p>
-        </div></a>
+        <a href="/logout">
+            <button class="btn-container btn-web-description-extra-info"><p>Logout</p></button>
+        </a>
     {{else}}
-        <a href="/login"><div class="btn-container btn-web-description-extra-info">
-            <p>Login</p>
-        </div></a>
+        <a href="/login">
+            <button class="btn-container btn-web-description-extra-info"><p>Login</p></button>
+        </a>
 
-        <a href="/signup"><div class="btn-container btn-web-description-extra-info">
-            <p>Sing Up</p>
-        </div></a>   
+        <a href="/signup">
+            <button class="btn-container btn-web-description-extra-info"><p>Sing Up</p></button>
+        </a>   
     {{/if}}
 </div>
 
