@@ -1,3 +1,5 @@
+let notifier = require('node-notifier');
+
 const isLoggedIn = (req, res, next) => {
     if(!req.session.currentUser) {
        res.redirect('/login');
@@ -13,14 +15,39 @@ const isLoggedOut = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-    if(req.session.currentUser === 'Admin') {
+    if(req.session.currentUser && req.session.currentUser === 'Admin') {
         res.redirect('/admin')
     }
     next();
 }
 
+const isModerator = (req, res, next) => {
+    if(req.session.currentUser && req.session.currentUser === 'Moderator') {
+        res.redirect('/admin')
+    }
+    next();
+}
+
+const isVerifiedUser = (req, res, next) => {
+    console.log(req.session.currentUser.username);
+    console.log(req.session.currentUser.status);
+    if (req.session.currentUser.status === 'Active') {
+        console.log('in Active ')
+        next();
+    } else {
+        // res.jsonp('You have limited access since your account is not verified. Please check your email and verify your account.');
+        notifier.notify({
+            title: 'Error Message',
+            message: 'You have limited access since your account is not verified. Please check your email and verify your account.'
+        });
+        res.redirect('/view-all-pets');
+    }
+}
+
 module.exports = {
     isLoggedIn,
     isLoggedOut,
-    isAdmin
+    isAdmin,
+    isModerator,
+    isVerifiedUser
 };

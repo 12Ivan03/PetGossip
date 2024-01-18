@@ -9,15 +9,15 @@ const fileUploader = require('../config/cloudinary.config.js')
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
-const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
+const{ isLoggedIn, isLoggedOut, isAdmin, isVerifiedUser } = require('../middlewares/route-guard.js')
 
-router.get('/create-pet/:userId', (req, res, next) => {
+router.get('/create-pet/:userId', isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
     res.render('pet/create-profile', {userId, inSession: true} )
 })
 
-router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) => {
+router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params
     console.log('post-pet the USER ID',userId)
 
@@ -42,11 +42,10 @@ router.post('/create-pet/:userId', fileUploader.single('img'), (req, res, next) 
         })
 })
 
-router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
+router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
     let userId = req.session.currentUser._id
     console.log("current User session", userId)
-
     Pet.findById(petId)
         .populate('user')
         .then(foundPet => {
@@ -54,9 +53,9 @@ router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
                 .populate('user')
                 .populate('pet')
                 .then((foundComments)=>{
-
+                    const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
                     let newFoundComments = foundComments.map((obj) => {
-                       return {...obj.toObject(), isOwner: userId.toString() === obj.user._id.toString()};
+                       return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
                     const isUser = userId.toString() === foundPet.user._id.toString();
@@ -65,7 +64,7 @@ router.get("/pet-profile/:petId", isLoggedIn, (req, res, next) => {
                     //, idTitle:"pet-profile-page"})
                 });
         })
-        .catch((err) => console.log(err))
+        .catch((err) => next(err))
 })
 
 router.get("/view-all-pets", (req, res, next) => {
@@ -83,7 +82,7 @@ router.get("/view-all-pets", (req, res, next) => {
     .catch((err) => console.log(err))
 })
 
-router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
+router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
     let userId = req.session.currentUser._id
     let publicIdOfCloudinary
@@ -120,7 +119,7 @@ router.post("/pet/:petId/delete", isLoggedIn, (req, res, next) => {
         .catch((err) => console.log(err))
 })
 
-router.get("/edit-pet/:petId", (req, res, next) => {
+router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
 
     Pet.findById(petId)
@@ -131,7 +130,7 @@ router.get("/edit-pet/:petId", (req, res, next) => {
         .catch((err) => console.log(err))
 })
 
-router.post("/edit-pet-profile/:petId", fileUploader.single('img'), (req, res, next) => {
+router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
     const { petId } = req.params
     const { name, incommingImg, votes, description } = req.body
     

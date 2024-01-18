@@ -38,5 +38,8 @@
 <button><a href="/edit-profile/{{user._id}}">Edit {{user.name}}'s Profile</a></button>
 <form action="/profile/delete/{{user._id}}" method="POST">
     <button type="submit">Delete {{user.name}}'s Profile</button>
-
 </form>
+{{#if errorMessage}}
+    <br>
+    <p style="color: red;">Sorry, you are not authorized to delete this user.</p>
+{{/if}}

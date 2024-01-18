@@ -19,9 +19,6 @@ router.get("/signup", isLoggedOut, (req, res, next) => {
 
 router.post("/signup", (req, res, next) => {
     const { username, password, email } = req.body;
-    
-    // console.log("this is the body", req.body);
-
     if(username === '' || password === '' || email === ''){
         res.render('auth/signup', {errMsg: "Please fill in all the required spaces"})
         return;
@@ -38,24 +35,17 @@ router.post("/signup", (req, res, next) => {
                 })
                 .then(foundUser => {
                     const message = "Click here to verify account.";
-                    // Send an email with the information we got from the form
-                      // Send an email with the information we got from the form
                     transporter.sendMail({
                         from: `"Pet Gossips " <${process.env.EMAIL_ADDRESS}>`,
                         to: email,
                         subject: "Account Verification",
                         text: message,
-                        // html: `<a href="http://localhost:'+ ${process.env.PORT}+'/auth/confirm/'+${foundUser.confirmationCode}">${message}</a>`,
                         html:templates.templateAccountVerification(foundUser.username, foundUser.confirmationCode)
                         })
                         .then((info) => {
-                            //Need to show some intimation to the user for email received and verification.
-                            // res.render("message", { email, subject, message, info })
                             console.log('info',info);
                             req.session.currentUser = foundUser;
-                            // console.log("this is the user's-session", foundUser)
                             res.render('user/edit-profile', { foundUser, inSession: true })
-
                         })
                         .catch((error) => console.log(error));
                 }).catch((error) => console.log(error));
@@ -80,17 +70,18 @@ router.post("/login", (req, res, next) => {
     User.findOne({username})
         .then((logUser) => {
             if(!logUser){
-                res.render('auth/login', {errUsernameMsg: "Inccorect username"})
+                res.render('auth/login', {errUsernameMsg: "User not found or password incorrect"})
             }
 
             bcrypt.compare(password, logUser.password)
                 .then((approvedPwd) => {
                     if(approvedPwd) {
-                        req.session.currentUser = { username: logUser.username, _id: logUser._id }
+                        req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role }
+                        // req.session.currentUser = logUser;
                         // console.log("session", req.session.currentUser)
                         res.redirect('/profile')
                     } else {
-                        res.render('auth/login', {errMsgPwd: "inccorect password"})
+                        res.render('auth/login', {errMsgPwd: "User not found or password incorrect"})
                     }
                 })
                 .catch((err) => console.log(err))
@@ -105,6 +96,7 @@ router.get("/logout", isLoggedIn, (req, res, next) => {
 })
 
 router.get('/confirm/:confirmCode', (req, res)=> {
+    console.log('currentUser', req.session.currentUser);
     User.findOne({confirmationCode: req.params.confirmCode})
         .then(foundUser => {
             if(foundUser){
@@ -116,8 +108,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 }
                 User
                 .findByIdAndUpdate(foundUser._id, { $set: { status: 'Active' } }, { new: true })
-                .then(updated=>{ 
-                    console.log('updated status is', updated);
+                .then(()=>{ 
                     res.render('auth/account-verified', {success:true})})
                 .catch(err=>console.log('error in updating status', err));
             } else {
@@ -128,7 +119,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
 })
 
 router.post('/contact', (req, res)=>{
-    console.log('req.body', req.body);
+    // console.log('req.body', req.body);
     const {userName, userEmail, customerNote} = req.body;
     transporter.sendMail({
         from: `"Pet Gossips - Support " <${process.env.EMAIL_ADDRESS}>`,

@@ -36,7 +36,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
     
 })
 
-router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next) => {
+router.post('/edit-profile/:userId', isLoggedIn, fileUploader.single('img'), (req, res, next) => {
     const { userId } = req.params;
     const { name, lastName, city, bio, _id, existingImage } = req.body;
 
@@ -73,48 +73,51 @@ router.post('/edit-profile/:userId', fileUploader.single('img'), (req, res, next
         
 })
 
-router.post('/profile/delete/:userId', (req, res, next) => {
+router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
     const { userId } = req.params;
     //const currentUserInSession = req.session.currentUser._id;
     let publicIdOfCloudinary
- 
-    User.findById(userId)  
-        .then((foundUser) => {
-            if (foundUser.img){        
-                publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
-                return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
-            } else {
-                return Promise.resolve();
-            }       
-        })
-        .then(() => {
-            return Pet.find({user: userId})
-        })
-        .then((foundPets) => {
-            const deletePets = foundPets.map((pets) => {
-                if (pets.img){
-                    publicIdOfCloudinary = pets.img.split('/').splice(-2).join('/').split('.')[0];
-                    return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true}); 
+    if (req.session.currentUser._id === userId || req.session.currentUser.role === 'Admin') {
+        User.findById(userId)
+            .then((foundUser) => {
+                if (foundUser.img) {
+                    publicIdOfCloudinary = foundUser.img.split('/').splice(-2).join('/').split('.')[0];
+                    return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true });
                 } else {
                     return Promise.resolve();
-                }   
+                }
             })
-            return Promise.all(deletePets)
-        })
-        .then(() => {
-            return Promise.all([
-                Comment.deleteMany({ user: userId}),
-                Pet.deleteMany({ user: userId}),
-                User.findByIdAndDelete(userId),
-            ]);
-        })
-        .then(() => {
-            req.session.destroy((err) => {
-                res.redirect("/")
+            .then(() => {
+                return Pet.find({ user: userId })
             })
-        })
-        .catch((err) => console.log(err));
-    
+            .then((foundPets) => {
+                const deletePets = foundPets.map((pets) => {
+                    if (pets.img) {
+                        publicIdOfCloudinary = pets.img.split('/').splice(-2).join('/').split('.')[0];
+                        return cloudinary.uploader.destroy(publicIdOfCloudinary, { invalidate: true });
+                    } else {
+                        return Promise.resolve();
+                    }
+                })
+                return Promise.all(deletePets)
+            })
+            .then(() => {
+                return Promise.all([
+                    Comment.deleteMany({ user: userId }),
+                    Pet.deleteMany({ user: userId }),
+                    User.findByIdAndDelete(userId),
+                ]);
+            })
+            .then(() => {
+                req.session.destroy((err) => {
+                    res.redirect("/")
+                })
+            })
+            .catch((err) => console.log(err));
+    } else {
+        res.redirect('/profile')
+    }
+   
 })
 
 module.exports = router;
