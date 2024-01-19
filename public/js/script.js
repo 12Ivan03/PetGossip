@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded",() => {
   
     const editPlusCommentDiv = document.querySelectorAll('.edit-plus-comment-div');
   
-    editPlusCommentDiv.forEach((hoverContainer) => {
-      const commentDiv = hoverContainer.querySelector('.comment-div');
-      const editBtn = hoverContainer.querySelector('.edit-btn');
+    editPlusCommentDiv.forEach((editBLurMsg) => {
+      const commentDiv = editBLurMsg.querySelector('.comment-div');
+      const editBtn = editBLurMsg.querySelector('.edit-btn');
           
       editBtn.addEventListener('click', () => {
         commentDiv.style.display = "flex";
@@ -40,21 +40,25 @@ document.addEventListener("DOMContentLoaded",() => {
     });
 
 
-    ////scroll up ////
+    ////hover pet info ////
 
-    // const petOpening = document.querySelector('.pet-opening');
+    const hoverPetInfoLi = document.querySelectorAll('.hover-pet-info-li');
 
-    // const handleScroll = () => {
-    //   const scrollY = window.scrollY;
 
-    //   const threshold = 100;
+    hoverPetInfoLi.forEach((hover) => {
+      const dinamiName = hover.querySelector('.dinamic-name')
 
-    //   if (scrollY > threshold) {
-    //     petOpening.classList.add('fade-away');
-    //   } else {
-    //     petOpening.classList.remove('fade-away');
-    //   }
-    // };
+      hover.addEventListener('mouseover', () => {
+        hover.style.color ="black";
+        hover.style.fontSize = "xx-large";
+        dinamiName.style.fontSize = "3rem";
+      });
 
-    // window.addEventListener('scroll', handleScroll);
+      hover.addEventListener('mouseleave', () => {
+        hover.style.color ="rgb(78, 77, 77)";
+        hover.style.fontSize = "larger"
+        dinamiName.style.fontSize = "x-large";
+      });
+      
+    })
   });
