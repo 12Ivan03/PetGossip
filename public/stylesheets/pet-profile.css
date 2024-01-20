@@ -28,7 +28,8 @@
 
 .container {
     height: 30rem;
-    background-image: url(/images/gras.jpeg);
+    /* background-image: url(/images/gras.jpeg); */
+    background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/r2yl4p9wqaykfi54jjil);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;

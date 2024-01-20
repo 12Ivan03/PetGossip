@@ -1,43 +1,43 @@
 // Code to run when the window has fully loaded
 
-window.onload = function () {
-  function preloadImages(images, cb) {
-    let loaded = 0;
-    const numImages = images.length;
+// window.onload = function () {
+//   function preloadImages(images, cb) {
+//     let loaded = 0;
+//     const numImages = images.length;
 
-    function imageLoaded() {
-      loaded++;
-      if (loaded === numImages) {
-        cb();
-      }
-    }
+//     function imageLoaded() {
+//       loaded++;
+//       if (loaded === numImages) {
+//         cb();
+//       }
+//     }
 
-    images.forEach(src => {
-      const img = new Image();
-      img.onload = imageLoaded;
-      img.src = src;
-    });
-  }
+//     images.forEach(src => {
+//       const img = new Image();
+//       img.onload = imageLoaded;
+//       img.src = src;
+//     });
+//   }
 
-  // List of image URLs to preload
-  const imageFolder = 'public/images/';
-  const imageUrls = [
-    'gras.jpeg',
-    'woman-walking-with-her-dog.jpeg',
-    'isolated-on-blue-background.jpeg',
-    'petgossip-logo.png',
-    'petgossip-logo-black-transparent.png',
-    'running-in-grass-dog.jpeg',
-    'petgossip-end-logo-transparent.png',
-    'white-horizontal-website-banner.jpeg'
+//   // List of image URLs to preload
+//   const imageFolder = 'public/images/';
+//   const imageUrls = [
+//     'gras.jpeg',
+//     'woman-walking-with-her-dog.jpeg',
+//     'isolated-on-blue-background.jpeg',
+//     'petgossip-logo.png',
+//     'petgossip-logo-black-transparent.png',
+//     'running-in-grass-dog.jpeg',
+//     'petgossip-end-logo-transparent.png',
+//     'white-horizontal-website-banner.jpeg'
 
-  ];
+//   ];
 
-  preloadImages(imageUrls.map(url => imageFolder + url), function () {
-    console.log('All images preloaded.');
-    // Continue with your website initialization or show content
-  });
-}
+//   preloadImages(imageUrls.map(url => imageFolder + url), function () {
+//     console.log('All images preloaded.');
+//     // Continue with your website initialization or show content
+//   });
+// }
 
 document.addEventListener("DOMContentLoaded",() => {
       
