@@ -118,9 +118,13 @@ router.get('/confirm/:confirmCode', (req, res)=> {
         }).catch(err => console.log(err));
 })
 
+router.get('/contact', (req, res)=>{
+    res.render('contact/contactus');
+});
+
 router.post('/contact', (req, res)=>{
     // console.log('req.body', req.body);
-    const {userName, userEmail, customerNote, isConfirmPage} = req.body;
+    const {userName, userEmail, customerNote} = req.body;
     transporter.sendMail({
         from: `"Pet Gossips - Support " <${process.env.EMAIL_ADDRESS}>`,
         to: process.env.EMAIL_ADDRESS,
@@ -130,10 +134,7 @@ router.post('/contact', (req, res)=>{
         })
         .then((info) => {
             console.log('email sent by the user to pet gossips.') 
-            if(isConfirmPage === '1')
-            res.render('auth/account-verified',{isMsgSent:true});
-            else
-            res.render('')
+            res.render('contact/contactus', {isMsgSent:true});
         })
         .catch(err=>console.log(err));
 

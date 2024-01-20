@@ -59,8 +59,8 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
 
                     });
                     const isUser = userId.toString() === foundPet.user._id.toString();
-
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true})
+                    console.log("req uri",req.originalUrl);
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl})
                     //, idTitle:"pet-profile-page"})
                 });
         })
