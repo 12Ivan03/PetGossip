@@ -1,7 +1,8 @@
 /* View pet profile */
 
 .view-all-pet-profile-top {
-    background-image: url(../images/running-in-grass-dog.jpeg);
+    /* background-image: url(../images/running-in-grass-dog.jpeg); */
+    background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/moqkw7qo49jytwlom88n);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
