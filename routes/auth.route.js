@@ -104,7 +104,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 console.log('User is found, making it active');
                 if(foundUser.status === 'Active'){
                     req.session.currentUser = { username: foundUser.username, _id: foundUser._id, status:foundUser.status, role:foundUser.role }
-                    res.render('auth/account-verified', {isActive:true});
+                    res.render('auth/account-verified', {isActive:true,  inSession:true});
                     return;
                 }
                 User
@@ -112,7 +112,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 .then(updatedUser=>{ 
                     console.log('updatedUser', updatedUser);
                     req.session.currentUser = { username: updatedUser.username, _id: updatedUser._id, status:updatedUser.status, role:updatedUser.role }
-                    res.render('auth/account-verified', {success:true})})
+                    res.render('auth/account-verified', {success:true, inSession:true})})
                 .catch(err=>console.log('error in updating status', err));
             } else {
                 console.log('no user is found registered for this user');
@@ -122,7 +122,10 @@ router.get('/confirm/:confirmCode', (req, res)=> {
 })
 
 router.get('/contact', (req, res)=>{
-    res.render('contact/contactus');
+    if(req.session.currentUser)
+        res.render('contact/contactus', {inSession:true});
+    else
+        res.render('contact/contactus');
 });
 
 router.post('/contact', (req, res)=>{
