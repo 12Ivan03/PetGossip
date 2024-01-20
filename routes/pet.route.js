@@ -55,12 +55,13 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                 .then((foundComments)=>{
                     const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
                     let newFoundComments = foundComments.map((obj) => {
+                        console.log('obj', obj)
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
                     const isUser = userId.toString() === foundPet.user._id.toString();
-
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true})
+                    console.log("req uri",req.originalUrl);
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl})
                     //, idTitle:"pet-profile-page"})
                 });
         })

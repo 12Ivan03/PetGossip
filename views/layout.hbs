@@ -6,10 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <title>{{appTitle}}</title>
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-      <link rel="stylesheet" href="/stylesheets/reset.style.css">
-      <link rel="stylesheet" href="/stylesheets/style-pet-all.css">
-      <link rel="stylesheet" href="/stylesheets/pet-profile.css">
+      <link rel="icon" type="image/png" href="/images/petgossip-logo-transparent.png">
+   
    </head>
 
    <body>
@@ -22,10 +20,10 @@
          
          <ul class="nav-bar-list">
             <li class="nav-bar-list-items"><a href="/">Home</a></li>
-            <li class="nav-bar-list-items"><a href="/view-all-pets">View All Pets</a></li>
+            <li class="nav-bar-list-items"><a href="/view-all-pets">Pets</a></li>
             {{#if inSession}}
             <li class="nav-bar-list-items"><a href="/profile">Profile</a></li>
-            <li class="nav-bar-list-items"><a href="/logout">logout</a></li>
+            <li class="nav-bar-list-items"><a href="/logout">Logout</a></li>
             {{else}}
             <li class="nav-bar-list-items"><a href="/signup">Sing Up</a></li>
             <li class="nav-bar-list-items"><a href="/login">Login</a></li>
@@ -35,6 +33,10 @@
 
       {{{body}}}
 
+      <link rel="stylesheet" href="/stylesheets/style.css" />
+      <link rel="stylesheet" href="/stylesheets/reset.style.css">
+      <link rel="stylesheet" href="/stylesheets/style-pet-all.css">
+      <link rel="stylesheet" href="/stylesheets/pet-profile.css">
       <script src="/js/script.js"></script>
    </body>
 

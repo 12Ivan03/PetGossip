@@ -1,4 +1,44 @@
 // Code to run when the window has fully loaded
+
+window.onload = function () {
+  function preloadImages(images, cb) {
+    let loaded = 0;
+    const numImages = images.length;
+
+    function imageLoaded() {
+      loaded++;
+      if (loaded === numImages) {
+        cb();
+      }
+    }
+
+    images.forEach(src => {
+      const img = new Image();
+      img.onload = imageLoaded;
+      img.src = src;
+    });
+  }
+
+  // List of image URLs to preload
+  const imageFolder = 'public/images/';
+  const imageUrls = [
+    'gras.jpeg',
+    'woman-walking-with-her-dog.jpeg',
+    'isolated-on-blue-background.jpeg',
+    'petgossip-logo.png',
+    'petgossip-logo-black-transparent.png',
+    'running-in-grass-dog.jpeg',
+    'petgossip-end-logo-transparent.png',
+    'white-horizontal-website-banner.jpeg'
+
+  ];
+
+  preloadImages(imageUrls.map(url => imageFolder + url), function () {
+    console.log('All images preloaded.');
+    // Continue with your website initialization or show content
+  });
+}
+
 document.addEventListener("DOMContentLoaded",() => {
       
   //// Pet profile ////
@@ -29,9 +69,9 @@ document.addEventListener("DOMContentLoaded",() => {
   
     const editPlusCommentDiv = document.querySelectorAll('.edit-plus-comment-div');
   
-    editPlusCommentDiv.forEach((hoverContainer) => {
-      const commentDiv = hoverContainer.querySelector('.comment-div');
-      const editBtn = hoverContainer.querySelector('.edit-btn');
+    editPlusCommentDiv.forEach((editBLurMsg) => {
+      const commentDiv = editBLurMsg.querySelector('.comment-div');
+      const editBtn = editBLurMsg.querySelector('.edit-btn');
           
       editBtn.addEventListener('click', () => {
         commentDiv.style.display = "flex";
@@ -40,21 +80,25 @@ document.addEventListener("DOMContentLoaded",() => {
     });
 
 
-    ////scroll up ////
+    ////hover pet info ////
 
-    // const petOpening = document.querySelector('.pet-opening');
+    const hoverPetInfoLi = document.querySelectorAll('.hover-pet-info-li');
 
-    // const handleScroll = () => {
-    //   const scrollY = window.scrollY;
 
-    //   const threshold = 100;
+    hoverPetInfoLi.forEach((hover) => {
+      const dinamiName = hover.querySelector('.dinamic-name')
 
-    //   if (scrollY > threshold) {
-    //     petOpening.classList.add('fade-away');
-    //   } else {
-    //     petOpening.classList.remove('fade-away');
-    //   }
-    // };
+      hover.addEventListener('mouseover', () => {
+        hover.style.color ="black";
+        hover.style.fontSize = "xx-large";
+        dinamiName.style.fontSize = "3rem";
+      });
 
-    // window.addEventListener('scroll', handleScroll);
+      hover.addEventListener('mouseleave', () => {
+        hover.style.color ="rgb(78, 77, 77)";
+        hover.style.fontSize = "larger"
+        dinamiName.style.fontSize = "x-large";
+      });
+      
+    })
   });

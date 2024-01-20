@@ -11,24 +11,29 @@ const petSchema = new Schema(
       type: String,
       required: true
     },
+    nickname: {
+      type: String,
+    },
     img: {
-        type: String,
-        default: '/images/pet-default-pic.png',
+      type: String,
+      default: '/images/pet-default-pic.png',
+    },
+    age: {
+      type: Number,
+    },
+    birthday: {
+      type: Number,
     },
     user: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
-    // comment: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Comment"
-    // }],
     votes: {
-        type: Number
+      type: Number
     },
 
   },

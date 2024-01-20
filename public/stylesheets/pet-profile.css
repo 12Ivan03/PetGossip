@@ -27,11 +27,11 @@
 /* profile pet */
 
 .container {
-    height: 60vh;
-    background-image: url(/images/woman-walking-with-her-dog.jpeg);
+    height: 30rem;
+    background-image: url(/images/gras.jpeg);
     background-position: bottom;
     background-repeat: no-repeat;
-    background-size: fixed;
+    background-size: cover;
 }
 
 .scroll-div {
@@ -39,7 +39,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 60vh;
+    height: 30rem;
 }
 
 .pet-name-background {
@@ -57,10 +57,12 @@
 }
 
 .pet-image {
-    overflow: hidden;
     height: 20rem;
-    width: 20rem;
+    max-width: 20rem;
+    min-width: 10rem;
+    overflow: hidden;
     border-radius: 10rem;
+    /* border-radius: 50% 20% / 10% 40%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,36 +71,210 @@
 }
 
 .pet-info {
-    margin-left: 15rem;
-    width: 30vw;
-   
+    margin-left: 20rem;
+    width: 40vw;
 }
 
-.static-name { 
-    font-size: small;
+.pet-info-li { 
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 0.8rem;
+    font-size: large;
     font-style: italic;
     color: rgb(78, 77, 77);
-    margin-right: 0.5rem;
+    -webkit-text-stroke: 0.1rem #0000005e;
+    transition: 0.3s ease-in-out;
 }
 
-.pet-info-li {
+.dinamic-name {
+    font-size:x-large;
+    color: rgb(0, 0, 0);
+    margin-left: 0.8rem;
+    font-weight: 900;
+    -webkit-text-stroke: 0rem!important;
+    transition: 0.3s ease-in-out;
+}
+
+/* btns */
+
+.pet-ed-del-btns {
     display: flex;
-    
-    
+    bottom: 3rem;
 }
 
+.btn-pet {
+    margin-right: 0.5rem;
+    height: 2.5rem;
+    width: 13rem;
+    border-radius: 0.3rem;
+    border: 0;
+    opacity: 0.5;
+    background-image: white;
+    transition: opacity 0.5s ease-in-out;
+}
 
+.btn-pet a {
+    text-decoration: none;
+    color: black;
+    font-size: normal;
+}
 
+.btn-pet:hover {
+    cursor: pointer;
+    background-image: linear-gradient(to bottom right ,rgba(0, 128, 0, 0.718),rgba(0, 0, 255, 0.502));
+    opacity: 1;
+    box-shadow: black 0.2rem 0.2rem 0.5rem;
+}
 
+.btn-pet:active {
+    box-shadow: none;
+}
 
+.btn-text {
+    font-weight: 900;
+    font-size: 1rem;
+}
 
+.pet-description-comment {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    height: 16rem;
+    background-image: linear-gradient(#d2b48c, #ffffff);
+    padding: 3rem 10rem 1rem 10rem;
+}
 
+.pet-description {
+    height: 15rem;
+}
 
+.comment-form-div {
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
+.comment-form-div form {
+    display: flex;
+    flex-direction: column;
+}
 
+.pet-description-title-info {
+    padding-right: 5rem;
+}
 
+.comment-form-div button {
+    margin-top: 1.5rem;
+}
 
+.textarea-pet-comment::-webkit-input-placeholder {
+    font-size: 1.1rem;
+}
 
+.pet-description-title-info {
+    box-shadow: black 0.3rem 0.3rem 0.5rem;
+    margin-right: 3rem;
+    border-radius: 0.5rem;
+}
+
+.title-info {
+    padding: 0.5rem 0 1rem 2rem;
+}
+
+.textarea-pet-comment {
+    background-color: #d2b48c;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+/* comments each */
+
+.pet-comments-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(to top, #d2b48c, #ffffff);
+    padding-bottom: 5rem;
+}
+
+.pet-comments-title {
+    margin-bottom: 1.5rem;
+}
+
+.titles-pet {
+    font-size: xx-large;
+    margin-bottom: 1rem;
+}
+
+.pet-comments {
+    width: 60vw;
+    display: grid;
+    grid-gap: 1.5rem;
+}
+
+.each-pet-comment {
+    display: grid;
+    border-radius: 0.5rem;
+}
+
+.each-pet-comment:nth-child(odd) {
+    justify-items: start;
+    margin-right: 15rem;
+    background-image: linear-gradient(to bottom right, #d2b48c, #ffffff);
+}
+
+.each-pet-comment:nth-child(even) {
+    justify-items: end;
+    margin-left: 15rem;
+    background-image: linear-gradient(to top right, #d2b48c, #ffffff);
+}
+
+.each-text-pet-comment {
+    width: 45rem;
+    margin: 1rem 0.8rem;
+}
+
+.comment-img-user {
+    display: flex;
+}
+
+.comment-img-user img {
+    height: 3rem;
+    width: 3.5rem;
+    margin: 0 0.5rem;
+}
+
+.each-comment { 
+    margin: 0.5rem 0 1rem 0;
+}
+
+.comment-try {
+    display: flex;
+}
+
+.each-comment-by {
+    margin-right: 0.5rem;
+    font-size: small;
+    font-style: italic;
+    color:  rgb(78, 77, 77);
+}
+
+.comment-try p:last-of-type  {
+    color: linear-gradient(to bottom right ,rgba(0, 128, 0, 0.718),rgba(0, 0, 255, 0.502));
+}
+
+.edit-btn {
+    height: 2rem;
+    width: 5rem;
+}
+
+.edit-plus-comment-div {
+    margin: 0.5rem;
+}
 
 
 
@@ -117,4 +293,10 @@
     justify-content: center;
     align-items: center;
     z-index: 50;
+}
+
+
+.pet-profilet-footer {
+   
+   
 }

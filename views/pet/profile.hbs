@@ -15,85 +15,120 @@
             </div>
 
             <div class="pet-info">
-                <ul>
-                    <li class="pet-info-li"><p class="static-name">Pet's name: <p>{{petInfo.name}}</p></p></li>
-                    <li class="pet-info-li"><p class="static-name">Pet nickname: <p></p></p></li>
-                    <li class="pet-info-li"><p class="static-name">Owner: <p>{{petInfo.user.name}} {{petInfo.user.lastName}}</p></p></li>
-                    <li class="pet-info-li"><p class="static-name">Votes: <p>{{petInfo.votes}}</p></p></li>
-                    <li class="pet-info-li"><p class="static-name">Age: <p></p></p></li>
-                    <li class="pet-info-li"><p class="static-name">Birthday: <p></p></p></li>
-                </ul>  
+                <div>
+                    <ul>
+                        <li class="pet-info-li hover-pet-info-li">Pet's name:<p class="dinamic-name">{{petInfo.name}}</p></li>
+                        <li class="pet-info-li hover-pet-info-li">Pet nickname:<p class="dinamic-name">{{petInfo.nickname}}</p></li>
+                        <li class="pet-info-li hover-pet-info-li">Owner:<p class="dinamic-name">{{petInfo.user.name}} {{petInfo.user.lastName}}</p></li>
+                        <li class="pet-info-li hover-pet-info-li">Votes:<p class="dinamic-name">{{petInfo.votes}}</p></li>
+                        <li class="pet-info-li hover-pet-info-li">Age:<p class="dinamic-name">{{petInfo.age}}</p></li>
+                        <li class="pet-info-li hover-pet-info-li">Birthday:<p class="dinamic-name">{{petInfo.birthday}}</p></li>
+                    </ul>  
+                </div>
+
+                <div class="pet-ed-del-btns">
+                    {{#if isUser}}
+                        <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
+
+                        <button class="btn-pet btn-text">Delete profile</button>
+                        
+                        <dialog id="deleteBtnPet"> 
+                            <form action="/pet/{{petInfo._id}}/delete" method="post">
+                            <button class="btn-pet btn-text" type="submit">Delete profile</button>
+                            </form>
+                        </dialog>
+                        
+                    {{/if}}
+                </div>
+
             </div>   
         </div>
     </div>
 
-
-
-<div class="pet-edit-btns">
-    {{#if isUser}}
-        <button><a href="/edit-pet/{{petInfo._id}}">Edit Pet</a></button>
-
-        <form action="/pet/{{petInfo._id}}/delete" method="post">
-            <button type="submit">Delete Pet</button>
-        </form>
-    {{/if}}
-</div>
     
-<div class="pet-description">
-    <p>Description: {{petInfo.description}}</p>
-</div>
+<div class="pet-description-comment">
 
-<div class="pet-leave-a-comment">
-    <form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
-        <label for="text">
-            <textarea name="text" id="text" cols="60" rows="5" placeholder="Leave a comment..."></textarea>
-        </label>
+    <div class="pet-description ">
+        <div class="titles-description-pet">
+            <p class="titles-pet">Description:</p>
+        </div>
+        <div class="pet-description-title-info">
+            <p class="title-info">{{petInfo.description}}</p>
+        </div>
+    </div>
 
-        <button type="submit">Comment</button>
-    </form>
+   <div class="comment-form-div">
+        <form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
+            <label for="text">
+                <textarea class="textarea-pet-comment" name="text" id="text" cols="60" rows="5" placeholder="Leave a comment here..."></textarea>
+            </label>
+            <button class="btn-pet" type="submit">Comment</button>
+        </form>
+   </div>
 </div>
 
 <div class="pet-comments-all">
 
     <div class="pet-comments-title">
-        <p>Comments:</p>
+        <p class="titles-pet">Comments:</p>
     </div>
 
     <div class="pet-comments">
         {{#each comment}}
-
-                <p>{{text}}</p>
-                <p>commented by {{user.name}}</p>
-
-                <div class="edit-plus-comment-div">
-                    {{!-- <div class="edit-plus-comment-div-plus"> --}}
-
-                        <div class="edit-btn" style="display: block;">
-                            {{#if isOwner}}
-                                <button><a class="edit-btn">Edit</a></button>
-                            {{/if}}
-                        </div>
-
-                        <div class="comment-div" style="display: none">
-
-                            <h1>Edit comment:</h1>
-
-                            <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
-                                <label for="text">
-                                    <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
-                                </label>
-                                <p>commented by {{user.name}}</p>
-                                <button type="submit">Save</button>     
-                            </form>
-                            <button><a href="/pet-profile/{{pet._id}}">back</a></button>
-                            <form action="/comment/delete/{{_id}}" method="post">
-                                <button type="submit">Delete Comment</button>
-                            </form>
-
-                        </div>
-                    {{!-- </div> --}}
+            <div class="each-pet-comment">
+                <div class="each-text-pet-comment">
+                    <div class="comment-img-user">
+                        <img src="{{user.img}}" alt="User's Img">
+                        <p class="each-comment">{{text}}</p>
+                    </div>
+                    <div class="comment-try"> 
+                        <p class="each-comment-by">Commented by:</p> 
+                        <p>{{user.name}} </p>
+                    </div>
                 </div>
+                <div class="edit-plus-comment-div">
 
+                    <div class="edit-btn" style="display: block;">
+                         {{#if isOwner}}
+                            <button class="edit-btn btn-pet"><a class=" btn-text">Edit</a></button>
+                        {{/if}}
+                    </div>
+
+                    <div class="comment-div" style="display: none">
+                        <h1>Edit comment:</h1>
+                        <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
+                            <label for="text">
+                                <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
+                            </label>
+                            <p>commented by {{user.name}}</p>
+                            <button type="submit">Save</button>     
+                        </form>
+                        <button><a href="/pet-profile/{{pet._id}}">back</a></button>
+                        <form action="/comment/delete/{{_id}}" method="post">
+                            <button type="submit">Delete Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         {{/each}}
     </div>
 </div>
+
+<footer class="footer pet-profilet-footer">
+
+    <div class="footer-background-color-logo">
+        <img class="footer-logo-image" src="/images/petgossip-logo-black-transparent.png" alt="">
+        <div class="footer-parallelogram">
+        </div>
+        <div class="footer-square">
+        </div>
+    </div>
+
+     <div class="footer-text"> 
+        <p>I'f you have any complains please do not hasitate to contact us and leave us a message here bellow:</p>
+       <div>
+        <button><a href="/contact">Contact Us</a></button>
+       </div>
+    </div>
+
+</footer>
