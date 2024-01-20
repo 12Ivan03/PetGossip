@@ -103,12 +103,15 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 console.log('foundUser', foundUser);
                 console.log('User is found, making it active');
                 if(foundUser.status === 'Active'){
+                    req.session.currentUser = { username: foundUser.username, _id: foundUser._id, status:foundUser.status, role:foundUser.role }
                     res.render('auth/account-verified', {isActive:true});
                     return;
                 }
                 User
                 .findByIdAndUpdate(foundUser._id, { $set: { status: 'Active' } }, { new: true })
-                .then(()=>{ 
+                .then(updatedUser=>{ 
+                    console.log('updatedUser', updatedUser);
+                    req.session.currentUser = { username: updatedUser.username, _id: updatedUser._id, status:updatedUser.status, role:updatedUser.role }
                     res.render('auth/account-verified', {success:true})})
                 .catch(err=>console.log('error in updating status', err));
             } else {

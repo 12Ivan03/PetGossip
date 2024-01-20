@@ -55,6 +55,7 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                 .then((foundComments)=>{
                     const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
                     let newFoundComments = foundComments.map((obj) => {
+                        console.log('obj', obj)
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
