@@ -6,31 +6,44 @@ const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.
 
 /* GET home page */
 router.get("/", (req, res, next) => {
-  const inSession = req.session.currentUser
+  try {
+    const inSession = req.session.currentUser
 
-  if(inSession){
-    Pet.find()
-      .then((foundPets) => {
-        res.render("index", { inSession: true, foundPets} );
-        // bgPage: "bg-page", 
-      })
-  } else {
-    Pet.find()
-      .then((foundPets) => {
-        res.render("index", { inSession: false, foundPets} );
-      })
-  };
-
+    if(inSession){
+      Pet.find()
+        .then((foundPets) => {
+          res.render("index", { inSession: true, foundPets,  _id:req.session.currentUser._id} );
+          // bgPage: "bg-page", 
+        })
+    } else {
+      Pet.find()
+        .then((foundPets) => {
+          res.render("index", { inSession: false, foundPets} );
+        })
+    };
+  
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+ 
 });
 
 router.get("/info", (req, res, next) => {
-  const inSession = req.session.currentUser
+
+  try {
+    const inSession = req.session.currentUser
 
   if(inSession){
-    res.render("info", { inSession: true });
+    res.render("info", { inSession: true, _id:req.session.currentUser._id });
   } else {
     res.render("info", { inSession: false });
   };
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+  
 
 })
 

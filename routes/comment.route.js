@@ -56,7 +56,7 @@ router.get('/edit-comment/:commentId', (req, res, next) => {
             .populate('user')
             .populate('pet')
             .then((foundComment) => {
-                res.render('comment/edit-comment', { foundComment, inSession: true })
+                res.render('comment/edit-comment', { foundComment, inSession: true,  _id: req.session.currentUser._id })
             })
             .catch((err) => console.log(err));
 })
