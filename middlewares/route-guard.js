@@ -31,8 +31,6 @@ const isModerator = (req, res, next) => {
 }
 
 const isVerifiedUser = (req, res, next) => {
-    console.log(req.session.currentUser.username);
-    console.log(req.session.currentUser.status);
     if (req.session.currentUser.status === 'Active') {
         console.log('in Active ')
         next();

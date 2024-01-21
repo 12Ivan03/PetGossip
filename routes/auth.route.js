@@ -99,10 +99,6 @@ router.get("/logout", isLoggedIn, (req, res, next) => {
     req.session.destroy((err) => {
         res.redirect("/")
     })
-    .catch((err) =>{
-        console.log(err);
-        next(err);
-    });
 })
 
 router.get('/confirm/:confirmCode', (req, res)=> {
