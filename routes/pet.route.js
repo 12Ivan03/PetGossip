@@ -53,13 +53,14 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                 .populate('user')
                 .populate('pet')
                 .then((foundComments)=>{
-                    const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
+                    const userRole = req.session.currentUser.role.toLowerCase() ;
+                    const isAdminOrModerator = userRole === 'admin' || userRole === 'moderator';
                     let newFoundComments = foundComments.map((obj) => {
                         console.log('obj', obj)
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
-                    const isUser = userId.toString() === foundPet.user._id.toString();
+                    const isUser = (userId.toString() === foundPet.user._id.toString()) || userRole === 'admin';
                     console.log("req uri",req.originalUrl);
                     res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl})
                     //, idTitle:"pet-profile-page"})
