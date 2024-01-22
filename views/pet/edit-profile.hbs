@@ -1,40 +1,84 @@
-<h1>Edit the profile of {{foundPet.name}}</h1>
+<div class="top-footer">
+    <div class="container">
+        <form action="/edit-pet-profile/{{foundPet._id}}" method="post" enctype="multipart/form-data">
+            <div class="scroll-div">
+                <div class="pet-name-background">
+                    {{foundPet.name}}
+                </div>
+                <div class="pet-image">
+                    <img src="{{foundPet.img}}" alt="image of the pet">
+                </div>
 
-<form action="/edit-pet-profile/{{foundPet._id}}" method="post" enctype="multipart/form-data">
-    <label for="name"> Pet's name:
-        <input type="text" id="name" name="name" value="{{foundPet.name}}">
-    </label>
-    <br>
-    <br>
-    <label for="img">new Img:
-        <input type="file" name="img" id="img"/>
-        <input type="text" name="img" id="img" hidden value="{{foundPet.img}}">
-    </label>
-    <br>
-    <br>
-    <img src="{{foundPet.img}}" alt="image of the pet" style="height: 200px">
+                <div class="img-name-edit-filds">
+                    <label for="img">new Img:
+                        <input type="file" name="img" id="img" />
+                        <input type="text" name="img" id="img" hidden value="{{foundPet.img}}">
+                    </label>
+                </div>
 
-    <p>I call my owner: bark-bark, but his human name is {{foundPet.user.name}} {{foundPet.user.lastName}}</p>
-
-    <label for="description"> Description:
-        <br>
-        <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description}}</textarea>
-    </label>
-    <br>
-    <br>
-    <p>votes: {{foundPet.votes}}</p>
-    <label for="votes">
-        <input type="radio" name="votes" id="votes" value="1">1
-        <input type="radio" name="votes" id="votes" value="2">2
-        <input type="radio" name="votes" id="votes" value="3">3
-        <input type="radio" name="votes" id="votes" value="4">4
-        <input type="radio" name="votes" id="votes" value="5">5
-    </label>
-    <br>
-    <br>
-    <button type="submit">Edit Pet</button>
-    </form>
-    <br>
-    <form action="/pet/{{foundPet._id}}/delete" method="post">
-        <button>Delete Pet</button>
-    </form>
+                <div class="pet-info">
+                    <div>
+                        <ul>
+                            <li class="pet-info-li ">Pet's name:
+                                <p class="dinamic-name">
+                                    <label for="name">
+                                        <input type="text" id="name" name="name" value="{{foundPet.name}}">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Pet nickname:
+                                <p class="dinamic-name">{{petInfo.nickname}}
+                                    <label for="nickname">
+                                        <input type="text" id="nickname" name="nickname" value="{{foundPet.nickname}}">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Owner:<p class="dinamic-name">{{foundPet.user.name}} {{foundPet.user.lastName}}</p>
+                            </li>
+                            <li class="pet-info-li ">Votes:
+                                <p class="dinamic-name">{{foundPet.votes}} /
+                                    <label for="votes">
+                                        <input type="radio" name="votes" id="votes" value="1">1
+                                        <input type="radio" name="votes" id="votes" value="2">2
+                                        <input type="radio" name="votes" id="votes" value="3">3
+                                        <input type="radio" name="votes" id="votes" value="4">4
+                                        <input type="radio" name="votes" id="votes" value="5">5
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Age:
+                                <p class="dinamic-name">
+                                    <label for="age">
+                                        <input type="number" id="age" name="age" value="{{foundPet.age}}">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Birthday:
+                                <p class="birthday-dat-data dinamic-name">
+                                    <label for="birthday">
+                                        <input type="number" id="birthday" name="birthday" value="{{foundPet.birthday}}">
+                                    </label>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+                    
+                    
+            <div class="pet-description-comment edit-description">
+                <label class="titles-pet edit-pet" for="description"> Description:
+                    <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description}}</textarea>
+                </label>
+                <div class="pet-ed-del-btns">
+                    <button class="btn-pet" type="submit">Save</button>
+                        {{!-- <form action="/pet/{{foundPet._id}}/delete" method="post">
+                            <button class="btn-pet btn-text">Delete Profile</button>
+                        </form> --}}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>      
+{{> footerPartial }}

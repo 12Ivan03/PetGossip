@@ -1,49 +1,58 @@
-    <div class="container">
-        {{!-- <div class="pet-opening" style="display: none">
+<div class="container">
+    {{!-- <div class="pet-opening" style="display: none">
 
-            <div class="pet-opening-img">
-                <img src="{{petInfo.img}}" alt="">
+        <div class="pet-opening-img">
+            <img src="{{petInfo.img}}" alt="">
+        </div>
+
+        <p>{{petInfo.name}}</p>
+    </div> --}}
+
+    <div class="scroll-div">
+        <div class="pet-name-background">{{petInfo.name}}</div>
+        <div class="pet-image">
+            <img src="{{petInfo.img}}" alt="image of the pet">
+        </div>
+
+        <div class="pet-info">
+            <div>
+                <ul>
+                    <li class="pet-info-li hover-pet-info-li">Pet's name:<p class="dinamic-name">{{petInfo.name}}</p>
+                    </li>
+                    <li class="pet-info-li hover-pet-info-li">Pet nickname:<p class="dinamic-name">{{petInfo.nickname}}
+                        </p>
+                    </li>
+                    <li class="pet-info-li hover-pet-info-li">Owner:<p class="dinamic-name">{{petInfo.user.name}}
+                            {{petInfo.user.lastName}}</p>
+                    </li>
+                    <li class="pet-info-li hover-pet-info-li">Votes:<p class="dinamic-name">{{petInfo.votes}}</p>
+                    </li>
+                    <li class="pet-info-li hover-pet-info-li">Age:<p class="dinamic-name">{{petInfo.age}} years</p>
+                    </li>
+                    <li class="pet-info-li hover-pet-info-li">Birthday:<p class="birthday-dat-data dinamic-name">
+                            {{petInfo.birthday}}</p>
+                    </li>
+                </ul>
             </div>
 
-            <p>{{petInfo.name}}</p>
-        </div> --}}
+            <div class="pet-ed-del-btns">
+                {{#if isUser}}
+                <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
 
-        <div class="scroll-div">
-            <div class="pet-name-background">{{petInfo.name}}</div>
-            <div class="pet-image">
-                <img src="{{petInfo.img}}" alt="image of the pet">
+                <button class="btn-pet btn-text">Delete profile</button>
+
+                <dialog id="deleteBtnPet">
+                    <form action="/pet/{{petInfo._id}}/delete" method="post">
+                        <button class="btn-pet btn-text" type="submit">Delete profile</button>
+                    </form>
+                </dialog>
+
+                {{/if}}
             </div>
 
-            <div class="pet-info">
-                <div>
-                    <ul>
-                        <li class="pet-info-li hover-pet-info-li">Pet's name:<p class="dinamic-name">{{petInfo.name}}</p></li>
-                        <li class="pet-info-li hover-pet-info-li">Pet nickname:<p class="dinamic-name">{{petInfo.nickname}}</p></li>
-                        <li class="pet-info-li hover-pet-info-li">Owner:<p class="dinamic-name">{{petInfo.user.name}} {{petInfo.user.lastName}}</p></li>
-                        <li class="pet-info-li hover-pet-info-li">Votes:<p class="dinamic-name">{{petInfo.votes}}</p></li>
-                        <li class="pet-info-li hover-pet-info-li">Age:<p class="dinamic-name">{{petInfo.age}}</p></li>
-                        <li class="pet-info-li hover-pet-info-li">Birthday:<p class="dinamic-name">{{petInfo.birthday}}</p></li>
-                    </ul>  
-                </div>
-
-                <div class="pet-ed-del-btns">
-                    {{#if isUser}}
-                        <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
-
-                        <button class="btn-pet btn-text">Delete profile</button>
-                        
-                        <dialog id="deleteBtnPet"> 
-                            <form action="/pet/{{petInfo._id}}/delete" method="post">
-                            <button class="btn-pet btn-text" type="submit">Delete profile</button>
-                            </form>
-                        </dialog>
-                        
-                    {{/if}}
-                </div>
-
-            </div>   
         </div>
     </div>
+</div>
 
     
 <div class="pet-description-comment">
@@ -88,14 +97,15 @@
                 </div>
                 <div class="edit-plus-comment-div">
 
+                    {{#if isOwner}}
                     <div class="edit-btn" style="display: block;">
-                         {{#if isOwner}}
                             <button class="edit-btn btn-pet"><a class=" btn-text">Edit</a></button>
-                        {{/if}}
                     </div>
+                    {{/if}}
 
                     <div class="comment-div" style="display: none">
                         <h1>Edit comment:</h1>
+
                         <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
                             <label for="text">
                                 <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
@@ -103,7 +113,11 @@
                             <p>commented by {{user.name}}</p>
                             <button type="submit">Save</button>     
                         </form>
-                        <button><a href="/pet-profile/{{pet._id}}">back</a></button>
+
+                        <button>
+                            <a href="/pet-profile/{{pet._id}}">back</a>
+                        </button>
+
                         <form action="/comment/delete/{{_id}}" method="post">
                             <button type="submit">Delete Comment</button>
                         </form>
@@ -114,21 +128,4 @@
     </div>
 </div>
 
-<footer class="footer pet-profilet-footer">
-
-    <div class="footer-background-color-logo">
-        <img class="footer-logo-image" src="/images/petgossip-logo-black-transparent.png" alt="">
-        <div class="footer-parallelogram">
-        </div>
-        <div class="footer-square">
-        </div>
-    </div>
-
-     <div class="footer-text"> 
-        <p>I'f you have any complains please do not hasitate to contact us and leave us a message here bellow:</p>
-       <div>
-        <button><a href="/contact">Contact Us</a></button>
-       </div>
-    </div>
-
-</footer>
+{{> footerPartial }}

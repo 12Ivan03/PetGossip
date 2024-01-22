@@ -1,32 +1,83 @@
-<h1>create pet profile</h1>
+<div class="top-footer">
+    <div class="container">
+        <form action="/create-pet/{{userId}}" method="POST" enctype="multipart/form-data">
+            <div class="scroll-div">
+                <div class="pet-image">
+                    {{!-- <img src="{{petInfo.img}}" alt="image of the pet"> --}}
+                </div>
 
-<form action="/create-pet/{{userId}}" method="POST" enctype="multipart/form-data">
+                <div class="img-name-edit-filds">
+                    <label for="img">Img:
+                        <input type="file" name="img" id="img">
+                        {{!-- <input type="text" name="img" id="img" placeholder="URL"> --}}
+                    </label>
+                </div>
 
-    <label for="img">Img:
-        <input type="file" name="img" id="img">
-        {{!-- <input type="text" name="img" id="img" placeholder="URL"> --}}
-    </label>
-    <br>
-    <br>
-    <label for="name">Name:
-        <input type="text" name="name" id="name">
-    </label>
-    <br>
-    <br>
-    <label for="description"> Description:
-        <br>
-        <textarea name="description" id="description" cols="50" rows="5" placeholder="description..."></textarea>
-    </label>
-    <br>
-    <br>
-    <label for="votes">
-        <input type="radio" name="votes" id="votes" value="1">1
-        <input type="radio" name="votes" id="votes" value="2">2
-        <input type="radio" name="votes" id="votes" value="3">3
-        <input type="radio" name="votes" id="votes" value="4">4
-        <input type="radio" name="votes" id="votes" value="5">5
-    </label>
-    <br>
-    <br>
-    <button type="submit">Create</button>
-</form>
+
+                <div class="pet-info">
+                    <div>
+                        <ul>
+                            <li class="pet-info-li ">Name:
+                                <p class="dinamic-name">
+                                    <label for="name">
+                                        <input type="text" name="name" id="name">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Nickname:
+                                <p class="dinamic-name">
+                                    <label for="nickname">
+                                        <input type="text" name="nickname" id="nickname">
+                                    </label>
+                                </p>
+                            </li>
+                            {{!-- <li class="pet-info-li ">Owner:
+                                <p class="dinamic-name">
+                                        
+                                </p>
+                            </li> --}}
+                            <li class="pet-info-li ">Votes:
+                                <p class="dinamic-name">
+                                    <label for="votes">
+                                        <input type="radio" name="votes" id="votes" value="1">1
+                                        <input type="radio" name="votes" id="votes" value="2">2
+                                        <input type="radio" name="votes" id="votes" value="3">3
+                                        <input type="radio" name="votes" id="votes" value="4">4
+                                        <input type="radio" name="votes" id="votes" value="5">5
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Age:
+                                <p class="dinamic-name">
+                                    <label for="age">
+                                        <input type="number" name="age" id="age">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Birthday:
+                                <p class="birthday-dat-data dinamic-name">
+                                    <label for="birthday">
+                                        <input type="number" name="birthday" id="birthday" placeholder="dd-mm-yyyy">
+                                    </label>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="pet-description-comment edit-description">
+                <label class="titles-pet edit-pet" for="description"> Description:
+                    <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description}}</textarea>
+                </label>
+                <div class="pet-ed-del-btns">
+                        <button class="btn-pet" type="submit">Create</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{{> footerPartial }}

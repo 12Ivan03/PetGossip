@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded",() => {
 
     hoverPetInfoLi.forEach((hover) => {
       const dinamiName = hover.querySelector('.dinamic-name')
+      
 
       hover.addEventListener('mouseover', () => {
         hover.style.color ="black";
@@ -61,4 +62,5 @@ document.addEventListener("DOMContentLoaded",() => {
       });
       
     })
+
   });

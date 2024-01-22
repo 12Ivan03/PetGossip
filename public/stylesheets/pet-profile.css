@@ -59,7 +59,7 @@
 .pet-image {
     height: 20rem;
     max-width: 20rem;
-    min-width: 10rem;
+    min-width: 20rem;
     overflow: hidden;
     border-radius: 10rem;
     /* border-radius: 50% 20% / 10% 40%; */
@@ -72,7 +72,7 @@
 
 .pet-info {
     margin-left: 20rem;
-    width: 40vw;
+    width: 48vw;
 }
 
 .pet-info-li { 
@@ -297,6 +297,18 @@
 
 
 .pet-profilet-footer {
-   
-   
+   height: 15rem; 
 }
+
+.pet-footer-text {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-div-contact-us {
+    margin-top: 2rem;
+}
+   
