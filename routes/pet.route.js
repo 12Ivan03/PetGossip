@@ -32,14 +32,22 @@ router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.singl
         img = incommingImg;
     }
 
-    Pet.create({img, name, description, user: userId, votes, nickname, age, birthday})   
-        .then((createdPet) => {
-            console.log('created pet', createdPet)
-            res.redirect(`/pet-profile/${createdPet._id}`)
+    Pet.findOne({name, user: userId})
+        .then((foundPet) => {
+            if(foundPet){
+                res.render('pet/create-profile', {userId, inSession: true, Msg: "You cannot crate a pets with the same name"} )
+            } else {
+                Pet.create({img, name, description, user: userId, votes, nickname, age, birthday})   
+                .then((createdPet) => {
+                    console.log('created pet', createdPet)
+                    res.redirect(`/pet-profile/${createdPet._id}`)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
         })
-        .catch((err) => {
-            console.log(err)
-        })
+
 })
 
 router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {

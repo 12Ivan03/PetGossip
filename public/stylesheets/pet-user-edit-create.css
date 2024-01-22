@@ -21,6 +21,11 @@
     flex-direction: column!important;
 }
 
+.create-pet-btn-back {
+    display: flex;
+    flex-direction: row;
+}
+
 /* user */
 
 .user-profile-btn {

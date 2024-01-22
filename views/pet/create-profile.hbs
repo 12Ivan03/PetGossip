@@ -23,6 +23,9 @@
                                         <input type="text" name="name" id="name">
                                     </label>
                                 </p>
+                                <p class="errorMsg-same-name-pet">
+                                    {{#if Msg}}{{Msg}}{{/if}}
+                                </p>
                             </li>
                             <li class="pet-info-li ">Nickname:
                                 <p class="dinamic-name">
@@ -71,11 +74,12 @@
                 <label class="titles-pet edit-pet" for="description"> Description:
                     <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description}}</textarea>
                 </label>
-                <div class="pet-ed-del-btns">
+                <div class="create-pet-btn-back">
+                    <div class="pet-ed-del-btns">
                         <button class="btn-pet" type="submit">Create</button>
+                    </div>          
                 </div>
-            </div>
-            
+            </div>    
         </form>
     </div>
 </div>
