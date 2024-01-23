@@ -41,7 +41,6 @@
     align-items: center;
     /* flex-wrap: wrap; */
     height: 30rem;
-    overflow: scroll;
 }
 
 .pet-name-background {
