@@ -15,22 +15,22 @@ const isLoggedOut = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-    if(req.session.currentUser && req.session.currentUser === 'Admin') {
-        res.redirect('/admin')
+    if(req.session.currentUser && req.session.currentUser.role.toLowerCase() === 'admin') {
+        next()
+    } else {
+        res.redirect('/')
     }
-    next();
 }
 
 const isModerator = (req, res, next) => {
-    if(req.session.currentUser && req.session.currentUser === 'Moderator') {
-        res.redirect('/admin')
+    if(req.session.currentUser && req.session.currentUser.role.toLowerCase() === 'moderator') {
+        next()
+    } else {
+        res.redirect('/')
     }
-    next();
 }
 
 const isVerifiedUser = (req, res, next) => {
-    console.log(req.session.currentUser.username);
-    console.log(req.session.currentUser.status);
     if (req.session.currentUser.status === 'Active') {
         console.log('in Active ')
         next();

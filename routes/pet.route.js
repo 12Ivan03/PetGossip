@@ -14,7 +14,7 @@ const{ isLoggedIn, isLoggedOut, isAdmin, isVerifiedUser } = require('../middlewa
 router.get('/create-pet/:userId', isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { userId } = req.params
     // console.log('this is the USER ID',userId)
-    res.render('pet/create-profile', {userId, inSession: true} )
+    res.render('pet/create-profile', {userId, inSession: true,  _id: req.session.currentUser._id} )
 })
 
 router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
@@ -61,17 +61,16 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                 .populate('user')
                 .populate('pet')
                 .then((foundComments)=>{
-                    const isAdminOrModerator = req.session.currentUser.role === 'Admin' || req.session.currentUser.role === 'Moderator';
+                    const userRole = req.session.currentUser.role.toLowerCase() ;
+                    const isAdminOrModerator = userRole === 'admin' || userRole === 'moderator';
                     let newFoundComments = foundComments.map((obj) => {
                         console.log('obj', obj)
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
-                    const isUser = userId.toString() === foundPet.user._id.toString();
+                    const isUser = (userId.toString() === foundPet.user._id.toString()) || userRole === 'admin';
                     console.log("req uri",req.originalUrl);
-                    console.log('found pet ', foundPet)
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl})
-                    //, idTitle:"pet-profile-page"})
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl,  _id:userId});
                 });
         })
         .catch((err) => next(err))
@@ -84,7 +83,7 @@ router.get("/view-all-pets", (req, res, next) => {
         const inSession = req.session.currentUser
 
         if(inSession){
-            res.render("pet/view-all-pets", { allPets, inSession: true} );
+            res.render("pet/view-all-pets", { allPets, inSession: true,  _id: req.session.currentUser._id} );
         } else {
             res.render("pet/view-all-pets", { allPets, inSession: false} );
         };
@@ -94,7 +93,6 @@ router.get("/view-all-pets", (req, res, next) => {
 
 router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) => {
     const { petId } = req.params
-    let userId = req.session.currentUser._id
     let publicIdOfCloudinary
 
     Pet.findById(petId)
@@ -124,7 +122,7 @@ router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) =
             ])
         })
         .then(() => {
-            res.redirect('/profile')
+            res.redirect(`/profile/${req.session.currentUser._id}`)
         })
         .catch((err) => console.log(err))
 })
@@ -135,7 +133,7 @@ router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
     Pet.findById(petId)
         .populate('user')
         .then((foundPet) => {
-                res.render('pet/edit-profile', { foundPet, inSession: true })  
+                res.render('pet/edit-profile', { foundPet, inSession: true,  _id: req.session.currentUser._id })  
         })
         .catch((err) => console.log(err))
 })
