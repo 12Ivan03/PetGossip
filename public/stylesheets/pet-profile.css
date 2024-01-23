@@ -54,6 +54,7 @@
 .pet-image img {
     height: 20rem;
     z-index: 10;
+    border-radius: 20rem;
 }
 
 .pet-image {
@@ -68,6 +69,11 @@
     align-items: center;
     margin: 3rem 0 0 13rem;
     box-shadow: rgb(0, 0, 0) 0.5rem 0.5rem 1rem ;
+    transition: transform 0.5s ease-in-out;
+}
+
+.bigger-img-hover {
+    transform: scale(1.5);
 }
 
 .pet-info {

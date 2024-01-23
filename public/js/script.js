@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded",() => {
 
       hover.addEventListener('mouseover', () => {
         hover.style.color ="black";
-        hover.style.fontSize = "xx-large";
-        dinamiName.style.fontSize = "3rem";
+        hover.style.fontSize = "x-large";
+        dinamiName.style.fontSize = "2.5rem";
       });
 
       hover.addEventListener('mouseleave', () => {
@@ -63,4 +63,18 @@ document.addEventListener("DOMContentLoaded",() => {
       
     })
 
+    //// img pet hover ////
+
+    const hoverImgdiv = document.querySelector('#img-div')
+
+    hoverImgdiv.addEventListener('mouseover', () => {
+      hoverImgdiv.classList.add('bigger-img-hover')
+    })
+
+    hoverImgdiv.addEventListener('mouseleave', () => {
+      hoverImgdiv.classList.remove('bigger-img-hover')
+    })
+
+
+    
   });
