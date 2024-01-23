@@ -349,18 +349,9 @@
     transform: translate(-17%, 0%);
     /* transform: translate(240%, 10%); */
     /* transform: translate(240%, -125%); */
-    
 }
-
-/* .back-comment-btn {
-    margin-right: 2rem;
-} */
 
 .back-comment-btn a {
     color: rgb(38, 38, 38);
     font-weight: 100;
 }
-
-/* .delete-comment-btn {
-    width: 10rem;
-} */
