@@ -8,7 +8,6 @@ const fileUploader = require('../config/cloudinary.config.js')
 const{ isLoggedIn, isLoggedOut, isAdmin, isVerifiedUser } = require('../middlewares/route-guard.js')
 
 router.get('/profile/:userId', isLoggedIn, (req, res, next) => {
-    // const userId = req.session.currentUser._id
     const userId = req.params.userId;
     console.log('userId', userId);
     User.findById(userId)

@@ -40,7 +40,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    /* flex-wrap: wrap; */
     height: 30rem;
+    overflow: scroll;
 }
 
 .pet-name-background {
@@ -55,12 +57,13 @@
 .pet-image img {
     height: 20rem;
     z-index: 10;
+    border-radius: 20rem;
 }
 
 .pet-image {
     height: 20rem;
     max-width: 20rem;
-    min-width: 10rem;
+    min-width: 20rem;
     overflow: hidden;
     border-radius: 10rem;
     /* border-radius: 50% 20% / 10% 40%; */
@@ -69,11 +72,16 @@
     align-items: center;
     margin: 3rem 0 0 13rem;
     box-shadow: rgb(0, 0, 0) 0.5rem 0.5rem 1rem ;
+    transition: transform 0.5s ease-in-out;
+}
+
+.bigger-img-hover {
+    transform: scale(1.5);
 }
 
 .pet-info {
     margin-left: 20rem;
-    width: 40vw;
+    width: 48vw;
 }
 
 .pet-info-li { 
@@ -119,6 +127,7 @@
     text-decoration: none;
     color: black;
     font-size: normal;
+    font-weight: 100;
 }
 
 .btn-pet:hover {
@@ -133,7 +142,7 @@
 }
 
 .btn-text {
-    font-weight: 900;
+    font-weight: 100;
     font-size: 1rem;
 }
 
@@ -277,6 +286,24 @@
     margin: 0.5rem;
 }
 
+/* pet - footer */
+
+.pet-profilet-footer {
+   height: 15rem; 
+}
+
+.pet-footer-text {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-div-contact-us {
+    margin-top: 2rem;
+}
+
 
 
 /* Pet comment  */
@@ -296,8 +323,36 @@
     z-index: 50;
 }
 
+.comment-div h1 {
+    margin-bottom: 1rem;
+}
 
-.pet-profilet-footer {
-   
-   
+.textarea-comment-div {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.comment-by-name {
+    margin: 1rem 0;
+    font-style: italic;
+}
+
+.comment-div-back-del-btn {
+    position: absolute;
+    display: flex;
+    transform: translate(25.5%,291%);
+    /* transform: translate(55.5%,361%); */
+    /* transform: translate(55.5%, 210%); */
+}
+
+.save-comment-btn {
+    position: absolute;
+    transform: translate(-17%, 0%);
+    /* transform: translate(240%, 10%); */
+    /* transform: translate(240%, -125%); */
+}
+
+.back-comment-btn a {
+    color: rgb(38, 38, 38);
+    font-weight: 100;
 }

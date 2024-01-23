@@ -320,6 +320,12 @@
   margin-right: 0.5rem;
 }
 
+/* footer contact us btn */
+
+.home-contact-btn {
+  width: 10rem!important;
+}
+
 /* black-footer */
 
 .black-footer {

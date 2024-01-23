@@ -22,7 +22,7 @@ const petSchema = new Schema(
       type: Number,
     },
     birthday: {
-      type: Number,
+      type: String,
     },
     user: {
       type: Schema.Types.ObjectId,

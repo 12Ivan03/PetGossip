@@ -1,3 +1,95 @@
+<div class="top-footer">
+    <div class="container">
+        <form action="/edit-profile/{{foundUser._id}}{{userId}}" method="POST" enctype="multipart/form-data">
+            <div class="scroll-div">
+                <div class="pet-name-background">
+                    {{foundUser.name}}
+                </div>
+                <div class="pet-image">
+                    <img src="{{foundUser.img}}" alt="image">
+                </div>
+
+                <div class="img-name-edit-filds">
+                    <label for="img">Image:
+                        <input type="file" name="img" id="img">
+                        <input type="text" name="existingImage" id="img" hidden value="{{foundUser.img}}">
+                    </label>
+                </div>
+
+                <div class="pet-info">
+                    <div>
+                        <ul>
+                            <li class="pet-info-li ">Name:
+                                <p class="dinamic-name">
+                                    <label for="name">
+                                        <input type="text" id="name" name="name" value="{{foundUser.name}}">
+                                        {{#if errMsg}}
+                                        <p>{{errMsg}}</p>
+                                        {{/if}}
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">Last name:
+                                <p class="dinamic-name">
+                                    <label for="lastName">
+                                        <input type="text" name="lastName" id="lastName" value="{{foundUser.lastName}}">
+                                    </label>
+                                </p>
+                            </li>
+                            <li class="pet-info-li ">City:
+                                <p class="dinamic-name">
+                                    <label for="city">
+                                        <input type="text" name="city" id="city" value="{{foundUser.city}}">
+                                        {{#if errMsg}}
+                                        <p>{{errMsg}}</p>
+                                        {{/if}}
+                                    </label>
+                                </p>
+                            </li>
+                              <li class="pet-info-li ">Few words about yourlsef:
+                                <p class="dinamic-name">
+                                    <label for="bio">
+                                        <textarea name="bio" id="bio"  cols="30" rows="3" maxlength="100">{{foundUser.bio}}</textarea>
+                                        {{!-- <input type="text" name="bio" id="bio" value="{{foundUser.bio}}"> --}}
+                                    </label>
+                                </p>
+                            </li>
+                              <li class="pet-info-li ">Email
+                                <p class="dinamic-name">
+                                    {{foundUser.email}}
+                                    {{!-- <label for="email">
+                                        <input type="text" name="email" id="email" value="{{foundUser.email}}">
+                                    </label> --}}
+                                </p>
+                            </li>
+                              <li class="pet-info-li ">Username:
+                                <p class="dinamic-name">
+                                    {{foundUser.username}}
+                                    {{!-- <label for="username">
+                                        <input type="text" name="username" id="username" value="{{foundUser.username}}">
+                                    </label> --}}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pet-description-comment edit-description">
+                <button class="btn-pet barker-background" type="submit">Submit</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{{> footerPartial }}
+
+
+
+{{!-- 
+
+
 <h1>edit user prof {{foundUser.username}}</h1>
 
 <form action="/edit-profile/{{foundUser._id}}{{userId}}" method="POST" enctype="multipart/form-data">
@@ -17,6 +109,9 @@
         <input type="text" name="lastName" id="lastName" value="{{foundUser.lastName}}">
     </label>
     <br>
+
+
+
     <label for="city">City:
         <input type="text" name="city" id="city" value="{{foundUser.city}}">
         {{#if errMsg}}
@@ -24,6 +119,8 @@
         {{/if}}
     </label>
     <br>
+
+
     <label for="bio">Short Bio:
         <input type="text" name="bio" id="bio" value="{{foundUser.bio}}">
     </label>
@@ -37,4 +134,4 @@
     </label>
     <br>
     <button type="submit">Submit</button>
-</form>
+</form> --}}

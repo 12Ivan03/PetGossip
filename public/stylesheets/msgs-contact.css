@@ -1,0 +1,52 @@
+/* comfirm msgs */
+
+.comfirm-msg {
+    height:10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.red {
+    color: rgb(128, 0, 0)!important;;    
+}
+/* contact msg */
+
+.contact-us-container {
+    height: 15rem!important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-contact-us-container {
+    color: black;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.message-contact-us {
+    height: 28rem!important;
+}
+
+.contact-page {
+    position: absolute;
+    top: 3rem;
+    left: 0;
+    z-index: 20;
+    height: 21rem;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* errorMsg-same-name-pet */
+
+.errorMsg-same-name-pet {
+    color: brown ;
+    margin-left: 1rem;
+}

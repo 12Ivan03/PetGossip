@@ -21,7 +21,7 @@ router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.singl
     const { userId } = req.params
     console.log('post-pet the USER ID',userId)
 
-    const { name, description, votes, incommingImg } = req.body;
+    const { name, description, votes, incommingImg, nickname, age, birthday } = req.body;
     console.log('req.body',req.body)
 
     let img;
@@ -32,14 +32,22 @@ router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.singl
         img = incommingImg;
     }
 
-    Pet.create({img, name, description, user: userId, votes})   
-        .then((createdPet) => {
-            console.log('created pet', createdPet)
-            res.redirect(`/pet-profile/${createdPet._id}`)
+    Pet.findOne({name, user: userId})
+        .then((foundPet) => {
+            if(foundPet){
+                res.render('pet/create-profile', {userId, inSession: true, Msg: "You cannot crate a pets with the same name"} )
+            } else {
+                Pet.create({img, name, description, user: userId, votes, nickname, age, birthday})   
+                .then((createdPet) => {
+                    console.log('created pet', createdPet)
+                    res.redirect(`/pet-profile/${createdPet._id}`)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
         })
-        .catch((err) => {
-            console.log(err)
-        })
+
 })
 
 router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
@@ -62,8 +70,7 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                     });
                     const isUser = (userId.toString() === foundPet.user._id.toString()) || userRole === 'admin';
                     console.log("req uri",req.originalUrl);
-                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl,  _id:userId})
-                    //, idTitle:"pet-profile-page"})
+                    res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl,  _id:userId});
                 });
         })
         .catch((err) => next(err))
@@ -133,7 +140,7 @@ router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
 
 router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
     const { petId } = req.params
-    const { name, incommingImg, votes, description } = req.body
+    const { name, incommingImg, votes, description, nickname, age, birthday } = req.body
     
     let img;
 
@@ -152,7 +159,7 @@ router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader
                 return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true})
             }
         })
-    Pet.findByIdAndUpdate(petId, {name, img, votes, description}, {new: true})
+    Pet.findByIdAndUpdate(petId, {name, img, votes, description, nickname, age, birthday}, {new: true})
         .then(() => {
             res.redirect(`/pet-profile/${petId}`)
         })

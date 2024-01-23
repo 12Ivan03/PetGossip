@@ -1,0 +1,60 @@
+/* edit and create pet additional CSS */
+.img-name-edit-filds {
+    position: absolute;
+    top: 27.5rem;
+    left: 14.5rem;
+}
+
+.top-footer {
+    height: 48rem;
+}
+
+.edit-pet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-description {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column!important;
+}
+
+.create-pet-btn-back {
+    display: flex;
+    flex-direction: row;
+}
+
+/* user */
+
+.user-profile-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 14rem;
+    background-image: linear-gradient(#d2b48c, #ffffff);
+}
+
+.user-profile-btn p {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 4rem;
+}
+
+/* show all animals */
+
+.user-pet-btn {
+    margin-bottom: 2rem;
+}
+
+.user-profile-pets {
+    margin-top: 3rem!important;
+}
+
+
+/* dark btn on light background */
+
+.barker-background {
+    box-shadow: black 0.1rem 0.1rem 0.1rem;
+}
