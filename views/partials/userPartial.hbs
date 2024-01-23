@@ -7,8 +7,13 @@
     <div>
         <p>{{name}} {{lastName}}</p>
         <p>{{city}}</p>
-        <form method="post" action="/profile/delete/{{_id}}">
-            <button>Delete Profile</button>
-        </form>
+            <button class="button open-button">Delete Profile</button>
+            <dialog class="modal" id="modal">
+                {{!-- <form method="post" action="/profile/delete/{{_id}}"> --}}
+                    <p>Are you sure you want to delete the user?</p>
+                    <button class="button close-button">No</button>
+                    <button class="button submit-button">Yes</button>
+                {{!-- </form> --}}
+            </dialog>
     </div>
 </div>

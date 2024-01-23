@@ -23,6 +23,9 @@
          </div>
          
          <ul class="nav-bar-list">
+            {{#if admin}}
+               <li class="nav-bar-list-items"><a href="/">Users</a></li>
+            {{/if}}
             <li class="nav-bar-list-items"><a href="/">Home</a></li>
             <li class="nav-bar-list-items"><a href="/view-all-pets">Pets</a></li>
             {{#if inSession}}
