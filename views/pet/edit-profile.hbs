@@ -56,7 +56,7 @@
                             <li class="pet-info-li ">Birthday:
                                 <p class="birthday-dat-data dinamic-name">
                                     <label for="birthday">
-                                        <input type="number" id="birthday" name="birthday" value="{{foundPet.birthday}}">
+                                        <input type="string" id="birthday" name="birthday" value="{{foundPet.birthday}}">
                                     </label>
                                 </p>
                             </li>
@@ -72,7 +72,7 @@
                     <textarea name="description" id="description" cols="50" rows="5">{{foundPet.description}}</textarea>
                 </label>
                 <div class="pet-ed-del-btns">
-                    <button class="btn-pet" type="submit">Save</button>
+                    <button class="btn-pet barker-background" type="submit">Save</button>
                         {{!-- <form action="/pet/{{foundPet._id}}/delete" method="post">
                             <button class="btn-pet btn-text">Delete Profile</button>
                         </form> --}}
