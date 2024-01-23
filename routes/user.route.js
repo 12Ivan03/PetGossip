@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require('../models/User.model.js');
 const Pet = require('../models/Pet.model.js');
-const Description = require('../models/Description.model');
+//const Description = require('../models/Description.model');
 const Comment = require('../models/Comment.model.js');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');

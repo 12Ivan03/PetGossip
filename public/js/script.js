@@ -1,7 +1,7 @@
 // Code to run when the window has fully loaded
 document.addEventListener("DOMContentLoaded",() => {
       
-  //// Pet profile ////
+  //// All Pet profile ////
     const hoverContainers = document.querySelectorAll('.hover-each-grid-box');
       
   
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded",() => {
           genreElement.style.color = 'black';
           genreElement.style.fontSize = "medium";
           imgOfAnimal.style.width = "20rem";
-          imgOfAnimal.style.height = "17rem";
+          imgOfAnimal.style.height = "17rem";   
       });
     });
   
@@ -44,11 +44,9 @@ document.addEventListener("DOMContentLoaded",() => {
 
     const hoverPetInfoLi = document.querySelectorAll('.hover-pet-info-li');
 
-
     hoverPetInfoLi.forEach((hover) => {
-      const dinamiName = hover.querySelector('.dinamic-name')
-      
-
+      const dinamiName = hover.querySelector('.dinamic-name');
+    
       hover.addEventListener('mouseover', () => {
         hover.style.color ="black";
         hover.style.fontSize = "x-large";
@@ -59,8 +57,23 @@ document.addEventListener("DOMContentLoaded",() => {
         hover.style.color ="rgb(78, 77, 77)";
         hover.style.fontSize = "larger"
         dinamiName.style.fontSize = "x-large";
+       
       });
       
+    })
+
+    const userBioHover = document.querySelectorAll('.hover-user-bio');
+
+    userBioHover.forEach((hover) => {
+
+      hover.addEventListener('mouseover', () => {
+        hover.style.color = "black";
+      })
+
+      hover.addEventListener('mouseleave', () => {
+        hover.style.color = "rgb(78, 77, 77)";
+      })
+
     })
 
     //// img pet hover ////

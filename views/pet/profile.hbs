@@ -54,6 +54,7 @@
 
         </div>
     </div>
+
 </div>
 
     
@@ -76,7 +77,9 @@
             <button class="btn-pet barker-background" type="submit">Comment</button>
         </form>
    </div>
+
 </div>
+
 
 <div class="pet-comments-all">
 
@@ -110,24 +113,28 @@
 
                         <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
                             <label for="text">
-                                <textarea name="text" id="text" cols="60" rows="5">{{text}}</textarea>
+                                <textarea  class="textarea-comment-div" name="text" id="text" cols="60" rows="5">{{text}}</textarea>
                             </label>
-                            <p>commented by {{user.name}}</p>
-                            <button type="submit">Save</button>     
+                            <p class="comment-by-name">commented by: {{user.name}}</p>
+                            <hr>
+                            <button class="btn-pet save-comment-btn" type="submit">Save</button>     
                         </form>
 
-                        <button>
-                            <a href="/pet-profile/{{pet._id}}">back</a>
-                        </button>
+                        <div class="comment-div-back-del-btn">
+                            <button class="btn-pet back-comment-btn">
+                                <a href="/pet-profile/{{pet._id}}">Back</a>
+                            </button>
 
-                        <form action="/comment/delete/{{_id}}" method="post">
-                            <button type="submit">Delete Comment</button>
-                        </form>
+                            <form action="/comment/delete/{{_id}}" method="post">
+                                <button class="btn-pet delete-comment-btn" type="submit">Delete Comment</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         {{/each}}
     </div>
+
 </div>
 
 {{> footerPartial }}

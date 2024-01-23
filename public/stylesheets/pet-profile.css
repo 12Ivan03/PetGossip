@@ -39,7 +39,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    /* flex-wrap: wrap; */
     height: 30rem;
+    overflow: scroll;
 }
 
 .pet-name-background {
@@ -124,6 +126,7 @@
     text-decoration: none;
     color: black;
     font-size: normal;
+    font-weight: 100;
 }
 
 .btn-pet:hover {
@@ -138,7 +141,7 @@
 }
 
 .btn-text {
-    font-weight: 900;
+    font-weight: 100;
     font-size: 1rem;
 }
 
@@ -282,6 +285,24 @@
     margin: 0.5rem;
 }
 
+/* pet - footer */
+
+.pet-profilet-footer {
+   height: 15rem; 
+}
+
+.pet-footer-text {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-div-contact-us {
+    margin-top: 2rem;
+}
+
 
 
 /* Pet comment  */
@@ -301,20 +322,45 @@
     z-index: 50;
 }
 
-
-.pet-profilet-footer {
-   height: 15rem; 
+.comment-div h1 {
+    margin-bottom: 1rem;
 }
 
-.pet-footer-text {
+.textarea-comment-div {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.comment-by-name {
+    margin: 1rem 0;
+    font-style: italic;
+}
+
+.comment-div-back-del-btn {
+    position: absolute;
     display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: flex-start;
-    align-items: center;
+    transform: translate(25.5%,291%);
+    /* transform: translate(55.5%,361%); */
+    /* transform: translate(55.5%, 210%); */
 }
 
-.btn-div-contact-us {
-    margin-top: 2rem;
+.save-comment-btn {
+    position: absolute;
+    transform: translate(-17%, 0%);
+    /* transform: translate(240%, 10%); */
+    /* transform: translate(240%, -125%); */
+    
 }
-   
+
+/* .back-comment-btn {
+    margin-right: 2rem;
+} */
+
+.back-comment-btn a {
+    color: rgb(38, 38, 38);
+    font-weight: 100;
+}
+
+/* .delete-comment-btn {
+    width: 10rem;
+} */
