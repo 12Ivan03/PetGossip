@@ -29,7 +29,7 @@ router.get('/edit-profile/:userId', isLoggedIn ,(req, res, next) => {
 
     User.findById(userId)
         .then((foundUser) => {
-            res.render('user/edit-profile', { foundUser, inSession: true, _id: req.session.currentUser._id })
+            res.render('user/edit-profile', { foundUser, inSession: true, _id: userId })
         })
         .catch((err) =>{
             console.log(err);
@@ -43,7 +43,7 @@ router.post('/edit-profile/:userId', isLoggedIn, fileUploader.single('img'), (re
     const { name, lastName, city, bio, _id, existingImage } = req.body;
 
     if(name === ''|| city === ''){
-        return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId})
+        return res.render('user/edit-profile', {errMsg: "fill the required fileds", foundUser: req.body, userId: userId,  _id: userId});
     } 
 
     let img;
@@ -137,7 +137,7 @@ router.get('/admin/users', isLoggedIn, isVerifiedUser, isAdmin, (req,res,next)=>
             "city": user.city
         }));
 
-        res.render('user/users', { users: usersToRender });
+        res.render('user/users', { users: usersToRender, inSession: true });
     })
     .catch((err) =>{
         console.log(err);
