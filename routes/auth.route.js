@@ -76,10 +76,12 @@ router.post("/login", (req, res, next) => {
             bcrypt.compare(password, logUser.password)
                 .then((approvedPwd) => {
                     if(approvedPwd) {
-                        req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role }
-                        // req.session.currentUser = logUser;
-                        // console.log("session", req.session.currentUser)
-                        res.redirect(`/profile/${logUser._id}`)
+                        req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role };
+                        if(req.session.currentUser.role === 'admin'){
+                            res.redirect('/admin/users');
+                        } else {
+                            res.redirect(`/profile/${logUser._id}`)
+                        }
                     } else {
                         res.render('auth/login', {errMsgPwd: "User not found or password incorrect"})
                     }
