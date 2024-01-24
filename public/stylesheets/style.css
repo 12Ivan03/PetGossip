@@ -106,17 +106,6 @@
   text-align: center;
 }
 
-/* .description-info-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-} */
-
-/* .description-info-text p {
-  text-align: center;
-} */
-
 .description-info-text h2 {
   margin-bottom: 4rem ;
   font-size: xx-large;
@@ -156,6 +145,7 @@
   overflow-y: scroll;
   display: flex;
 }
+
 
 .profilesPet-container {
   margin: 0 1rem;
@@ -285,6 +275,10 @@
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+.footer-text p {
+  text-align: center;
 }
 
 .footer-text-ul {

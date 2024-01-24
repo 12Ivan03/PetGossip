@@ -72,7 +72,7 @@
     margin: 3rem 0 0 13rem;
     box-shadow: rgb(0, 0, 0) 0.5rem 0.5rem 1rem ;
     transition: transform 0.5s ease-in-out;
-    z-index: 50;
+    z-index: 90;
 }
 
 .bigger-img-hover {
@@ -319,7 +319,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 50;
+    z-index: 100;
 }
 
 .comment-div h1 {
@@ -339,9 +339,9 @@
 .comment-div-back-del-btn {
     position: absolute;
     display: flex;
-    transform: translate(25.5%,291%);
-    /* transform: translate(55.5%,361%); */
-    /* transform: translate(55.5%, 210%); */
+    transform: translate(0%,291%);
+    margin-left: 14.5rem;
+    /* transform: translate(25.5%,291%); */
 }
 
 .save-comment-btn {

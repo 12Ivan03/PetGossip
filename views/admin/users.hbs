@@ -1,0 +1,33 @@
+<div class=" admin-title">
+    <p>Hello  </p>
+</div>
+<div class="admin-all-users">
+    <p>All Users</p>
+</div>
+<div class="all-profiles">
+    {{#each users}}
+        <div class="all-prifles-each-box">
+            <a href="/profile/{{_id}}" class="hover-each-grid-box">
+                <div class="all-profile-each-box-pic-of-pet-div">
+                    <img src="{{img}}" alt="user-profile-picture" class="hover-image all-profile-each-box-pic-of-pet">
+                </div>
+        
+                <div class="all-profile-each-box-info-of-pet">
+                    <div class="all-profile-each-box-info-of-pet-name into-pet-p">
+                                <p>Name: <p>{{name}} {{lastName}}</p></p>
+                    </div>
+                    <div class="all-profile-each-box-info-of-pet-owner into-pet-p">
+                                <p>City: <p>{{city}}</p></p>
+                    </div>
+                    <div class="all-profile-each-box-info-of-pet-description into-pet-p">
+                        <form method="post" action="/profile/delete/{{_id}}">
+                            <button>Delete Profile</button>
+                        </form>
+                    </div> 
+                </div>
+            </a>
+        </div>
+    {{/each}}
+</div>
+
+{{> footerPartial }}

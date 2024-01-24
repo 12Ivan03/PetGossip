@@ -1,7 +1,7 @@
 /* singup login  */
 
 .background-log-sign-in {
-    height: 40rem;
+    height: 75vh;
     background-image: url(../images/woman-walking-with-her-dog.jpeg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -66,18 +66,18 @@
 .main-info-container {
     position: relative;
     overflow: hidden;
-    background-color: #d2b48c9f;
+    background-color: #d2b48c9a;
 }
 
 .info-page-container {
-    height: 55rem;
+    height: 100vh;
     z-index: 5;
     overflow: hidden;
 }
 
 .info-page-square {
     background-color: #d2b48c;
-    height: 55rem;
+    height: 100vh;
     width: 20rem;
 }
 
@@ -85,7 +85,7 @@
     position: absolute;
     background-color: #d2b48c;
     width: 55vw;
-    height: 55rem;
+    height: 100vh;
     transform: skew(25deg);
 }
 
@@ -107,6 +107,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-x: scroll;
 }
 
 .info-text h1 {

@@ -1,14 +1,21 @@
-<div class="userProfilesinAdmin">
+<div class="all-prifles-each-box">
     <a href="/profile/{{_id}}" class="hover-each-grid-box">
-        <div>
-            <img src="{{img}}" alt="user-profile-picture" class="img-admin-users">
+        <div "all-profile-each-box-pic-of-pet-div">
+            <img src="{{img}}" alt="user-profile-picture" class="hover-image all-profile-each-box-pic-of-pet">
+        </div>
+  
+        <div class="all-profile-each-box-info-of-pet">
+            <div class="all-profile-each-box-info-of-pet-name into-pet-p">
+                        <p>Name: <p class="hover-name">{{name}} {{lastName}}</p></p>
+            </div>
+            <div class="all-profile-each-box-info-of-pet-owner into-pet-p">
+                        <p>City: <p>{{city}}</p></p>
+            </div>
+            <div class="all-profile-each-box-info-of-pet-description into-pet-p">
+                <form method="post" action="/profile/delete/{{_id}}">
+                    <button>Delete Profile</button>
+                </form>
+            </div> 
         </div>
     </a>
-    <div>
-        <p>{{name}} {{lastName}}</p>
-        <p>{{city}}</p>
-        <form method="post" action="/profile/delete/{{_id}}">
-            <button>Delete Profile</button>
-        </form>
-    </div>
 </div>

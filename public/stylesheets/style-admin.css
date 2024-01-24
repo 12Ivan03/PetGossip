@@ -1,11 +1,28 @@
+.admin-title {
+    height: 15rem;
+    background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/r2yl4p9wqaykfi54jjil);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+}
 
-.userProfilesinAdmin {
+.admin-title p {
+    padding-left: 20rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3rem;
+}
+
+.admin-all-users {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
-.img-admin-users {
-    width: 8rem;
+.admin-all-users p {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 4rem;
 }

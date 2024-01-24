@@ -127,21 +127,22 @@ router.post('/profile/delete/:userId', isLoggedIn, (req, res, next) => {
 
 router.get('/admin/users', isLoggedIn, isVerifiedUser, isAdmin, (req,res,next)=>{
     User.find()
-    .then(users=>{
-        const usersToRender = users.map(user => ({
-            "_id": user._id,
-            "name": user.name,
-            "lastName": user.lastName,
-            "img": user.img,
-            "city": user.city
-        }));
+        .then(users=>{
+            const usersToRender = users.map(user => ({
+                "_id": user._id,
+                "name": user.name,
+                "lastName": user.lastName,
+                "img": user.img,
+                "city": user.city
+            }));
 
-        res.render('user/users', { users: usersToRender, inSession: true });
-    })
-    .catch((err) =>{
-        console.log(err);
-        next(err);
-    });
+            console.log('req.session.currentUser id', req.session.currentUser._id)
+            res.render('admin/users', { users: usersToRender, inSession: true, adminUser: req.session.currentUser, _id: req.session.currentUser._id });
+        })
+        .catch((err) =>{
+            console.log(err);
+            next(err);
+        });
 });
 
 module.exports = router;
