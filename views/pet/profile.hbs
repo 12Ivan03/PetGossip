@@ -41,13 +41,13 @@
                 {{#if isUser}}
                 <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
 
-                <button class="btn-pet btn-text">Delete profile</button>
+                {{!-- <button class="btn-pet btn-text">Delete profile</button>
 
-                <dialog id="deleteBtnPet">
+                <dialog id="deleteBtnPet"> --}}
                     <form action="/pet/{{petInfo._id}}/delete" method="post">
                         <button class="btn-pet btn-text" type="submit">Delete profile</button>
                     </form>
-                </dialog>
+                {{!-- </dialog> --}}
 
                 {{/if}}
             </div>
@@ -108,7 +108,7 @@
                     </div>
                     {{/if}}
 
-                    <div class="comment-div" style="display: none">
+                    <div class="comment-div" >
                         <h1>Edit comment:</h1>
 
                         <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
@@ -130,6 +130,7 @@
                             </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         {{/each}}

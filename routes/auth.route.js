@@ -1,12 +1,9 @@
 const router = require("express").Router();
 const User = require('../models/User.model.js');
-const Pet = require('../models/Pet.model.js');
-const Description = require('../models/Description.model');
-const Comment = require('../models/Comment.model.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 11;
 
-const{ isLoggedIn, isLoggedOut, isAdmin } = require('../middlewares/route-guard.js')
+const{ isLoggedIn, isLoggedOut } = require('../middlewares/route-guard.js')
 // Import the configured Nodemailer transporter object
 const { transporter} = require("../config/transporter.config");
 const fs = require('fs');
@@ -51,7 +48,10 @@ router.post("/signup", (req, res, next) => {
                 }).catch((error) => console.log(error));
             }
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>{
+            console.log(err);
+            next(err);
+        })
 
 })
 
@@ -76,17 +76,25 @@ router.post("/login", (req, res, next) => {
             bcrypt.compare(password, logUser.password)
                 .then((approvedPwd) => {
                     if(approvedPwd) {
-                        req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role }
-                        // req.session.currentUser = logUser;
-                        // console.log("session", req.session.currentUser)
-                        res.redirect('/profile')
+                        req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role };
+                        if(req.session.currentUser.role === 'admin'){
+                            res.redirect('/admin/users');
+                        } else {
+                            res.redirect(`/profile/${logUser._id}`)
+                        }
                     } else {
                         res.render('auth/login', {errMsgPwd: "User not found or password incorrect"})
                     }
                 })
-                .catch((err) => console.log(err))
+                .catch((err) =>{
+                    console.log(err);
+                    next(err);
+                })
         })
-        .catch((err) => console.log(err))
+        .catch((err) =>{
+            console.log(err);
+            next(err);
+        })
 })
 
 router.get("/logout", isLoggedIn, (req, res, next) => {
@@ -104,7 +112,7 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 console.log('User is found, making it active');
                 if(foundUser.status === 'Active'){
                     req.session.currentUser = { username: foundUser.username, _id: foundUser._id, status:foundUser.status, role:foundUser.role }
-                    res.render('auth/account-verified', {isActive:true,  inSession:true});
+                    res.render('auth/account-verified', {isActive:true,  inSession:true,  _id: req.session.currentUser._id});
                     return;
                 }
                 User
@@ -112,20 +120,29 @@ router.get('/confirm/:confirmCode', (req, res)=> {
                 .then(updatedUser=>{ 
                     console.log('updatedUser', updatedUser);
                     req.session.currentUser = { username: updatedUser.username, _id: updatedUser._id, status:updatedUser.status, role:updatedUser.role }
-                    res.render('auth/account-verified', {success:true, inSession:true})})
+                    res.render('auth/account-verified', {success:true, inSession:true,  _id: req.session.currentUser._id})})
                 .catch(err=>console.log('error in updating status', err));
             } else {
                 console.log('no user is found registered for this user');
                 res.render('auth/account-verified');
             }
-        }).catch(err => console.log(err));
+        }).catch((err) =>{
+            console.log(err);
+            next(err);
+        })
 })
 
-router.get('/contact', (req, res)=>{
-    if(req.session.currentUser)
-        res.render('contact/contactus', {inSession:true});
-    else
-        res.render('contact/contactus');
+router.get('/contact', (req, res, next) => {
+    try {
+        if (req.session.currentUser)
+            res.render('contact/contactus', { inSession: true,  _id: req.session.currentUser._id });
+        else
+            res.render('contact/contactus');
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+
 });
 
 router.post('/contact', (req, res)=>{
@@ -142,7 +159,10 @@ router.post('/contact', (req, res)=>{
             console.log('email sent by the user to pet gossips.') 
             res.render('contact/contactus', {isMsgSent:true});
         })
-        .catch(err=>console.log(err));
+        .catch((err) =>{
+            console.log(err);
+            next(err);
+        });
 
 });
 

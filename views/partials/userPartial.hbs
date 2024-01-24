@@ -1,0 +1,14 @@
+<div class="userProfilesinAdmin">
+    <a href="/profile/{{_id}}" class="hover-each-grid-box">
+        <div>
+            <img src="{{img}}" alt="user-profile-picture" class="img-admin-users">
+        </div>
+    </a>
+    <div>
+        <p>{{name}} {{lastName}}</p>
+        <p>{{city}}</p>
+        <form method="post" action="/profile/delete/{{_id}}">
+            <button>Delete Profile</button>
+        </form>
+    </div>
+</div>

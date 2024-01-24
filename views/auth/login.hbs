@@ -1,25 +1,33 @@
-<h1>Login</h1>
+<div class="background-log-sign-in">
+    <div class="login-contianer">
+        <p class="title-log-sign">LOGIN</p>
+        <form action="/login" method="post">
 
-<form action="/login" method="post">
-    <label for="username"> Username:
-        <input type="text" name="username" id="username" placeholder="username">
-        {{#if errMsg}}
-            <p>*{{errMsg}}</p>
-        {{/if}}
-        {{#if errUsernameMsg}}
-            <p>*{{errUsernameMsg}}</p>
-        {{/if}}
-    </label>
-    <label for="pwd"> Password:
-        <input type="password" id="pwd" name="password" placeholder="********">
-         {{#if errMsg}}
-            <p>*{{errMsg}}</p>
-        {{/if}}
-        {{#if errMsgPwd}}
-            <p>*{{errMsgPwd}}</p>
-        {{/if}}
-    </label>
-    <br>
-    <br>
-    <button type="submit">Login</button>
-</form>
+            <label class="label-log-sign" for="username"> Username:
+                <input class="input-log-sign" type="text" name="username" id="username" placeholder="username">
+                {{#if errMsg}}
+                <p class="err-msg">*{{errMsg}}</p>
+                {{/if}}
+                {{#if errUsernameMsg}}
+                <p class="err-msg">*{{errUsernameMsg}}</p>
+                {{/if}}
+            </label>
+
+            <label class="label-log-sign" for="pwd"> Password:
+                <input class="input-log-sign" type="password" id="pwd" name="password" placeholder="********">
+                {{#if errMsg}}
+                <p class="err-msg">*{{errMsg}}</p>
+                {{/if}}
+                {{#if errMsgPwd}}
+                <p class="err-msg">*{{errMsgPwd}}</p>
+                {{/if}}
+            </label>
+
+            <button class="btn-web-description-extra-info log-sign-in-btn" type="submit">Login</button>
+
+            <a href="/signup">Sign Up</a>
+        </form>
+    </div>
+</div>
+
+{{>footerPartial}}

@@ -28,7 +28,8 @@
 
 .container {
     height: 30rem;
-    background-image: url(/images/gras.jpeg);
+    /* background-image: url(/images/gras.jpeg); */
+    background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/r2yl4p9wqaykfi54jjil);
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -54,7 +55,7 @@
 
 .pet-image img {
     height: 20rem;
-    z-index: 10;
+    z-index: 20;
     border-radius: 20rem;
 }
 
@@ -71,6 +72,7 @@
     margin: 3rem 0 0 13rem;
     box-shadow: rgb(0, 0, 0) 0.5rem 0.5rem 1rem ;
     transition: transform 0.5s ease-in-out;
+    z-index: 50;
 }
 
 .bigger-img-hover {
@@ -302,8 +304,6 @@
     margin-top: 2rem;
 }
 
-
-
 /* Pet comment  */
 
 .comment-div {
@@ -315,6 +315,7 @@
     height: 100vh;
     background-color: #8572725e;
     backdrop-filter: blur(8px);
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;

@@ -53,7 +53,8 @@
 /* web-title-phrase */
 
 .web-title-phrase {
-  background-image: url(../images/isolated-on-blue-background.jpeg);
+  /* background-image: url(../images/isolated-on-blue-background.jpeg); */
+  background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/sgvxksm7djkgqfau3myu);
   background-position: top;
   background-position-x: center;
   background-repeat: none;
