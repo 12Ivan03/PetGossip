@@ -1,0 +1,126 @@
+/* singup login  */
+
+.background-log-sign-in {
+    height: 75vh;
+    background-image: url(../images/woman-walking-with-her-dog.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-contianer {
+    height: 25rem;
+    width: 18rem;
+    background-color: rgba(127, 123, 111, 0.382);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.sign-up-container {
+    height: 28rem!important;
+}
+
+.title-log-sign {
+    margin-top: 1rem;
+    font-size: 3rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.login-contianer form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.label-log-sign{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 1rem 0 0.8rem 0;
+}
+
+.input-log-sign {
+    margin-top: 0.7rem;
+}
+
+.log-sign-in-btn {
+    margin: 1.5rem 0;
+    height: 2rem!important;
+    width: 10rem!important;
+}
+
+.err-msg {
+    font-size: small;
+}
+
+/* info - more */
+
+.main-info-container {
+    position: relative;
+    overflow: hidden;
+    background-color: #d2b48c9a;
+}
+
+.info-page-container {
+    height: 60rem;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.info-page-square {
+    background-color: #d2b48c;
+    height: 60rem;
+    width: 20rem;
+}
+
+.info-page-parallelogram {
+    position: absolute;
+    background-color: #d2b48c;
+    width: 55vw;
+    height: 60rem;
+    transform: skew(25deg);
+}
+
+.info-logo-page {
+    position: absolute;
+    height: 30rem;
+    z-index: 10;
+    left: -4rem;
+    bottom: -7rem;
+    opacity: 0.05;
+    overflow: hidden;
+}
+
+.info-text {
+    position: absolute;
+    top: 7rem;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: scroll;
+}
+
+.info-text h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.info-exponation-text {
+    width: 37rem;
+}
+
+.info-exponation-text p {
+    font-size: large;
+    text-align: center;
+    margin: 1rem 0;
+}

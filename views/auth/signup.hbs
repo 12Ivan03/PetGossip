@@ -1,30 +1,35 @@
-<h1>signup</h1>
+<div class="background-log-sign-in">
+    <div class="login-contianer sign-up-container">
+        <p class="title-log-sign">SIGN UP</p>
+        <form action="/signup" method="post">
 
-<form action="/signup" method="post">
-    <label for="username"> Username:
-        <input type="text" id="username" name="username" placeholder="username">
-        {{#if errMsg}}
-            <p>{{errMsg}}</p>
-        {{/if}}
-         {{#if errUserMsg}}
-            <p>{{errUserMsg}}</p>
-        {{/if}}
-    </label>
-    <br>
-    <label for="email"> Email:
-        <input type="email" name="email" id="email" placeholder="email">
-          {{#if errMsg}}
-            <p>{{errMsg}}</p>
-        {{/if}}
-    </label>
-    <br>
-    <label for="pwd"> Password:
-        <input type="password" name="password" id="pwd" placeholder="********">
-          {{#if errMsg}}
-            <p>{{errMsg}}</p>
-        {{/if}}
-    </label>
-    <br>
-    <br>
-    <button type="submit">Submit</button>
-</form>
+            <label class="label-log-sign" for="username"> Username:
+                <input class="input-log-sign" type="text" id="username" name="username" placeholder="username">
+                {{#if errMsg}}
+                <p class="err-msg">{{errMsg}}</p>
+                {{/if}}
+                {{#if errUserMsg}}
+                <p class="err-msg">{{errUserMsg}}</p>
+                {{/if}}
+            </label>
+            
+            <label class="label-log-sign" for="email"> Email:
+                <input class="input-log-sign" type="email" name="email" id="email" placeholder="email">
+                {{#if errMsg}}
+                <p class="err-msg">{{errMsg}}</p>
+                {{/if}}
+            </label>
+            
+            <label class="label-log-sign" for="pwd"> Password:
+                <input class="input-log-sign" type="password" name="password" id="pwd" placeholder="********">
+                {{#if errMsg}}
+                <p class="err-msg">{{errMsg}}</p>
+                {{/if}}
+            </label>
+
+            <button class="btn-web-description-extra-info log-sign-in-btn" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+{{>footerPartial}}

@@ -1,12 +1,4 @@
 <div class="container">
-    {{!-- <div class="pet-opening" style="display: none">
-
-        <div class="pet-opening-img">
-            <img src="{{petInfo.img}}" alt="">
-        </div>
-
-        <p>{{petInfo.name}}</p>
-    </div> --}}
 
     <div class="scroll-div">
         <div class="pet-name-background">
@@ -117,7 +109,7 @@
                     </div>
                     {{/if}}
 
-                    <div class="comment-div" style="display: none">
+                    <div class="comment-div" >
                         <h1>Edit comment:</h1>
 
                         <form action="/comment-save/{{_id}}/pet/{{pet._id}}" method="post">
@@ -137,9 +129,10 @@
                             <form action="/comment/delete/{{_id}}" method="post">
                                 <button class="btn-pet delete-comment-btn" type="submit">Delete Comment</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
+                        </div>                
+                    </div> 
+
+                </div>  {{!--  class = edit-plus-comment-div --}}
             </div>
         {{/each}}
     </div>
