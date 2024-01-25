@@ -70,14 +70,14 @@
 }
 
 .info-page-container {
-    height: 100vh;
+    height: 60rem;
     z-index: 5;
     overflow: hidden;
 }
 
 .info-page-square {
     background-color: #d2b48c;
-    height: 100vh;
+    height: 60rem;
     width: 20rem;
 }
 
@@ -85,7 +85,7 @@
     position: absolute;
     background-color: #d2b48c;
     width: 55vw;
-    height: 100vh;
+    height: 60rem;
     transform: skew(25deg);
 }
 
