@@ -118,16 +118,37 @@ document.addEventListener("DOMContentLoaded",() => {
 
     //// img pet hover ////
 
-    const hoverImgdiv = document.querySelector('#img-div')
+    const hoverImgdiv = document.getElementById('img-div');
 
-    hoverImgdiv.addEventListener('mouseover', () => {
-      hoverImgdiv.classList.add('bigger-img-hover')
-    })
+    if(hoverImgdiv){
+      hoverImgdiv.addEventListener('mouseover', () => {
+        hoverImgdiv.classList.add('bigger-img-hover')
+      })
+  
+      hoverImgdiv.addEventListener('mouseleave', () => {
+        hoverImgdiv.classList.remove('bigger-img-hover')
+      })
+    }
+   
+    const deleteModal = document.querySelector('.delete-modal');
+    const deleteButton = document.querySelector('.delete-button');
+    const backdrop = document.querySelector('.backdrop');
+    const cancelBtn = document.querySelector('.btn-cancel');
+    const confirmBtn = document.querySelector('.btn-confirm');
 
-    hoverImgdiv.addEventListener('mouseleave', () => {
-      hoverImgdiv.classList.remove('bigger-img-hover')
-    })
+    function closeModal(){
+      deleteModal.style.display = 'none';
+      backdrop.style.display = 'none';
+    }
 
-
+    if(deleteButton && deleteModal && backdrop && cancelBtn && confirmBtn){
+      deleteButton.addEventListener('click', ()=>{
+        deleteModal.style.display = 'flex';
+        backdrop.style.display = 'block';
+      })
+      cancelBtn.addEventListener('click', closeModal);
+      confirmBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+    }
     
   });

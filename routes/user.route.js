@@ -136,7 +136,7 @@ router.get('/admin/users', isLoggedIn, isVerifiedUser, isAdmin, (req,res,next)=>
             "city": user.city
         }));
 
-        res.render('user/users', { users: usersToRender, inSession: true });
+        res.render('user/users', { users: usersToRender, inSession: true, _id: req.session.currentUser._id });
     })
     .catch((err) =>{
         console.log(err);

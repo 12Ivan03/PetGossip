@@ -340,3 +340,47 @@
   font-size: 0.6rem;
   margin-left: 1rem;
 }
+
+/* Modal for delete buttons throughout */
+
+.delete-modal {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  position: fixed;
+  z-index: 200;
+  top: 40%;
+  left: 40%;
+  width: 25%;
+  height: 15%;
+  background: rgb(157, 200, 226);
+  -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, .4);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, .4);
+  padding: 1rem;
+}
+
+.modal-text {
+  text-align: center;
+  font: 1.2em sans-serif;
+}
+
+.demo-container {
+  display: block;
+}
+
+.backdrop {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 2;
+  z-index: 100;
+}
+
+.delete-model-actions {
+  display: flex;
+  justify-content: space-around;
+}
