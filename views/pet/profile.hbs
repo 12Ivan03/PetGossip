@@ -41,14 +41,23 @@
                 {{#if isUser}}
                 <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
 
-                {{!-- <button class="btn-pet btn-text">Delete profile</button>
-
-                <dialog id="deleteBtnPet"> --}}
-                    <form action="/pet/{{petInfo._id}}/delete" method="post">
-                        <button class="btn-pet btn-text" type="submit">Delete profile</button>
-                    </form>
-                {{!-- </dialog> --}}
-
+                    <div class="backdrop"></div>
+                    <div class="delete-modal">
+                        <p class="modal-text">Please confirm if you really want to delete ?</p>
+                        <div class="delete-model-actions">
+                            <button type="button" class="btn-pet btn-text btn-cancel">No</button>
+                            <form action="/pet/{{petInfo._id}}/delete" method="post">
+                                <button class="btn-pet btn-text btn-confirm" type="submit">Yes</button>
+                            </form>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="demo-container">
+                        <div class="modal-control">
+                            <button type="button" class="delete-button btn-pet btn-text">Delete Profile</button>
+                        </div>
+                    </div>
                 {{/if}}
             </div>
 

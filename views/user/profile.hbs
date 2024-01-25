@@ -41,9 +41,9 @@
                     <a class="btn-text" href="/edit-profile/{{user._id}}">Edit Profile</a>
                 </button>
 
-                <form action="/profile/delete/{{user._id}}" method="POST">
+                {{!-- <form action="/profile/delete/{{user._id}}" method="POST">
                     <button class="btn-pet btn-text" type="submit">Delete Profile</button>
-                </form>
+                </form> --}}
 {{!-- Maybe  --}}
                 {{!-- <button class="btn-pet btn-text">Delete profile</button>
 
@@ -52,6 +52,24 @@
                         <button class="btn-pet btn-text" type="submit">Delete profile</button>
                     </form>
                 </dialog> --}}
+
+                    <div class="backdrop"></div>
+                    <div class="delete-modal">
+                        <p class="modal-text">Please confirm if you really want to delete ?</p>
+                        <div class="delete-model-actions">
+                            <button type="button" class="btn-pet btn-text btn-cancel">No</button>
+                            <form action="/profile/delete/{{user._id}}" method="post">
+                                <button class="btn-pet btn-text btn-confirm" type="submit">Yes</button>
+                            </form>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="demo-container">
+                        <div class="modal-control">
+                            <button type="button" class="delete-button btn-pet btn-text">Delete Profile</button>
+                        </div>
+                    </div>
 
             </div>
 
