@@ -37,39 +37,26 @@
 
 
             <div class="pet-ed-del-btns">
-                <button  class="btn-pet">
-                    <a class="btn-text" href="/edit-profile/{{user._id}}">Edit Profile</a>
-                </button>
-
-                {{!-- <form action="/profile/delete/{{user._id}}" method="POST">
-                    <button class="btn-pet btn-text" type="submit">Delete Profile</button>
-                </form> --}}
-{{!-- Maybe  --}}
-                {{!-- <button class="btn-pet btn-text">Delete profile</button>
-
-                <dialog id="deleteBtnPet">
-                    <form action="/pet/{{petInfo._id}}/delete" method="post">
-                        <button class="btn-pet btn-text" type="submit">Delete profile</button>
-                    </form>
-                </dialog> --}}
-
-                    <div class="backdrop"></div>
-                    <div class="delete-modal">
-                        <p class="modal-text">Please confirm if you really want to delete ?</p>
-                        <div class="delete-model-actions">
-                            <button type="button" class="btn-pet btn-text btn-cancel">No</button>
-                            <form action="/profile/delete/{{user._id}}" method="post">
-                                <button class="btn-pet btn-text btn-confirm" type="submit">Yes</button>
-                            </form>
-                        </div>
-                    
+                <a class="btn-text" href="/edit-profile/{{user._id}}"><button class="btn-pet">Edit Profile</button></a>
+                
+                <div class="backdrop"></div>
+                <div class="delete-modal">
+                    <p class="modal-text">Please confirm if you really want to delete your account?</p>
+                    <p class="modal-text">This action cannot be undone.</p>
+                    <div class="delete-model-actions">
+                        <button type="button" class="btn-pet btn-text btn-cancel">No</button>
+                        <form action="/profile/delete/{{user._id}}" method="post">
+                            <button class="btn-pet btn-text btn-confirm" type="submit">Yes</button>
+                        </form>
                     </div>
-                    
-                    <div class="demo-container">
-                        <div class="modal-control">
-                            <button type="button" class="delete-button btn-pet btn-text">Delete Profile</button>
-                        </div>
+                
+                </div>
+                
+                <div class="demo-container">
+                    <div class="modal-control">
+                        <button type="button" class="delete-button btn-pet btn-text">Delete Profile</button>
                     </div>
+                </div>
 
             </div>
 
@@ -81,8 +68,8 @@
 
 <div  class="user-profile-btn">
     <div class="user-pet-btn">
-        <button class="btn-pet"><a class="btn-text" href="/view-all-pets">View All Pets</a></button>
-        <button class="btn-pet"><a class="btn-text" href="/create-pet/{{user._id}}">Create Pet</a></button>
+        <a class="btn-text" href="/view-all-pets"><button class="btn-pet barker-background">View All Pets</button></a>
+        <a class="btn-text" href="/create-pet/{{user._id}}"><button class="btn-pet barker-background">Create Pet</button></a>
     </div>
     
     <p class="titles-pet">Your pets</p>

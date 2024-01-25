@@ -31,15 +31,16 @@
 
             <div class="pet-ed-del-btns">
                 {{#if isUser}}
-                <button class="btn-pet"><a class="btn-text" href="/edit-pet/{{petInfo._id}}">Edit profile</a></button>
+                <a class="btn-text" href="/edit-pet/{{petInfo._id}}"><button class="btn-pet">Edit profile</button></a>
 
                     <div class="backdrop"></div>
                     <div class="delete-modal">
-                        <p class="modal-text">Please confirm if you really want to delete ?</p>
+                        <p class="modal-text">Are you sure you want to delete the profile of {{petInfo.name}}?</p>
+                        <p class="modal-text">This action cannot be undone.</p>
                         <div class="delete-model-actions">
-                            <button type="button" class="btn-pet btn-text btn-cancel">No</button>
+                            <button type="button" class="btn-pet btn-text btn-cancel btn-delete-no">Back</button>
                             <form action="/pet/{{petInfo._id}}/delete" method="post">
-                                <button class="btn-pet btn-text btn-confirm" type="submit">Yes</button>
+                                <button class="btn-pet btn-text btn-confirm" type="submit">Comfirm</button>
                             </form>
                         </div>
                     
@@ -105,7 +106,7 @@
 
                     {{#if isOwner}}
                     <div class="edit-btn" style="display: block;">
-                            <button class="edit-btn btn-pet barker-background"><a class=" btn-text">Edit</a></button>
+                            <a class=" btn-text"><button class="edit-btn btn-pet barker-background">Edit</button></a>
                     </div>
                     {{/if}}
 
@@ -122,12 +123,14 @@
                         </form>
 
                         <div class="comment-div-back-del-btn">
-                            <button class="btn-pet back-comment-btn">
-                                <a href="/pet-profile/{{pet._id}}">Back</a>
-                            </button>
-
+                            <a href="/pet-profile/{{pet._id}}">
+                                <button class="btn-pet back-comment-btn">
+                                    Back
+                                </button>
+                            </a>
+                            
                             <form action="/comment/delete/{{_id}}" method="post">
-                                <button class="btn-pet delete-comment-btn" type="submit">Delete Comment</button>
+                                <button class="btn-pet delete-comment-btn" type="submit">Delete</button>
                             </form>
                         </div>                
                     </div> 
