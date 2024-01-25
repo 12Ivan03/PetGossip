@@ -137,7 +137,7 @@ router.get('/admin/users', isLoggedIn, isVerifiedUser, isAdmin, (req,res,next)=>
             }));
 
             console.log('req.session.currentUser id', req.session.currentUser._id)
-            res.render('admin/users', { users: usersToRender, inSession: true, adminUser: req.session.currentUser, _id: req.session.currentUser._id });
+            res.render('admin/users', { users: usersToRender, inSession: true, username: req.session.currentUser.username, _id: req.session.currentUser._id });
         })
         .catch((err) =>{
             console.log(err);
