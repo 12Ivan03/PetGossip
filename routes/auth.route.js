@@ -14,7 +14,7 @@ router.get("/signup", isLoggedOut, (req, res, next) => {
     res.render("auth/signup");
 });
 
-router.post("/signup", (req, res, next) => {
+router.post("/signup", isLoggedOut, (req, res, next) => {
     const { username, password, email } = req.body;
     if(username === '' || password === '' || email === ''){
         res.render('auth/signup', {errMsg: "Please fill in all the required spaces"})
