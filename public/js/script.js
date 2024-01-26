@@ -154,19 +154,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // loading Icon //
 
-  const loadingBtn = document.querySelector('.loading-btn')
+  // const loadingBtn = document.querySelector('.loading-btn')
 
-  if(loadingBtn){
-    loadingBtn.addEventListener('click', () => {
-      const loadingIcon = document.querySelector('.loading-icon');
-      const loadingIconBackground = document.querySelector('.loading-icon-background')
+  // if(loadingBtn){
+  //   loadingBtn.addEventListener('click', () => {
+  //     const loadingIcon = document.querySelector('.loading-icon');
+  //     const loadingIconBackground = document.querySelector('.loading-icon-background')
   
+  //     loadingIcon.style.display = 'block';
+  //     loadingIconBackground.style.display = 'block';
+  //   })
+  
+  // }
+
+  const loadingBtnAll = document.querySelectorAll('.loading-btn')
+ 
+  loadingBtnAll.forEach((pushBtn) => {
+    const loadingIcon = document.querySelector('.loading-icon');
+    const loadingIconBackground = document.querySelector('.loading-icon-background')
+
+    pushBtn.addEventListener('click', () => {
+    
       loadingIcon.style.display = 'block';
       loadingIconBackground.style.display = 'block';
     })
-  
-  }
- 
+
+  })
   //snackbar
 
   let snackbar = document.getElementById("snackbar");

@@ -54,25 +54,20 @@
 
 /* loading icon  */
 
-/* body {
-    position: relative;
-} */
-
 .loading-icon {
     display: none;
-    width: 50px; /* Adjust size as needed */
-    height: 50px; /* Adjust size as needed */
-    border: 5px solid #ccc; /* Customize border style */
-    border-top: 5px solid #dba634; /* Customize border color */
-    border-radius: 50%; /* Makes it round */
-    animation: spin 1s linear infinite; /* Animation effect */
-    position: fixed; /* Position relative to the viewport */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    margin-top: -25px; /* Half of the height to center vertically */
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0.5rem solid #ccc;
+    border-top: 0.5rem solid #dba634;
+    border-radius: 50%;
+    animation: spin 1s linear infinite; 
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    margin-top: -25px;
     margin-left: -25px;
-    background-color: #8572727e;
-    backdrop-filter: blur(5px);
+    z-index: 160;
 }
 
 @keyframes spin {
@@ -89,6 +84,5 @@
     left: 0;
     background-color: #8572727e;
     backdrop-filter: blur(5px);
-
-    z-index: 100;
+    z-index: 150;
 }

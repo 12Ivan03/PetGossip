@@ -22,18 +22,18 @@
    <nav class="nav-bar">
       <div class="parallelogram"></div>
       <div class="logo">
-         <a href="/"><img src="/images/petgossip-logo-transparent.png" alt="Logo-Img" class="logo-img"></a>
+         <a class="loading-btn" href="/"><img src="/images/petgossip-logo-transparent.png" alt="Logo-Img" class="logo-img"></a>
       </div>
 
       <ul class="nav-bar-list">
-         <li class="nav-bar-list-items"><a href="/">Home</a></li>
-         <li class="nav-bar-list-items"><a href="/view-all-pets">Pets</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/">Home</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/view-all-pets">Pets</a></li>
          {{#if inSession}}
-         <li class="nav-bar-list-items"><a href="/profile/{{_id}}">Profile</a></li>
-         <li class="nav-bar-list-items"><a href="/logout">Logout</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/profile/{{_id}}">Profile</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/logout">Logout</a></li>
          {{else}}
-         <li class="nav-bar-list-items"><a href="/signup">Sing Up</a></li>
-         <li class="nav-bar-list-items"><a href="/login">Login</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/signup">Sing Up</a></li>
+         <li class="nav-bar-list-items"><a class="loading-btn" href="/login">Login</a></li>
          {{/if}}
       </ul>
    </nav>

@@ -31,7 +31,7 @@
 
             <div class="pet-ed-del-btns">
                 {{#if isUser}}
-                <a class="btn-text" href="/edit-pet/{{petInfo._id}}"><button class="btn-pet">Edit profile</button></a>
+                <a class="btn-text" href="/edit-pet/{{petInfo._id}}"><button class="btn-pet loading-btn">Edit profile</button></a>
 
                     <div class="backdrop"></div>
                     <div class="delete-modal">
@@ -40,7 +40,7 @@
                         <div class="delete-model-actions">
                             <button type="button" class="btn-pet btn-text btn-cancel btn-delete-no">Back</button>
                             <form action="/pet/{{petInfo._id}}/delete" method="post">
-                                <button class="btn-pet btn-text btn-confirm" type="submit">Comfirm</button>
+                                <button class="btn-pet btn-text btn-confirm loading-btn" type="submit">Comfirm</button>
                             </form>
                         </div>
                     
@@ -76,7 +76,7 @@
             <label for="text">
                 <textarea class="textarea-pet-comment" name="text" id="text" cols="60" rows="5" placeholder="Leave a comment here..."></textarea>
             </label>
-            <button class="btn-pet barker-background" type="submit">Comment</button>
+            <button class="btn-pet barker-background loading-btn" type="submit">Comment</button>
         </form>
    </div>
 
@@ -119,7 +119,7 @@
                             </label>
                             <p class="comment-by-name">commented by: {{user.name}}</p>
                             <hr>
-                            <button class="btn-pet save-comment-btn" type="submit">Save</button>     
+                            <button class="btn-pet save-comment-btn loading-btn" type="submit">Save</button>     
                         </form>
 
                         <div class="comment-div-back-del-btn">
@@ -130,7 +130,7 @@
                             </a>
                             
                             <form action="/comment/delete/{{_id}}" method="post">
-                                <button class="btn-pet delete-comment-btn" type="submit">Delete</button>
+                                <button class="btn-pet delete-comment-btn loading-btn" type="submit">Delete</button>
                             </form>
                         </div>                
                     </div> 
