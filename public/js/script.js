@@ -73,10 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const commentDiv = editBLurMsg.querySelector('.comment-div');
     const editBtn = editBLurMsg.querySelector('.edit-btn');
 
-    editBtn.addEventListener('click', () => {
-      commentDiv.style.display = "flex";
-      editBtn.style.display = 'none';
-    });
+    if(editBtn){
+      editBtn.addEventListener('click', () => {
+        commentDiv.style.display = "flex";
+        editBtn.style.display = 'none';
+      });
+    }
+   
   });
 
 
