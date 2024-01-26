@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>{{appTitle}}</title>
-      <link rel="icon" type="image/png" href="/images/petgossip-logo-transparent.png">
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-      <link rel="stylesheet" href="/stylesheets/reset.style.css">
-      <link rel="stylesheet" href="/stylesheets/style-pet-all.css">
-      <link rel="stylesheet" href="/stylesheets/pet-profile.css">
-      <link rel="stylesheet" href="/stylesheets/pet-user-edit-create.css">
-      <link rel="stylesheet" href="/stylesheets/msgs-contact.css">
-      <link rel="stylesheet" href="/stylesheets/style-admin.css">
-      <link rel="stylesheet" href="/stylesheets/log-sign-more.css">
-   </head>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>{{appTitle}}</title>
+   <link rel="icon" type="image/png" href="/images/petgossip-logo-transparent.png">
+   <link rel="stylesheet" href="/stylesheets/style.css" />
+   <link rel="stylesheet" href="/stylesheets/reset.style.css">
+   <link rel="stylesheet" href="/stylesheets/style-pet-all.css">
+   <link rel="stylesheet" href="/stylesheets/pet-profile.css">
+   <link rel="stylesheet" href="/stylesheets/pet-user-edit-create.css">
+   <link rel="stylesheet" href="/stylesheets/msgs-contact.css">
+   <link rel="stylesheet" href="/stylesheets/style-admin.css">
+   <link rel="stylesheet" href="/stylesheets/log-sign-more.css">
+</head>
 
-   <body>
+<body>
 
-      <nav class="nav-bar">
-         <div class="parallelogram"></div>
-         <div class="logo">
-            <a href="/"><img src="/images/petgossip-logo-transparent.png" alt="Logo-Img" class="logo-img"></a>
-         </div>
-         
-         <ul class="nav-bar-list">
-            <li class="nav-bar-list-items"><a href="/">Home</a></li>
-            <li class="nav-bar-list-items"><a href="/view-all-pets">Pets</a></li>
-            {{#if inSession}}
-            <li class="nav-bar-list-items"><a href="/profile/{{_id}}">Profile</a></li>
-            <li class="nav-bar-list-items"><a href="/logout">Logout</a></li>
-            {{else}}
-            <li class="nav-bar-list-items"><a href="/signup">Sing Up</a></li>
-            <li class="nav-bar-list-items"><a href="/login">Login</a></li>
-            {{/if}}
-         </ul>
-      </nav>
+   <nav class="nav-bar">
+      <div class="parallelogram"></div>
+      <div class="logo">
+         <a href="/"><img src="/images/petgossip-logo-transparent.png" alt="Logo-Img" class="logo-img"></a>
+      </div>
 
-      {{{body}}}
-  
+      <ul class="nav-bar-list">
+         <li class="nav-bar-list-items"><a href="/">Home</a></li>
+         <li class="nav-bar-list-items"><a href="/view-all-pets">Pets</a></li>
+         {{#if inSession}}
+         <li class="nav-bar-list-items"><a href="/profile/{{_id}}">Profile</a></li>
+         <li class="nav-bar-list-items"><a href="/logout">Logout</a></li>
+         {{else}}
+         <li class="nav-bar-list-items"><a href="/signup">Sing Up</a></li>
+         <li class="nav-bar-list-items"><a href="/login">Login</a></li>
+         {{/if}}
+      </ul>
+   </nav>
+   {{{body}}}
+
    <div class="loading-icon-background">
-       <div class="loading-icon"></div>   
+      <div class="loading-icon"></div>
    </div>
 
-      <script src="/js/script.js"></script>
-   </body>
+   {{#if isNotVerified}}
+   <div id="snackbar">
+      <p>Your account is not verified. Kindly check your email.</p>
+   </div>
+   {{/if}}
+
+   <script src="/js/script.js"></script>
+</body>
 
 </html>

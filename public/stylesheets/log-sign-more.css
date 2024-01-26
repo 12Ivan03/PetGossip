@@ -2,7 +2,8 @@
 
 .background-log-sign-in {
     height: 75vh;
-    background-image: url(../images/woman-walking-with-her-dog.jpeg);
+    /* background-image: url(../images/woman-walking-with-her-dog.jpeg); */
+    background-image: url(https://res.cloudinary.com/dtsbyexgk/image/upload/f_auto,q_auto/v1/petgossips-static/woman-walking-with-her-dog-min_ubwlti.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
