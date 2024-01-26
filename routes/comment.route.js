@@ -23,7 +23,7 @@ router.post('/comment/:petId/user/:userId', isLoggedIn, (req, res, next) => {
             .catch((err) => console.log(err))    
 })
 
-router.post('/comment/delete/:commentId', (req, res, next) => {
+router.post('/comment/delete/:commentId', isLoggedIn, (req, res, next) => {
     const { commentId } = req.params
 
     Comment.findById(commentId)
@@ -47,7 +47,7 @@ router.post('/comment/delete/:commentId', (req, res, next) => {
 
 })
 
-router.get('/edit-comment/:commentId', (req, res, next) => {
+router.get('/edit-comment/:commentId', isLoggedIn, (req, res, next) => {
     
     const { commentId } = req.params;
     let user = req.session.currentUser._id;
@@ -58,17 +58,23 @@ router.get('/edit-comment/:commentId', (req, res, next) => {
             .then((foundComment) => {
                 res.render('comment/edit-comment', { foundComment, inSession: true,  _id: req.session.currentUser._id })
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                next(err);
+            });
 })
 
-router.post('/comment-save/:commentId/pet/:petId', (req, res, next) => {
+router.post('/comment-save/:commentId/pet/:petId', isLoggedIn, (req, res, next) => {
     const {commentId, petId } = req.params
     
     Comment.findByIdAndUpdate(commentId, req.body, {new: true})
         .then(() => {
             res.redirect(`/pet-profile/${petId}`)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            next(err);
+        });
 })
 
 module.exports = router;

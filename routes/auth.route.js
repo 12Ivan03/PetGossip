@@ -42,7 +42,7 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
                         .then((info) => {
                             console.log('info',info);
                             req.session.currentUser = foundUser;
-                            res.render('user/edit-profile', { foundUser, inSession: true })
+                            res.render('user/edit-profile', { foundUser, inSession: true, _id:req.session.currentUser._id })
                         })
                         .catch((err) =>{
                             console.log('error in sending email',err);
@@ -72,16 +72,14 @@ router.post("/login", (req, res, next) => {
 
     if(username === '' || password === ''){
         res.render('auth/login', {errMsg: "Please fill in all required spaces"});
-        return;
     } 
 
     User.findOne({username})
         .then((logUser) => {
             if(!logUser){
                 res.render('auth/login', {errUsernameMsg: "User not found or password incorrect"})
-            }
-
-            bcrypt.compare(password, logUser.password)
+            } else {
+                bcrypt.compare(password, logUser.password)
                 .then((approvedPwd) => {
                     if(approvedPwd) {
                         req.session.currentUser = { username: logUser.username, _id: logUser._id, status:logUser.status, role:logUser.role };
@@ -98,6 +96,7 @@ router.post("/login", (req, res, next) => {
                     console.log(err);
                     next(err);
                 })
+            }
         })
         .catch((err) =>{
             console.log(err);
@@ -111,7 +110,7 @@ router.get("/logout", isLoggedIn, (req, res, next) => {
     })
 })
 
-router.get('/confirm/:confirmCode', (req, res)=> {
+router.get('/confirm/:confirmCode', (req, res, next)=> {
     console.log('currentUser', req.session.currentUser);
     User.findOne({confirmationCode: req.params.confirmCode})
         .then(foundUser => {
@@ -153,7 +152,7 @@ router.get('/contact', (req, res, next) => {
 
 });
 
-router.post('/contact', (req, res)=>{
+router.post('/contact', (req, res, next)=>{
     // console.log('req.body', req.body);
     const {userName, userEmail, customerNote} = req.body;
     transporter.sendMail({

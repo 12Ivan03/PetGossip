@@ -177,6 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
       loadingIcon.style.display = 'block';
       loadingIconBackground.style.display = 'block';
+
+      setTimeout(function(){
+        loadingIcon.style.display = 'none';
+        loadingIconBackground.style.display = 'none';
+      }, 5000)
     })
 
   })
@@ -189,3 +194,58 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+//validate username, password and email
+
+function validateField(inputId, validationMessageId, regex, errorMessage) {
+  let input = document.getElementById(inputId);
+  let value = input.value;
+
+  let isValid = regex.test(value);
+
+  if (!isValid) {
+    input.setCustomValidity(errorMessage);
+    showValidationMessage(validationMessageId, errorMessage);
+  } else {
+    input.setCustomValidity("");
+    hideValidationMessage(validationMessageId);
+  }
+}
+
+function showValidationMessage(messageId, errorMessage) {
+  let validationMessage = document.getElementById(messageId);
+  validationMessage.textContent = errorMessage;
+}
+
+function hideValidationMessage(messageId) {
+  let validationMessage = document.getElementById(messageId);
+  validationMessage.textContent = "";
+}
+
+
+//validate comment textarea
+function validateTextarea() {
+  let textareaValue = document.getElementById("text").value.trim();
+  let commentError = document.getElementById("commentError");
+
+  if (textareaValue === "") {
+      commentError.textContent = "Please enter a comment. :(";
+  } else {
+      commentError.textContent = "";
+  }
+}
+
+function validateForm() {
+  let textareaValue = document.getElementById("text").value.trim();
+  let commentError = document.getElementById("commentError");
+  if (textareaValue === "") {
+      commentError.textContent = "Please enter a comment. :(";
+      return false; // Prevent form submission
+  }
+  return true;
+}
+
+function hideCommentError() {
+  let commentError = document.getElementById("commentError");
+  commentError.textContent = "";
+}

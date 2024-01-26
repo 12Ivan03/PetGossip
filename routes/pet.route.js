@@ -43,7 +43,8 @@ router.post('/create-pet/:userId',isLoggedIn, isVerifiedUser, fileUploader.singl
                     res.redirect(`/pet-profile/${createdPet._id}`)
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
+                    next(err);
                 })
             }
         })
@@ -68,12 +69,21 @@ router.get("/pet-profile/:petId", isLoggedIn, isVerifiedUser, (req, res, next) =
                        return {...obj.toObject(), isOwner: (userId.toString() === obj.user._id.toString()) || isAdminOrModerator };
 
                     });
+                    console.log('foundPet', foundPet)
+                    console.log('foundPet', foundPet.user);
                     const isUser = (userId.toString() === foundPet.user._id.toString()) || userRole === 'admin';
                     console.log("req uri",req.originalUrl);
                     res.render('pet/profile',{ petInfo: foundPet, userId, comment: newFoundComments, isUser, inSession: true, originalURL:req.originalUrl,  _id:userId});
-                });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    next(err);
+                })
         })
-        .catch((err) => next(err))
+        .catch((err) => {
+            console.log(err);
+            next(err);
+        })
 })
 
 router.get("/view-all-pets", (req, res, next) => {
@@ -87,7 +97,10 @@ router.get("/view-all-pets", (req, res, next) => {
             res.render("pet/view-all-pets", { allPets, inSession: false} );
         };
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+        console.log(err);
+        next(err);
+    })
 })
 
 router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) => {
@@ -123,7 +136,10 @@ router.post("/pet/:petId/delete", isLoggedIn, isVerifiedUser, (req, res, next) =
         .then(() => {
             res.redirect(`/profile/${req.session.currentUser._id}`)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err);
+            next(err);
+        })
 })
 
 router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
@@ -134,7 +150,10 @@ router.get("/edit-pet/:petId", isLoggedIn, isVerifiedUser, (req, res, next) => {
         .then((foundPet) => {
                 res.render('pet/edit-profile', { foundPet, inSession: true,  _id: req.session.currentUser._id })  
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err);
+            next(err);
+        })
 })
 
 router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader.single('img'), (req, res, next) => {
@@ -157,12 +176,18 @@ router.post("/edit-pet-profile/:petId", isLoggedIn, isVerifiedUser, fileUploader
                 publicIdOfCloudinary = foundPet.img.split('/').splice(-2).join('/').split('.')[0];
                 return cloudinary.uploader.destroy(publicIdOfCloudinary, {invalidate: true})
             }
+        }).catch((err) => {
+            console.log(err);
+            next(err);
         })
     Pet.findByIdAndUpdate(petId, {name, img, votes, description, nickname, age, birthday}, {new: true})
         .then(() => {
             res.redirect(`/pet-profile/${petId}`)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            console.log(err);
+            next(err);
+        })
 })
 
 module.exports = router;
