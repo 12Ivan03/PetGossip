@@ -42,6 +42,10 @@
     font-size: 4rem;
 }
 
+.edit-user-back-btn {
+    align-items: start!important;
+}
+
 /* show all animals */
 
 .user-pet-btn {
