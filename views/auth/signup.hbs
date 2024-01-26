@@ -4,7 +4,7 @@
         <form action="/signup" method="post">
 
             <label class="label-log-sign" for="username"> Username:
-                <input class="input-log-sign" type="text" id="username" name="username" placeholder="username">
+                <input class="input-log-sign" type="text" id="username" name="username" placeholder="username" required>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
@@ -14,20 +14,20 @@
             </label>
             
             <label class="label-log-sign" for="email"> Email:
-                <input class="input-log-sign" type="email" name="email" id="email" placeholder="email">
+                <input class="input-log-sign" type="email" name="email" id="email" placeholder="email" required>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
             </label>
             
             <label class="label-log-sign" for="pwd"> Password:
-                <input class="input-log-sign" type="password" name="password" id="pwd" placeholder="********">
+                <input class="input-log-sign" type="password" name="password" id="pwd" placeholder="********" required>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
             </label>
 
-            <button class="btn-web-description-extra-info log-sign-in-btn" type="submit">Submit</button>
+            <button class="btn-web-description-extra-info log-sign-in-btn loading-btn" type="submit">Submit</button>
         </form>
     </div>
 </div>

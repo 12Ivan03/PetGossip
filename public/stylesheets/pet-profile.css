@@ -109,6 +109,7 @@
 
 .pet-ed-del-btns {
     display: flex;
+    flex-direction: row;
     bottom: 3rem;
 }
 
@@ -288,6 +289,55 @@
     margin: 0.5rem;
 }
 
+
+/* Modal for delete buttons throughout */
+
+.delete-modal {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    position: fixed;
+    z-index: 200;
+    top: 38%;
+    left: 35%;
+    width: 29rem;
+    height: 10rem;
+    background: transparent;
+    /* #d2b48c6c; */
+    /* -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, .4);
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, .4); */
+    /* padding: 1rem; */
+
+  }
+  
+  .modal-text {
+    text-align: center;
+    font-size: large;
+  }
+  
+  .demo-container {
+    display: block;
+  }
+  
+  .backdrop {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    background-color: #8572727e;
+    backdrop-filter: blur(3px);
+    opacity: 2;
+    z-index: 100;
+  }
+  
+  .delete-model-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+  }
+
 /* pet - footer */
 
 .pet-profilet-footer {
@@ -315,8 +365,8 @@
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
-    background-color: #8572725e;
-    backdrop-filter: blur(8px);
+    background-color: #8572727e;
+    backdrop-filter: blur(3px);
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -343,14 +393,11 @@
     display: flex;
     transform: translate(0%,291%);
     margin-left: 14.5rem;
-    /* transform: translate(25.5%,291%); */
 }
 
 .save-comment-btn {
     position: absolute;
     transform: translate(-17%, 0%);
-    /* transform: translate(240%, 10%); */
-    /* transform: translate(240%, -125%); */
 }
 
 .back-comment-btn a {

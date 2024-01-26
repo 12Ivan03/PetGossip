@@ -58,8 +58,13 @@
     width: 10rem!important;
 }
 
+.signup-a:active {
+    color: black;
+}
+
 .err-msg {
     font-size: small;
+    color: rgb(255, 146, 51);
 }
 
 /* info - more */

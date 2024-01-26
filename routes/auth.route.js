@@ -44,8 +44,16 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
                             req.session.currentUser = foundUser;
                             res.render('user/edit-profile', { foundUser, inSession: true })
                         })
-                        .catch((error) => console.log(error));
-                }).catch((error) => console.log(error));
+                        .catch((err) =>{
+                            console.log('error in sending email',err);
+                            User.deleteOne({foundUser})
+                            req.session.currentUser = undefined;
+                            next(err);
+                        })
+                }).catch((err) =>{
+                    console.log(err);
+                    next(err);
+                })
             }
         })
         .catch((err) =>{
