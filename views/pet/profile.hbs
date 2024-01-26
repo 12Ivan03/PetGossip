@@ -1,4 +1,4 @@
-<div class="container">
+ <div class="container">
 
     <div class="scroll-div">
         <div class="pet-name-background">
@@ -72,12 +72,15 @@
     </div>
 
    <div class="comment-form-div">
-        <form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST">
+        <form action="/comment/{{petInfo._id}}/user/{{userId}}" method="POST" onsubmit="return validateForm()">
             <label for="text">
-                <textarea class="textarea-pet-comment" name="text" id="text" cols="60" rows="5" placeholder="Leave a comment here..."></textarea>
+                <textarea class="textarea-pet-comment" name="text" id="text" cols="60" rows="5"
+                    placeholder="Leave a comment here..." oninput="validateTextarea()" onblur="hideCommentError()"></textarea>
             </label>
+            <span id="commentError"></span>
             <button class="btn-pet barker-background loading-btn" type="submit">Comment</button>
         </form>
+        
    </div>
 
 </div>

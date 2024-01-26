@@ -4,7 +4,10 @@
         <form action="/signup" method="post">
 
             <label class="label-log-sign" for="username"> Username:
-                <input class="input-log-sign" type="text" id="username" name="username" placeholder="username" required>
+                <input class="input-log-sign" type="text" id="username" name="username" placeholder="username"
+                    oninput="validateField('username', 'username-validation-message', /^[A-Za-z0-9_]{3,}$/, 'Enter minimum 3 characters.')"
+                    onblur="hideValidationMessage('username-validation-message')" required>
+                <span id="username-validation-message"></span>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
@@ -14,14 +17,20 @@
             </label>
             
             <label class="label-log-sign" for="email"> Email:
-                <input class="input-log-sign" type="email" name="email" id="email" placeholder="email" required>
+                <input class="input-log-sign" type="email" name="email" id="email" placeholder="email"
+                    oninput="validateField('email', 'email-validation-message', /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Enter a valid email.')"
+                    onblur="hideValidationMessage('email-validation-message')" required>
+                <span id="email-validation-message"></span>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
             </label>
             
             <label class="label-log-sign" for="pwd"> Password:
-                <input class="input-log-sign" type="password" name="password" id="pwd" placeholder="********" required>
+                <input class="input-log-sign" type="password" name="password" id="pwd" placeholder="********"
+                    oninput="validateField('pwd', 'password-validation-message', /^.{6,}$/, 'Enter minimum 6 characters.')"
+                    onblur="hideValidationMessage('password-validation-message')" required>
+                <span id="password-validation-message"></span>
                 {{#if errMsg}}
                 <p class="err-msg">{{errMsg}}</p>
                 {{/if}}
