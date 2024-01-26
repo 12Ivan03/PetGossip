@@ -18,7 +18,7 @@
 .edit-description {
     padding-top: 0;
     display: flex;
-    flex-direction: column!important;
+    flex-direction: column;
 }
 
 .create-pet-btn-back {

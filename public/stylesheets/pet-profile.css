@@ -109,6 +109,7 @@
 
 .pet-ed-del-btns {
     display: flex;
+    flex-direction: row;
     bottom: 3rem;
 }
 
