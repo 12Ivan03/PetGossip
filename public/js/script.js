@@ -156,14 +156,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadingBtn = document.querySelector('.loading-btn')
 
-  loadingBtn.addEventListener('click', () => {
-    const loadingIcon = document.querySelector('.loading-icon');
-    const loadingIconBackground = document.querySelector('.loading-icon-background')
-
-    loadingIcon.style.display = 'block';
-    loadingIconBackground.style.display = 'block';
-  })
-
+  if(loadingBtn){
+    loadingBtn.addEventListener('click', () => {
+      const loadingIcon = document.querySelector('.loading-icon');
+      const loadingIconBackground = document.querySelector('.loading-icon-background')
+  
+      loadingIcon.style.display = 'block';
+      loadingIconBackground.style.display = 'block';
+    })
+  
+  }
+ 
   //snackbar
 
   let snackbar = document.getElementById("snackbar");

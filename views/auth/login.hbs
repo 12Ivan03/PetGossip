@@ -4,7 +4,7 @@
         <form action="/login" method="post">
 
             <label class="label-log-sign" for="username"> Username:
-                <input class="input-log-sign" type="text" name="username" id="username" placeholder="username">
+                <input class="input-log-sign" type="text" name="username" id="username" placeholder="enter username" required>
                 {{#if errMsg}}
                 <p class="err-msg">*{{errMsg}}</p>
                 {{/if}}
@@ -14,7 +14,7 @@
             </label>
 
             <label class="label-log-sign" for="pwd"> Password:
-                <input class="input-log-sign" type="password" id="pwd" name="password" placeholder="********">
+                <input class="input-log-sign" type="password" id="pwd" name="password" placeholder="********" required>
                 {{#if errMsg}}
                 <p class="err-msg">*{{errMsg}}</p>
                 {{/if}}
