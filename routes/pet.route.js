@@ -81,9 +81,8 @@ router.get("/view-all-pets", (req, res, next) => {
     .populate('user')
     .then((allPets) => {
         const inSession = req.session.currentUser
-
         if(inSession){
-            res.render("pet/view-all-pets", { allPets, inSession: true,  _id: req.session.currentUser._id} );
+            res.render("pet/view-all-pets", { allPets, inSession: true,  _id: req.session.currentUser._id, isNotVerified: req.query.isNotVerified} );
         } else {
             res.render("pet/view-all-pets", { allPets, inSession: false} );
         };

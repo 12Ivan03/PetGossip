@@ -1,4 +1,4 @@
-let notifier = require('node-notifier');
+// let notifier = require('node-notifier');
 
 const isLoggedIn = (req, res, next) => {
     if(!req.session.currentUser) {
@@ -36,11 +36,11 @@ const isVerifiedUser = (req, res, next) => {
         next();
     } else {
         // res.jsonp('You have limited access since your account is not verified. Please check your email and verify your account.');
-        notifier.notify({
-            title: 'Error Message',
-            message: 'You have limited access since your account is not verified. Please check your email and verify your account.'
-        });
-        res.redirect('/view-all-pets');
+        // notifier.notify({
+        //     title: 'Error Message',
+        //     message: 'You have limited access since your account is not verified. Please check your email and verify your account.'
+        // });
+        res.redirect('/view-all-pets?isNotVerified=true');
     }
 }
 

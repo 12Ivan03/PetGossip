@@ -36,11 +36,14 @@
             <li class="nav-bar-list-items"><a href="/login">Login</a></li>
             {{/if}}
          </ul>
-      </nav>
-
+      </nav>  
       {{{body}}}
-
-
+      {{#if isNotVerified}}
+      <div id="snackbar">
+      <p>Your account is not verified. Kindly check your email.</p>
+      </div>
+      {{/if}}
+      
       <script src="/js/script.js"></script>
    </body>
 

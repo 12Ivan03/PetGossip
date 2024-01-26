@@ -150,5 +150,11 @@ document.addEventListener("DOMContentLoaded",() => {
       confirmBtn.addEventListener('click', closeModal);
       backdrop.addEventListener('click', closeModal);
     }
-    
+
+    let snackbar = document.getElementById("snackbar");
+    if(snackbar){
+      snackbar.className = "show";
+      setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+    }
+   
   });
